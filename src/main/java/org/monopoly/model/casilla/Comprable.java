@@ -1,7 +1,44 @@
 package org.monopoly.model.casilla;
 
-public class Comprable {
+import java.util.List;
+
+public abstract class Comprable extends Casilla implements ConEfecto {
     private String nombre;
     private Jugador dueño;
-    private
+    private int valorHipoteca;
+    private int rentaBasica;
+    private int valorCompra;
+    private boolean estaHipotecada;
+    protected Config.ColoresCasillas color;
+
+    public Comprable(Config.TiposCasillas tipo, String nombre, Jugador dueño, int valorHipoteca, int rentaBasica, int valorCompra, Config.ColoresCasillas color){
+        super(tipo);
+        this.nombre = nombre;
+        this.dueño = dueño;
+        this.valorHipoteca = valorHipoteca;
+        this.rentaBasica = rentaBasica;
+        this.valorCompra = valorCompra;
+        this.estaHipotecada = false;
+        this.color = color;
+    }
+
+    public Jugador getDueño() {
+        return dueño;
+    }
+
+    public abstract int getRenta();
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void comprar(){
+
+    };
+
+    public Config.ColoresCasillas getColor() {
+        return this.color;
+    }
+
+    public abstract void aplicarEfecto(Jugador jugador);
 }
