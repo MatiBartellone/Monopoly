@@ -1,8 +1,14 @@
 package org.monopoly.model.casilla;
 
 public class Estacion {
-    public Propiedad(Config.TiposCasillas tipo, String nombre, Jugador dueño, int valorHipoteca, int rentaBasica, int valorCompra, Config.ColoresCasillas color){
-        super(tipo, nombre, dueño, valorHipoteca, rentaBasica, valorCompra);
+    public Propiedad(Config.TiposCasillas tipo, String nombre, int rentaBasica, int valorCompra, Config.ColoresCasillas color){
+        super(tipo, nombre, rentaBasica, valorCompra);
     }
 
-    pub
+    public void aplicarEfecto(Jugador jugador){
+        if this.dueño == null || jugador.getCasillaActual() != this || jugador.poseerDeTipo(this.getTipo())  {
+            return;
+        }
+        renta = this.rentaBasica * this.dueño.cantDeTipo(this.getTipo());
+        jugador.retirarDinero(renta)
+    }

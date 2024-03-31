@@ -5,36 +5,37 @@ import java.util.List;
 public abstract class Comprable extends Casilla implements ConEfecto {
     private String nombre;
     private Jugador dueño;
-    private int valorHipoteca;
     private int rentaBasica;
     private int valorCompra;
-    private boolean estaHipotecada;
     protected Config.ColoresCasillas color;
 
-    public Comprable(Config.TiposCasillas tipo, String nombre, Jugador dueño, int valorHipoteca, int rentaBasica, int valorCompra, Config.ColoresCasillas color){
+    public Comprable(Config.TiposCasillas tipo, String nombre, int rentaBasica, int valorCompra, Config.ColoresCasillas color){
         super(tipo);
         this.nombre = nombre;
-        this.dueño = dueño;
-        this.valorHipoteca = valorHipoteca;
         this.rentaBasica = rentaBasica;
         this.valorCompra = valorCompra;
-        this.estaHipotecada = false;
         this.color = color;
     }
 
     public Jugador getDueño() {
-        return dueño;
+        return this.dueño;
+    }
+
+    public int getValorCompra(){
+        return this.valorCompra
     }
 
     public abstract int getRenta();
 
     public String getNombre() {
-        return nombre;
+        return this.nombre;
     }
 
-    public void comprar(){
-
-    };
+    public void comprar(Jugador jugador){
+        if this.dueño == null && jugador.getCasillaActual() == this && jugador.puedeComprarActual(){
+            this.dueño = jugador
+        }
+    }
 
     public Config.ColoresCasillas getColor() {
         return this.color;
