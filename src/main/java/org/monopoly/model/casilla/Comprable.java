@@ -5,14 +5,13 @@ import java.util.List;
 public abstract class Comprable extends Casilla implements ConEfecto {
     private String nombre;
     private Jugador dueño;
-    private int rentaBasica;
     private int valorCompra;
-    protected Config.ColoresCasillas color;
+    protected Config.ColoresComprables color;
 
-    public Comprable(Config.TiposCasillas tipo, String nombre, int rentaBasica, int valorCompra, Config.ColoresCasillas color){
+    public Comprable(Config.TiposCasillas tipo, String nombre, Jugador jugador,  int valorCompra, Config.ColoresComprables color){
         super(tipo);
         this.nombre = nombre;
-        this.rentaBasica = rentaBasica;
+        this.dueño = jugador
         this.valorCompra = valorCompra;
         this.color = color;
     }
@@ -32,12 +31,13 @@ public abstract class Comprable extends Casilla implements ConEfecto {
     }
 
     public void comprar(Jugador jugador){
-        if this.dueño == null && jugador.getCasillaActual() == this && jugador.puedeComprarActual(){
+        if this.dueño == null && jugador.getCasillaActual() == this{
+            jugador.comprar(this)
             this.dueño = jugador
         }
     }
 
-    public Config.ColoresCasillas getColor() {
+    public Config.ColoresComprables getColor() {
         return this.color;
     }
 
