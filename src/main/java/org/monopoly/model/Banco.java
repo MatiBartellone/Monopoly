@@ -1,22 +1,32 @@
 package org.monopoly.model;
 
-public class Banco {
-    private int dinero;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
-    public Banco(int dineroTotal){
-        this.dinero = dineroTotal;
+public class Banco {
+    private Map<Jugador, CuentaBancaria> cuentasJugadores;
+
+    public Banco(List<Jugador> jugadores){
+        this.cuentasJugadores = new HashMap<Jugador, CuentaBancaria>();
+        for (Jugador j : jugadores){
+            this.cuentasJugadores.put(j, new CuentaBancaria(Config.DineroInicial));
+        }
     }
 
     public void otorgarDinero(Jugador jugador, int monto){
-        jugador.sumarDinero(monto);
-        dinero -= monto;
+        this.cuentasJugadores.get(jugador).sumarDinero(monto);
     }
     public boolean recibirDinero(Jugador jugador, int monto){
-        if (jugador.getDinero() < monto){
-            return false;
-        }
-        jugador.retirarDinero(monto);
-        dinero += monto;
+        CuentaBancaria cuenta = this.cuentasJugadores.get(jugador);
+        if (!cuenta.poseeDinero(monto)) return false;
+        cuenta.retirarDinero(monto);
+        return true;
+    }
+
+    public boolean transferir(Jugador receptor, Jugador emisor, int monto){
+        if (this.recibirDinero(emisor, monto)) return false;
+        this.otorgarDinero(receptor, monto);
         return true;
     }
 }
