@@ -17,7 +17,7 @@ public class Banco {
     public void otorgarDinero(Jugador jugador, int monto){
         this.cuentasJugadores.get(jugador).sumarDinero(monto);
     }
-    public boolean recibirDinero(Jugador jugador, int monto){
+    public boolean quitarDinero(Jugador jugador, int monto){
         CuentaBancaria cuenta = this.cuentasJugadores.get(jugador);
         if (!cuenta.poseeDinero(monto)) return false;
         cuenta.retirarDinero(monto);
@@ -25,7 +25,7 @@ public class Banco {
     }
 
     public boolean transferir(Jugador receptor, Jugador emisor, int monto){
-        if (this.recibirDinero(emisor, monto)) return false;
+        if (this.quitarDinero(emisor, monto)) return false;
         this.otorgarDinero(receptor, monto);
         return true;
     }
