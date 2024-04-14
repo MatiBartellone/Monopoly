@@ -2,14 +2,15 @@ package org.monopoly.model.casilla;
 
 import org.monopoly.model.AdmJugador;
 import org.monopoly.model.Config;
+import org.monopoly.model.Jugador;
 
 public class Multa extends Monetaria {
     public Multa(Config.TiposCasillas tipo, int monto){
         super(tipo, monto);
     }
 
-    public void accionar(AdmJugador administrador) {
-        administrador.quitarDinero(administrador.getJugadorActual(), this.getMonto());
+    public void accionar(AdmJugador administrador, Jugador jugador) {
+        administrador.quitarDinero(jugador, this.getMonto());
     }
 
 }

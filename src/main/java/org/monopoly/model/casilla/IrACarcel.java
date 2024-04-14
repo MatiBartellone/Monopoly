@@ -2,6 +2,7 @@ package org.monopoly.model.casilla;
 
 import org.monopoly.model.AdmJugador;
 import org.monopoly.model.Config;
+import org.monopoly.model.Jugador;
 
 public class IrACarcel extends Casilla implements Accionable{
 
@@ -10,7 +11,7 @@ public class IrACarcel extends Casilla implements Accionable{
     }
 
     @Override
-    public void accionar(AdmJugador administrador) {
-        administrador.encarcelar(administrador.getJugadorActual());
+    public void accionar(AdmJugador administrador, Jugador jugador) {
+        administrador.encarcelar(jugador);
     }
 }
