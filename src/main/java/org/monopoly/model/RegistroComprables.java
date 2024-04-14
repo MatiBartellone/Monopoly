@@ -51,18 +51,12 @@ public class RegistroComprable {
     }
 
     public int obtenerCantSet(Jugador jugador, Config.ColoresPropiedades color){
-        HashMap<Config.ColoresPropiedades, Integer> tablaColorJugador;
-        tablaColorJugador = this.tablaColoresJugadores.get(jugador);
-        if (tablaColorJugador.containsKey(color)){
-            return tablaColorJugador.get(color);
-        }
-        return 0;
+        return (this.tablaColoresJugadores.get(jugador).containsKey(color))
+                ? this.tablaColoresJugadores.get(jugador).get(color)
+                : 0;
     }
     public boolean poseeSetCompleto(Jugador jugador, Config.ColoresPropiedades color){
-        if (this.obtenerCantSet(jugador, color) == this.tablaColores.get(color)){
-            return true;
-        }
-        return false;
+        return this.obtenerCantSet(jugador, color) == this.tablaColores.get(color);
     }
 }
 
