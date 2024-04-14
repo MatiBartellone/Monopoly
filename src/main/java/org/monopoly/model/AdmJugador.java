@@ -15,15 +15,30 @@ public class AdmJugador {
         this.registroComprables = new RegistroComprables();
     }
 
-    public void comprar(Jugador jugador, Comparable comprable) {}
+    public void comprar(Jugador jugador, Comparable comprable) {
+        if (this.banco.quitarDinero(jugador, comprable.getValorCompra()))
+            this.registroComprables.registrarCompra(jugador, comprable.getValorHipoteca());
+    }
 
-    public void construirConstruccion(Jugador jugador, Propiedad propiedad) {}
+    public void construirConstruccion(Jugador jugador, Propiedad propiedad) {
+        if (this.banco.quitarDinero(jugador, propiedad.getValorConstruir()))
+            propiedad.construir();
+    }
 
-    public void venderConstruccion(Jugador jugador, Propiedad propiedad) {}
+    public void venderConstruccion(Jugador jugador, Propiedad propiedad) {
+        this.banco.otorgarDinero(jugador, propiedad.getValorDestruir());
+        propiedad.destruir();
+    }
 
-    public void hipotecar(Jugador jugador, Comparable comparable) {}
+    public void hipotecar(Jugador jugador, Comparable comparable) {
+        this.banco.otorgarDinero(jugador, comparable.getValorHipoteca());
+        comprable.hipotecar();
+    }
 
-    public void deshipotecar(Jugador jugador, Comparable comparable) {}
+    public void deshipotecar(Jugador jugador, Comparable comparable) {
+        if (this.banco.quitarDinero(jugador, comparable.getValorHipoteca()))
+            comprable.deshipotecar();
+    }
 
     public void encarcelar(Jugador jugador) {
         jugador.setTurnosCarcel(Config.TurnosCarcel);
@@ -48,12 +63,12 @@ public class AdmJugador {
         this.banco.otorgarDinero(jugador, monto);
     }
 
-    public void quitarDinero(Jugador jugador, int monto) {
-        this.banco.quitarDinero(jugador, monto);
+    public boolean quitarDinero(Jugador jugador, int monto) {
+        return this.banco.quitarDinero(jugador, monto);
     }
 
-    public void transferir(Jugador receptor, Jugador emisor, int monto) {
-        this.banco.transferir(receptor, emisor, monto);
+    public boolean transferir(Jugador receptor, Jugador emisor, int monto) {
+        return this.banco.transferir(receptor, emisor, monto);
     }
 
     public int obtenerCantSet(Jugador jugador, Config.ColoresPropiedades color) {
