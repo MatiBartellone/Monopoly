@@ -1,6 +1,8 @@
 package org.monopoly.model;
 
 import org.monopoly.model.casilla.Casilla;
+import org.monopoly.model.casilla.Comprable;
+import org.monopoly.model.casilla.Propiedad;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -8,35 +10,58 @@ import java.util.List;
 import java.util.Set;
 
 public class Juego {
-    private final Set<Jugador> jugadores;
+    //puede que el observerOptions esté suscripto al juego y que cada vez que se realice un método de juego se le avise al
+    private final List<Jugador> jugadores;
     private final Tablero tablero;
     private final AdmTurnos admTurnos;
     private final AdmMovimientos admMovimientos;
-    private final Banco banco;
+    private final AdmJugador admJugador;
 
-    //para el constructor lo que haremos es que el juego reciba ya la lista de jugadores, pues el juego conyroller debe verificar que sea una cantidad válida
-    //entonces ya recibe una lista de
-    public Juego(Set<Jugador> jugadores, Tablero tablero, int dineroTotal) {
+    public Juego(List<Jugador> jugadores, Tablero tablero, int dineroTotal) {
         this.jugadores = jugadores;
         this.tablero = tablero;
         this.admTurnos = new AdmTurnos(jugadores);
         this.admMovimientos = new AdmMovimientos(tablero);
-        this.banco = new Banco(dineroTotal);
+        this.admJugador = new AdmJugador(jugadores);
     }
-    //para mover el el jugador el juego debe enviarle el jugador
-    public void cambiarTurno(){
-        this.admTurnos.Siguiente();
+    public void siguienteTurno(){this.admTurnos.siguiente();}
+    public void tirarDados(){this.admMovimientos.tirarDados();}
+    public void pagarFianza(){
+        Jugador jugadorActual = admTurnos.getJugadorActual();
+        admJugador.pagarFianza(jugadorActual);
+        //deberia haber una validación entre pagar la fianza y el resto no?¿devuelvve un error?
+        admJugador.liberar(jugadorActual);
     }
-    public int tirarDados(){
-        return this.admMovimientos.randomizador();
+    public void mover() {
+        if (this.validarEncarcelamiento()) {
+            admMovimientos.mover(admTurnos.getJugadorActual());
+        }
     }
-    //no puedo suponer desde juego que no se está tratando de mover a un jugador que esté preso??
-    public void mover(int pasos){this.admMovimientos.mover(this.admTurnos.getJugadorActual(),pasos);}
-    public boolean ejecutarCompra(Comprable comprable, Jugador jugador){
-        jugador.comprar(comprable);
-        tablero.obtenerCasilla().comprar(jugador);
-
+    private boolean validarEncarcelamiento(){
+        Jugador jugador = this.admTurnos.getJugadorActual();
+        if (jugador.getEstado() == Config.EstadosJugadores.EN_JUEGO){return true;}
+        if (jugador.getTurnosCarcel() == 0 || admMovimientos.sonDadosIguales()){
+            admJugador.liberar(jugador);
+            return true;
+        }
+        jugador.setTurnosCarcel(jugador.getTurnosCarcel()-1);
+        return false;
     }
-
+    public void comprar(){
+        Jugador jugador =admTurnos.getJugadorActual();
+        this.admJugador.comprar(jugador,jugador.getCasillaActual());
+    }
+    public void construirConstruccion(Propiedad lugar){
+        admJugador.construirContruccion(admTurnos.getJugadorActual(),lugar);
+    }
+    public void venderConstruccion(Propiedad lugar){
+        admJugador.venderConstruccion(admTurnos.getJugadorActual(), lugar);
+    }
+    public void hipotecar(Comprable compra){
+        admJugador.hipotecar(admTurnos.getJugadorActual(), compra);
+    }
+    public void deshipotecar(Comprable compra){
+        admJugador.deshipotecar(admTurnos.getJugadorActual(),compra);
+    }
 }
 //
