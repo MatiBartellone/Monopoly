@@ -2,24 +2,20 @@ package org.monopoly.model.casilla;
 
 import java.util.List;
 
-public abstract class Comprable extends Casilla implements ConEfecto {
+public abstract class Comprable extends Casilla{
     private String nombre;
-    private Jugador dueño;
+    protected Config.ColoresComprables color;
     private int valorCompra;
     private int valorRentaBasica;
-    protected Config.ColoresComprables color;
+    private int valorHipoteca;
+    private boolean estaHipotecada;
 
     public Comprable(Config.TiposCasillas tipo, String nombre, int valorCompra, int valorRentaBasica, Config.ColoresComprables color){
         super(tipo);
         this.nombre = nombre;
-        this.dueño = null;
+        this.color = color;
         this.valorCompra = valorCompra;
         this.valorRentaBasica = valorRentaBasica;
-        this.color = color;
-    }
-
-    public Jugador getDueño() {
-        return this.dueño;
     }
 
     public String getNombre() {
@@ -34,17 +30,21 @@ public abstract class Comprable extends Casilla implements ConEfecto {
         return this.color;
     }
 
-    public void setDueño(Jugador dueño) {
-        this.dueño = dueño;
+    public void hipotecar(){
+        this.estaHipotecada = true;
     }
 
-    public void comprar(Jugador jugador){
-        if this.dueño != null || jugador.getCasillaActual() != this{
+    public void deshipotecar(){
+        this.estaHipotecada = false;
+    }
+
+    public void accionar(AdmJugador admJugador, Jugador jugador){
+        if !sePuedeAccionar(admJugador, jugador){
             return;
         }
-        jugador.comprar(this) // donde chequea que tenga la plata disponible?
-        this.dueño = jugador
+        this.cobrarAlquiler(admJugador, jugador);
     }
 
-    public abstract void aplicarEfecto(Jugador jugador);
+    private abstract boolean sePuedeAccionar(AdmJugador admJugador, Jugador jugador);
+    private abstract void cobrarAlquiler(AdmJugador admJugador, Jugador jugador);
 }
