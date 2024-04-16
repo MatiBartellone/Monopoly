@@ -1,28 +1,30 @@
 package org.monopoly.model;
 
+import org.monopoly.model.casilla.Comprable;
 import org.monopoly.model.casilla.Propiedad;
 
 import java.util.List;
+import java.util.Map;
 
 public class AdmJugador {
     private List<Jugador> jugadores;
     private Banco banco;
     private RegistroComprables registroComprables;
 
-    public AdmJugador(List<Jugador> jugadores){
+    public AdmJugador(List<Jugador> jugadores, Map<Config.ColoresPropiedades, Integer> tablaColores){
         this.jugadores = jugadores;
         this.banco = new Banco(jugadores);
-        this.registroComprables = new RegistroComprables();
+        this.registroComprables = new RegistroComprables(tablaColores, jugadores);
     }
 
-    public void comprar(Jugador jugador, Comparable comprable) {
-        if (this.banco.quitarDinero(jugador, comprable.getValorCompra()))
-            this.registroComprables.registrarCompra(jugador, comprable.getValorHipoteca());
+    public void comprar(Jugador jugador, Comprable comprable) {
+        this.banco.quitarDinero(jugador, comprable.getValorCompra());
+        this.registroComprables.registrarCompra(jugador, comprable.getValorHipoteca());
     }
 
     public void construirConstruccion(Jugador jugador, Propiedad propiedad) {
-        if (this.banco.quitarDinero(jugador, propiedad.getValorConstruir()))
-            propiedad.construir();
+        this.banco.quitarDinero(jugador, propiedad.getValorConstruir());
+        propiedad.construir();
     }
 
     public void venderConstruccion(Jugador jugador, Propiedad propiedad) {
@@ -30,14 +32,14 @@ public class AdmJugador {
         propiedad.destruir();
     }
 
-    public void hipotecar(Jugador jugador, Comparable comparable) {
+    public void hipotecar(Jugador jugador, Comprable comprable) {
         this.banco.otorgarDinero(jugador, comparable.getValorHipoteca());
         comprable.hipotecar();
     }
 
-    public void deshipotecar(Jugador jugador, Comparable comparable) {
-        if (this.banco.quitarDinero(jugador, comparable.getValorHipoteca()))
-            comprable.deshipotecar();
+    public void deshipotecar(Jugador jugador, Comprable comprable) {
+        this.banco.quitarDinero(jugador, comparable.getValorHipoteca());
+        comprable.deshipotecar();
     }
 
     public void encarcelar(Jugador jugador) {
@@ -63,20 +65,20 @@ public class AdmJugador {
         this.banco.otorgarDinero(jugador, monto);
     }
 
-    public boolean quitarDinero(Jugador jugador, int monto) {
-        return this.banco.quitarDinero(jugador, monto);
+    public void quitarDinero(Jugador jugador, int monto) {
+        this.banco.quitarDinero(jugador, monto);
     }
 
-    public boolean transferir(Jugador receptor, Jugador emisor, int monto) {
-        return this.banco.transferir(receptor, emisor, monto);
+    public void transferir(Jugador receptor, Jugador emisor, int monto) {
+        this.banco.transferir(receptor, emisor, monto);
     }
 
     public int obtenerCantSet(Jugador jugador, Config.ColoresPropiedades color) {
         return this.registroComprables.obtenerCantSet(jugador, color);
     }
 
-    public Jugador obtenerDuenio(Comparable comparable) {
-        return this.registroComprables.obtenerDuenio(comparable);
+    public Jugador obtenerDuenio(Comprable comprable) {
+        return this.registroComprables.obtenerDuenio(comprable);
     }
 
 
