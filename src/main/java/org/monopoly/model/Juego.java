@@ -19,7 +19,7 @@ public class Juego {
 
     public Juego( Tablero tablero, List<Jugador> jugadores) {
         this.jugadores = jugadores;
-        this.tablero = new Tablero();
+        this.tablero = tablero;
         this.admTurnos = new AdmTurnos(jugadores);
         this.admMovimientos = new AdmMovimientos(tablero);
         this.admJugador = new AdmJugador(jugadores);
@@ -31,13 +31,15 @@ public class Juego {
         if (this.validarEncarcelamiento()) {
             Jugador jugador = admTurnos.getJugadorActual();
             if (admMovimientos.mover(jugador)){this.pagarPasoSalida(jugador);}
+            if (jugador.getCasillaActual() instanceof Accionable){Accionable accionable.accionar(admJugador,jugador);}
         }
     }
 
     public void comprar(){
         //¿estaría rompiendo el principio de polK?
         Casilla casilla = admTurnos.getJugadorActual().getCasillaActual();
-        admJugador.comprar(admTurnos.getJugadorActual(),casilla);
+        Comprable comprable = (Comprable) casilla;
+        admJugador.comprar(admTurnos.getJugadorActual(),comprable);
     }
     //la propiedad se sacará de los observers que tienen guardadas las opciones de propiedades donde contruir
 
