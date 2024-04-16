@@ -5,7 +5,14 @@ public class Estacion extends Comprable {
     private int cantEstaciones;
     public Propiedad(Config.TiposCasillas tipo, String nombre, int valorCompra, int valorRentaBasica, Config.ColoresComprables color){
         super(tipo, nombre, valorCompra, rentaBasica, color);
-        this.cantEstaciones = 0;
+    }
+
+    public void aumentarEstaciones(){
+        this.cantEstaciones++
+    }
+
+    public void disminuirEstaciones(){
+        this.cantEstaciones--
     }
 
     private boolean sePuedeAccionar(AdmJugador admJugador, Jugador jugador){

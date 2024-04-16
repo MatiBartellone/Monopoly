@@ -5,16 +5,16 @@ import java.util.List;
 public class Propiedad extends Comprable{
     private ArrayList<Construccion> listaConstruccion = new ArrayList<>();
     private int cantConstruidos;
-    private int valorTotalConstruidos;
     private int valorConstruir;
     private int valorDestruir;
+    private int valorTotalConstruidos;
 
     public Propiedad(Config.TiposCasillas tipo, String nombre, int valorCompra, int valorRentaBasica, Config.ColoresComprables color, int valorHipoteca, ArrayList<Construccion> listaConstruccion, int valorConstruir, int valorDestruir){
         super(tipo, nombre, valorCompra, valorRentaBasica, color);
         this.valorHipoteca = valorHipoteca;
-        this.listaConstruccion = listaConstruccion;
         this.valorConstruir = valorConstruir;
         this.valorDestruir = valorDestruir;
+        this.listaConstruccion = listaConstruccion;
     }
 
     public int getValorConstruir() {
@@ -29,24 +29,16 @@ public class Propiedad extends Comprable{
         return this.cantConstruidos;
     }
 
-    public bool construir(){
-        if this.cantConstruidos >= len(this.listaConstruccion)-1{// falta chequear que la diferencia sea menor a 1 entre todas las propiedades < Config.MaxCasas && // es dueño de todas las propiedades del mismo color
-            return false;
-        }
+    public void construir(){
         valorAlquiler = this.listaConstruccion[cantConstruidos].getValorAlquiler();
         this.valorTotalConstruidos += valorAlquiler;
         this.cantConstruidos++
-        return true
     }
 
-    public bool destruir(){
-        if this.cantConstruidos > 0 {// falta chequear que la diferencia sea menor a 1 entre todas las propiedades
-            return false;
-        }
+    public void destruir(){
         valorAlquiler = this.listaConstruccion[cantConstruidos].getValorAlquiler();
         this.valorTotalConstruidos -= valorAlquiler;
         this.cantConstruidos--
-        return true
     }
 
     private boolean sePuedeAccionar(AdmJugador admJugador, Jugador jugador){
