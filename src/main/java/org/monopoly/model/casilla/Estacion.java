@@ -1,26 +1,23 @@
 package org.monopoly.model.casilla;
 
+import org.monopoly.model.Config;
+
 public class Estacion extends Comprable {
 
     private int cantEstaciones;
-    public Propiedad(Config.TiposCasillas tipo, String nombre, int valorCompra, int valorRentaBasica, Config.ColoresComprables color){
-        super(tipo, nombre, valorCompra, rentaBasica, color);
+    public Estacion(Config.TiposCasillas tipo, String nombre, int valorCompra, int valorRentaBasica, Config.ColoresComprables color){
+        super(tipo, nombre, valorCompra, valorRentaBasica, color);
     }
 
     public void aumentarEstaciones(){
-        this.cantEstaciones++
+        this.cantEstaciones++;
     }
 
     public void disminuirEstaciones(){
-        this.cantEstaciones--
+        this.cantEstaciones--;
     }
 
-    private boolean sePuedeAccionar(AdmJugador admJugador, Jugador jugador){
-        return admJugador.tieneDueño(this) && jugador.getCasillaActual() == this && admJugador.obtenerCantSet(jugador, this.color) == 0
-    }
-
-    private void cobrarAlquiler(AdmJugador admJugador, Jugador jugador){
-        renta = this.rentaBasica * admJugador.obtenerCantSet(jugador, this.color);
-        admJugador(jugador, admJugador.obtenerDueño(this), renta)
+    protected int calcularAlquiler(AdmJugador admJugador, Jugador jugador){
+        return this.valorRrentaBasica * admJugador.obtenerCantSet(jugador, this.color);
     }
 }

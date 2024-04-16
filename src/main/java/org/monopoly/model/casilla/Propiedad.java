@@ -1,9 +1,11 @@
 package org.monopoly.model.casilla;
+
+import org.monopoly.model.Config;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Propiedad extends Comprable{
-    private ArrayList<Construccion> listaConstruccion = new ArrayList<>();
+    private List<Construccion> construcciones = new ArrayList<>();
     private int cantConstruidos;
     private int valorConstruir;
     private int valorDestruir;
@@ -11,10 +13,11 @@ public class Propiedad extends Comprable{
 
     public Propiedad(Config.TiposCasillas tipo, String nombre, int valorCompra, int valorRentaBasica, Config.ColoresComprables color, int valorHipoteca, ArrayList<Construccion> listaConstruccion, int valorConstruir, int valorDestruir){
         super(tipo, nombre, valorCompra, valorRentaBasica, color);
+        this.construcciones = new ArrayList<>();
         this.valorHipoteca = valorHipoteca;
         this.valorConstruir = valorConstruir;
         this.valorDestruir = valorDestruir;
-        this.listaConstruccion = listaConstruccion;
+        this.construcciones = listaConstruccion;
     }
 
     public int getValorConstruir() {
@@ -30,23 +33,18 @@ public class Propiedad extends Comprable{
     }
 
     public void construir(){
-        valorAlquiler = this.listaConstruccion[cantConstruidos].getValorAlquiler();
+        int valorAlquiler = this.construcciones.get(cantConstruidos).getValorAlquiler();
         this.valorTotalConstruidos += valorAlquiler;
-        this.cantConstruidos++
+        this.cantConstruidos++;
     }
 
     public void destruir(){
-        valorAlquiler = this.listaConstruccion[cantConstruidos].getValorAlquiler();
+        int valorAlquiler = this.construcciones.get(cantConstruidos).getValorAlquiler();
         this.valorTotalConstruidos -= valorAlquiler;
-        this.cantConstruidos--
+        this.cantConstruidos--;
     }
 
-    private boolean sePuedeAccionar(AdmJugador admJugador, Jugador jugador){
-        return admJugador.tieneDueño(this) && jugador.getCasillaActual() == this
-    }
-
-    private void cobrarAlquiler(AdmJugador admJugador, Jugador jugador){
-        renta = this.rentaBasica + this.valorTotalConstruidos;
-        admJugador(jugador, admJugador.obtenerDueño(this), renta)
+    protected int calcularAlquiler(AdmJugador admJugador, Jugador jugador){
+        return this.valorRentaBasica + this.valorTotalConstruidos;
     }
 }

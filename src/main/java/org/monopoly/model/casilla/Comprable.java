@@ -1,14 +1,15 @@
 package org.monopoly.model.casilla;
 
+import org.monopoly.model.Config;
 import java.util.List;
 
 public abstract class Comprable extends Casilla{
     private String nombre;
     protected Config.ColoresComprables color;
-    private int valorCompra;
-    private int valorRentaBasica;
-    private int valorHipoteca;
-    private boolean estaHipotecada;
+    protected int valorCompra;
+    protected int valorRentaBasica;
+    protected int valorHipoteca;
+    protected boolean estaHipotecada;
 
     public Comprable(Config.TiposCasillas tipo, String nombre, int valorCompra, int valorRentaBasica, Config.ColoresComprables color){
         super(tipo);
@@ -39,12 +40,8 @@ public abstract class Comprable extends Casilla{
     }
 
     public void accionar(AdmJugador admJugador, Jugador jugador){
-        if !sePuedeAccionar(admJugador, jugador){
-            return;
-        }
-        this.cobrarAlquiler(admJugador, jugador);
+        int renta = this.calcularAlquiler(admJugador, jugador);
+        admJugador.transferir(admJugador.obtenerDuenio(this), jugador, renta);
     }
-
-    private abstract boolean sePuedeAccionar(AdmJugador admJugador, Jugador jugador);
-    private abstract void cobrarAlquiler(AdmJugador admJugador, Jugador jugador);
+    abstract int calcularAlquiler(AdmJugador admJugador, Jugador jugador);
 }
