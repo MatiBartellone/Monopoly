@@ -36,12 +36,12 @@ public class RegistroComprable {
         actualizarcantidad(tablaJugador, color);
     }
 
-    public boolean tieneDueño(Comprable comprable){
+    public boolean tieneDuenio(Comprable comprable){
         return this.tablaPropiedades.containsKey(comprable);
     }
 
-    public Jugador obtenerDueño(Comprable comprable){
-        if (this.tieneDueño(comprable)) {
+    public Jugador obtenerDuenio(Comprable comprable){
+        if (this.tieneDuenio(comprable)) {
             return  this.tablaPropiedades.get(comprable);
         }
         return null;
