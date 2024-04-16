@@ -1,5 +1,8 @@
 package org.monopoly.model;
 
+import org.monopoly.model.casilla.Casilla;
+
+import java.sql.Array;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class AdmMovimientos {
@@ -19,8 +22,11 @@ public class AdmMovimientos {
         for(int dado: dados){if (dado!=valor){return false;}}
         return true;
     }
-    public void mover(Jugador jugador){
-        jugador.mover(tablero.casillaSiguiente(jugador.getCasillaActual(),this.sumarDados(dados)));
+    public boolean mover(Jugador jugador){
+        Casilla casilla = jugador.getCasillaActual();
+        int pasos = this.sumarDados(dados);
+        jugador.mover(tablero.casillaSiguiente(casilla,pasos));
+        return tablero.pasoPorSalida(casilla,pasos);
     }
     private int sumarDados(int[] dados) {
         int suma = 0;

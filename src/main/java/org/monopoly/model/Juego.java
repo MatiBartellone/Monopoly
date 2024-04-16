@@ -28,15 +28,16 @@ public class Juego {
     public void tirarDados(){this.admMovimientos.tirarDados();}
     public void pagarFianza(){admJugador.pagarFianza(admTurnos.getJugadorActual());}
     public void mover() {
-        if (this.validarEncarcelamiento()) {admMovimientos.mover(admTurnos.getJugadorActual());}
+        if (this.validarEncarcelamiento()) {
+            Jugador jugador = admTurnos.getJugadorActual();
+            if (admMovimientos.mover(jugador)){this.pagarPasoSalida(jugador);}
+        }
     }
 
     public void comprar(){
         //¿estaría rompiendo el principio de polK?
         Casilla casilla = admTurnos.getJugadorActual().getCasillaActual();
-        if (tablero.esCasillaComprable(casilla)){
-            admJugador.comprar(admTurnos.getJugadorActual(),tablero.getComprable(casilla));
-        }
+        admJugador.comprar(admTurnos.getJugadorActual(),casilla);
     }
     //la propiedad se sacará de los observers que tienen guardadas las opciones de propiedades donde contruir
 
@@ -80,4 +81,5 @@ public class Juego {
         }
         return false;
     }
+    private void pagarPasoSalida(Jugador jugador){ admJugador.otorgarDinero(jugador,Config.PagoPorSalida);}
 }
