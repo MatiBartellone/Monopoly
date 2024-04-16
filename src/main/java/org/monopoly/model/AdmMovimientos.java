@@ -20,8 +20,7 @@ public class AdmMovimientos {
         return true;
     }
     public void mover(Jugador jugador){
-        int pasos= this.sumarDados(dados);
-        jugador.mover(tablero.casillaSiguiente(jugador.getCasillaActual(),pasos));
+        jugador.mover(tablero.casillaSiguiente(jugador.getCasillaActual(),this.sumarDados(dados)));
     }
     private int sumarDados(int[] dados) {
         int suma = 0;
