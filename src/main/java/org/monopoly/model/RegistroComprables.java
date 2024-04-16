@@ -6,12 +6,12 @@ import org.monopoly.model.casilla.Comprable;
 import java.util.List;
 import java.util.HashMap;
 import java.util.Map;
-public class RegistroComprable {
+public class RegistroComprables {
     private Map<Comprable, Jugador> tablaPropiedades;
     private Map<Config.ColoresPropiedades, Integer> tablaColores;
     private Map<Jugador, Map<Config.ColoresPropiedades, Integer>> tablaColoresJugadores;
 
-    public RegistroComprable(HashMap<Config.ColoresPropiedades, Integer> tablacolores, List<Jugador> jugadores){
+    public RegistroComprables(HashMap<Config.ColoresPropiedades, Integer> tablacolores, List<Jugador> jugadores){
         this.tablaPropiedades = new HashMap<Comprable, Jugador>();
         this.tablaColores = tablacolores;
         this.tablaColoresJugadores = new HashMap<Jugador, Map<Config.ColoresPropiedades, Integer>>();
@@ -56,4 +56,3 @@ public class RegistroComprable {
         return this.obtenerCantSet(jugador, color) == this.tablaColores.get(color);
     }
 }
-
