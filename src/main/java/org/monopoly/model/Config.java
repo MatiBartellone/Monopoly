@@ -18,6 +18,7 @@ public class Config {
     public static int ValorFianza = 50;
     public static int MaxCasas = 4;
     public static int MaxHoteles = 1;
+    public static int PagoPorSalida = 200;
 
     public static List<Casilla> ListaCasillas = new ArrayList<Casilla>(){{
         add(new Casilla());
