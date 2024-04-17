@@ -22,4 +22,8 @@ public class Tablero {
         }
         return this.listaCasillas.get(index);
     }
+
+    public boolean pasoPorSalida(Casilla casillaActual, int avances){
+        return this.listaCasillas.indexOf(casillaActual) + avances >= this.listaCasillas.size();
+    }
 }
