@@ -71,7 +71,7 @@ public class Juego {
     private boolean unicoEnJuego(){
         int enJuego = 0;
         for (Jugador jugador: jugadores){
-            if (jugador.getEstado()==Config.EstadosJugadores.EN_JUEGO){enJuego++;}
+            if (jugador.getEstado()==Config.EstadosJugadores.EN_JUEGO || jugador.getEstado()==Config.EstadosJugadores.PRESO){enJuego++;}
             if (enJuego > 1){return false;}
         }
         return true;
