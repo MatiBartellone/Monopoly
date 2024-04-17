@@ -17,16 +17,16 @@ public class Banco {
     public void otorgarDinero(Jugador jugador, int monto){
         this.cuentasJugadores.get(jugador).sumarDinero(monto);
     }
-    public boolean recibirDinero(Jugador jugador, int monto){
+    public void quitarDinero(Jugador jugador, int monto){
         CuentaBancaria cuenta = this.cuentasJugadores.get(jugador);
-        if (!cuenta.poseeDinero(monto)) return false;
-        cuenta.retirarDinero(monto);
-        return true;
+        if (cuenta.poseeDinero(monto)) cuenta.retirarDinero(monto);
+
     }
 
-    public boolean transferir(Jugador receptor, Jugador emisor, int monto){
-        if (this.recibirDinero(emisor, monto)) return false;
-        this.otorgarDinero(receptor, monto);
-        return true;
+    public void transferir(Jugador receptor, Jugador emisor, int monto){
+        if (this.cuentasJugadores.get(emisor).poseeDinero(monto)) {
+            this.quitarDinero(emisor, monto);
+            this.otorgarDinero(receptor, monto);
+        }
     }
 }
