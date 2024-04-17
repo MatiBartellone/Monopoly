@@ -6,11 +6,10 @@ import org.monopoly.model.Jugador;
 
 public class IrACarcel extends Casilla implements Accionable{
 
-    public IrACarcel(Config.TiposCasillas tipoDado){
-        super(tipoDado);
+    public IrACarcel(Config.TiposCasillas tipo){
+        super(tipo);
     }
 
-    @Override
     public void accionar(AdmJugador administrador, Jugador jugador) {
         administrador.encarcelar(jugador);
     }

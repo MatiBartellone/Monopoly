@@ -9,7 +9,6 @@ public class Loteria extends Monetaria{
         super(tipo, monto);
     }
 
-    @Override
     public void accionar(AdmJugador administrador, Jugador jugador) {
         administrador.otorgarDinero(jugador, this.getMonto());
     }
