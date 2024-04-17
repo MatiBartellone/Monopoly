@@ -1,6 +1,9 @@
 package org.monopoly.model.casilla;
 
+import org.monopoly.model.AdmJugador;
 import org.monopoly.model.Config;
+import org.monopoly.model.Jugador;
+
 import java.util.ArrayList;
 import java.util.List;
 

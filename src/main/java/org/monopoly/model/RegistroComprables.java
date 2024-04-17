@@ -8,20 +8,20 @@ import java.util.HashMap;
 import java.util.Map;
 public class RegistroComprables {
     private Map<Comprable, Jugador> tablaPropiedades;
-    private Map<Config.ColoresPropiedades, Integer> tablaColores;
-    private Map<Jugador, Map<Config.ColoresPropiedades, Integer>> tablaColoresJugadores;
+    private Map<Config.ColoresComprables, Integer> tablaColores;
+    private Map<Jugador, Map<Config.ColoresComprables, Integer>> tablaColoresJugadores;
 
-    public RegistroComprables(HashMap<Config.ColoresPropiedades, Integer> tablacolores, List<Jugador> jugadores){
+    public RegistroComprables(Map<Config.ColoresComprables, Integer> tablacolores, List<Jugador> jugadores){
         this.tablaPropiedades = new HashMap<Comprable, Jugador>();
         this.tablaColores = tablacolores;
-        this.tablaColoresJugadores = new HashMap<Jugador, Map<Config.ColoresPropiedades, Integer>>();
+        this.tablaColoresJugadores = new HashMap<Jugador, Map<Config.ColoresComprables, Integer>>();
         for (Jugador jugador : jugadores) {
-            Map<Config.ColoresPropiedades, Integer> tablaJugador = new HashMap<Config.ColoresPropiedades, Integer>();
+            Map<Config.ColoresComprables, Integer> tablaJugador = new HashMap<Config.ColoresComprables, Integer>();
             this.tablaColoresJugadores.put(jugador, tablaJugador);
         }
     }
 
-    private void actualizarcantidad(Map<Config.ColoresPropiedades, Integer> tabla, Config.ColoresPropiedades color){
+    private void actualizarcantidad(Map<Config.ColoresComprables, Integer> tabla, Config.ColoresComprables color){
         if (tabla.containsKey(color)){
             int nueva_cant = tabla.get(color) + 1;
             tabla.put(color, nueva_cant);
@@ -31,8 +31,8 @@ public class RegistroComprables {
     }
     public void registrarCompra(Comprable comprable, Jugador jugador){
         this.tablaPropiedades.put(comprable, jugador);
-        Config.ColoresPropiedades color = comprable.getColor();
-        Map<Config.ColoresPropiedades, Integer> tablaJugador = this.tablaColoresJugadores.get(jugador);
+        Config.ColoresComprables color = comprable.getColor();
+        Map<Config.ColoresComprables, Integer> tablaJugador = this.tablaColoresJugadores.get(jugador);
         actualizarcantidad(tablaJugador, color);
     }
 
@@ -41,18 +41,13 @@ public class RegistroComprables {
     }
 
     public Jugador obtenerDuenio(Comprable comprable){
-        if (this.tieneDuenio(comprable)) {
-            return  this.tablaPropiedades.get(comprable);
-        }
-        return null;
+        return (this.tieneDuenio(comprable)) ? this.tablaPropiedades.get(comprable) : null;
     }
 
-    public int obtenerCantSet(Jugador jugador, Config.ColoresPropiedades color){
-        return (this.tablaColoresJugadores.get(jugador).containsKey(color))
-                ? this.tablaColoresJugadores.get(jugador).get(color)
-                : 0;
+    public int obtenerCantSet(Jugador jugador, Config.ColoresComprables color){
+        return this.tablaColoresJugadores.get(jugador).getOrDefault(color, 0);
     }
-    public boolean poseeSetCompleto(Jugador jugador, Config.ColoresPropiedades color){
+    public boolean poseeSetCompleto(Jugador jugador, Config.ColoresComprables color){
         return this.obtenerCantSet(jugador, color) == this.tablaColores.get(color);
     }
 }

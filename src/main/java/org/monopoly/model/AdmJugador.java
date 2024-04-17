@@ -11,15 +11,15 @@ public class AdmJugador {
     private Banco banco;
     private RegistroComprables registroComprables;
 
-    public AdmJugador(List<Jugador> jugadores, Map<Config.ColoresPropiedades, Integer> tablaColores){
+    public AdmJugador(List<Jugador> jugadores, Map<Config.ColoresComprables, Integer> tablaColores){
         this.jugadores = jugadores;
-        this.banco = new Banco(jugadores);
-        this.registroComprables = new RegistroComprables(tablaColores, jugadores);
+        this.banco = new Banco(this.jugadores);
+        this.registroComprables = new RegistroComprables(tablaColores, this.jugadores);
     }
 
     public void comprar(Jugador jugador, Comprable comprable) {
         this.banco.quitarDinero(jugador, comprable.getValorCompra());
-        this.registroComprables.registrarCompra(jugador, comprable.getValorHipoteca());
+        this.registroComprables.registrarCompra(comprable, jugador);
     }
 
     public void construirConstruccion(Jugador jugador, Propiedad propiedad) {
@@ -33,12 +33,12 @@ public class AdmJugador {
     }
 
     public void hipotecar(Jugador jugador, Comprable comprable) {
-        this.banco.otorgarDinero(jugador, comparable.getValorHipoteca());
+        this.banco.otorgarDinero(jugador, comprable.getValorHipoteca());
         comprable.hipotecar();
     }
 
     public void deshipotecar(Jugador jugador, Comprable comprable) {
-        this.banco.quitarDinero(jugador, comparable.getValorHipoteca());
+        this.banco.quitarDinero(jugador, comprable.getValorHipoteca());
         comprable.deshipotecar();
     }
 
@@ -73,12 +73,16 @@ public class AdmJugador {
         this.banco.transferir(receptor, emisor, monto);
     }
 
-    public int obtenerCantSet(Jugador jugador, Config.ColoresPropiedades color) {
+    public int obtenerCantSet(Jugador jugador, Config.ColoresComprables color) {
         return this.registroComprables.obtenerCantSet(jugador, color);
     }
 
     public Jugador obtenerDuenio(Comprable comprable) {
         return this.registroComprables.obtenerDuenio(comprable);
+    }
+
+    public boolean esGanador(Jugador jugador){
+        return false;
     }
 
 

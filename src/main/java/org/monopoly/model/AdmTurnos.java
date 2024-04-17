@@ -16,7 +16,7 @@ public class AdmTurnos {
     //maneja si el jugador que está terminando su turno acaba de cumplir su ultimo turno en prision
     public void siguiente(){
         int iJugador = this.sgteListaCircular();
-        while (jugadores.get(iJugador).getEstado()==Config.EstadosJugadores.QUEBRADO){
+        while (jugadores.get(iJugador).getEstado() == Config.EstadosJugadores.QUEBRADO){
             iJugador = this.sgteListaCircular();
         }
         this.turno = iJugador;

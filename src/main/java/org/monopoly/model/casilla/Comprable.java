@@ -1,7 +1,11 @@
 package org.monopoly.model.casilla;
 
+import org.monopoly.model.AdmJugador;
 import org.monopoly.model.Config;
+import org.monopoly.model.Jugador;
+
 import java.util.List;
+import java.util.Objects;
 
 public abstract class Comprable extends Casilla{
     private String nombre;
@@ -27,6 +31,10 @@ public abstract class Comprable extends Casilla{
         return this.valorCompra;
     }
 
+    public int getValorHipoteca(){
+        return this.valorHipoteca;
+    }
+
     public Config.ColoresComprables getColor() {
         return this.color;
     }
@@ -44,4 +52,18 @@ public abstract class Comprable extends Casilla{
         admJugador.transferir(admJugador.obtenerDuenio(this), jugador, renta);
     }
     abstract int calcularAlquiler(AdmJugador admJugador, Jugador jugador);
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(this.nombre, this.color);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+        Comprable otroComprable = (Comprable) obj;
+        return Objects.equals(this.nombre, otroComprable.nombre) &&
+                this.color == otroComprable.color;
+    }
 }

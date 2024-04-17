@@ -1,6 +1,8 @@
 package org.monopoly.model.casilla;
 
+import org.monopoly.model.AdmJugador;
 import org.monopoly.model.Config;
+import org.monopoly.model.Jugador;
 
 public class Estacion extends Comprable {
 
@@ -18,6 +20,6 @@ public class Estacion extends Comprable {
     }
 
     protected int calcularAlquiler(AdmJugador admJugador, Jugador jugador){
-        return this.valorRrentaBasica * admJugador.obtenerCantSet(jugador, this.color);
+        return this.valorRentaBasica * admJugador.obtenerCantSet(jugador, this.color);
     }
 }
