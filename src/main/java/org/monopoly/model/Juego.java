@@ -1,6 +1,5 @@
 package org.monopoly.model;
 
-import org.monopoly.model.casilla.Accionable;
 import org.monopoly.model.casilla.Casilla;
 import org.monopoly.model.casilla.Comprable;
 import org.monopoly.model.casilla.Propiedad;
@@ -28,17 +27,15 @@ public class Juego {
     public void mover() {
         if (this.validarEncarcelamiento()) {
             Jugador jugador = this.admTurnos.getJugadorActual();
-            if (this.admMovimientos.mover(jugador)){this.pagarPasoSalida(jugador);}
-            if (jugador.getCasillaActual() instanceof Accionable accionable)
-                accionable.accionar(this.admJugador,jugador);
+            if (this.admMovimientos.mover(jugador)) this.pagarPasoSalida(jugador);
+            jugador.getCasillaActual().accionar(this.admJugador,jugador);
         }
     }
 
     public void comprar(){
-        //¿estaría rompiendo el principio de polK?
-        Casilla casilla = this.admTurnos.getJugadorActual().getCasillaActual();
+        Casilla casilla = this.admTurnos.getCasillaActual();
         if(casilla instanceof Comprable comprable)
-            this.admJugador.comprar(this.admTurnos.getJugadorActual(),comprable);
+            this.admJugador.comprar(this.admTurnos.getJugadorActual(), comprable);
     }
     //la propiedad se sacará de los observers que tienen guardadas las opciones de propiedades donde contruir
 
@@ -71,7 +68,8 @@ public class Juego {
     private boolean unicoEnJuego(){
         int enJuego = 0;
         for (Jugador jugador: jugadores){
-            if (jugador.getEstado()==Config.EstadosJugadores.EN_JUEGO || jugador.getEstado()==Config.EstadosJugadores.PRESO){enJuego++;}
+            if (jugador.getEstado()==Config.EstadosJugadores.EN_JUEGO ||
+                    jugador.getEstado()==Config.EstadosJugadores.PRESO) enJuego++;
             if (enJuego > 1){return false;}
         }
         return true;

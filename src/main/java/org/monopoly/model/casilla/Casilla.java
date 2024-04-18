@@ -1,13 +1,10 @@
 package org.monopoly.model.casilla;
+import org.monopoly.model.AdmJugador;
 import org.monopoly.model.Config;
-public class Casilla {
+import org.monopoly.model.Jugador;
 
-    private Config.TiposCasillas tipo;
+public interface Casilla {
+    Config.TiposCasillas getTipo();
+    void accionar(AdmJugador administrador, Jugador jugador);
 
-    public Casilla(Config.TiposCasillas tipo){
-        this.tipo = tipo;
-    }
-    public Config.TiposCasillas getTipo(){
-        return this.tipo;
-    }
 }

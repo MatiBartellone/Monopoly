@@ -22,9 +22,7 @@ public class Config {
     public static int PagoPorSalida = 200;
 
     public static List<Casilla> ListaCasillas = new ArrayList<Casilla>(){{
-        add(new Casilla(TiposCasillas.SALIDA));
-        add(new Casilla(TiposCasillas.CARCEL));
-        add(new Casilla(TiposCasillas.PASO));
+
     }};
     public static Map<Config.ColoresComprables, Integer> TablaColores = new HashMap<Config.ColoresComprables, Integer>(){{
         put(ColoresComprables.FERROCARRIL, 4);
