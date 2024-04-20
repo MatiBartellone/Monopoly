@@ -29,4 +29,8 @@ public class Banco {
             this.otorgarDinero(receptor, monto);
         }
     }
+
+    public int consultarDinero(Jugador jugador){
+        return  this.cuentasJugadores.get(jugador).getDinero();
+    }
 }

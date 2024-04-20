@@ -73,6 +73,10 @@ public class AdmJugador {
         this.banco.transferir(receptor, emisor, monto);
     }
 
+    public boolean alcanzaDinero(Jugador jugador, int cantidad){
+        return this.banco.consultarDinero(jugador) > cantidad;
+    }
+
     public int obtenerCantSet(Jugador jugador, Config.ColoresComprables color) {
         return this.registroComprables.obtenerCantSet(jugador, color);
     }

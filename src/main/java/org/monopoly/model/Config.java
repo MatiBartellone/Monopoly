@@ -9,7 +9,7 @@ import java.util.Map;
 
 public class Config {
     public static enum ColoresJugadores{AUTO, SOMBRERO, PLANCHA, BARCO}
-    public static enum EstadosJugadores{EN_JUEGO, PRESO, QUEBRADO}
+    public static enum EstadosJugadores{EN_JUEGO, PRESO, QUEBRADO, CRISIS}
     public static enum TiposCasillas{PROPIEDAD, ESTACION, IR_A_CARCEL, MULTA, LOTERIA, CARCEL, SALIDA, PASO}
     public static enum ColoresComprables{FERROCARRIL, MARRON, CELESTE, ROSA, NARANJA, ROJO, AMARILLO, VERDE, AZUL}
     public static enum TiposConstrucciones{CASA, HOTEL}
