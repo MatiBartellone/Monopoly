@@ -7,8 +7,10 @@ import org.monopoly.model.Jugador;
 public class IrACarcel implements Casilla{
 
     private Config.TiposCasillas tipo;
+    private Casilla casillaCarcel;
 
-    public IrACarcel(Config.TiposCasillas tipo){
+    public IrACarcel(Config.TiposCasillas tipo, Casilla carcel){
+        this.casillaCarcel = carcel;
         this.tipo = tipo;
     }
 
@@ -17,6 +19,7 @@ public class IrACarcel implements Casilla{
     }
 
     public void accionar(AdmJugador administrador, Jugador jugador) {
+        jugador.mover(this.casillaCarcel);
         administrador.encarcelar(jugador);
     }
 }
