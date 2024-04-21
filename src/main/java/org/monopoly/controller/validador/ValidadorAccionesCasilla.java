@@ -1,6 +1,8 @@
-package org.monopoly.controller;
+package org.monopoly.controller.validador;
 
+import org.monopoly.controller.accion.*;
 import org.monopoly.model.Config;
+import org.monopoly.model.Juego;
 import org.monopoly.model.Jugador;
 import org.monopoly.model.RegistroComprables;
 import org.monopoly.model.casilla.Comprable;
@@ -14,22 +16,23 @@ import java.util.Map;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class ValidadorAccionesCasilla implements Validador{
-
+    private Juego juego;
     private RegistroComprables registro;
     private Map<Jugador, List<Propiedad>> construccionesDesbloqueadas;
     private Map<Jugador, List<Propiedad>> puedeVender;
     private Map<Jugador, List<Comprable>> puedeHipotecar;
     private Map<Jugador, List<Comprable>> deshipotecasDebloqueadas;
 
-    public ValidadorAccionesCasilla(RegistroComprables registro, List<Jugador> jugadores) {
-        this.registro = registro;
+    public ValidadorAccionesCasilla(Juego juego) {
+        this.juego = juego;
+        this.registro = juego.getRegistroComprables();
         this.construccionesDesbloqueadas = new HashMap<>();
         this.puedeVender = new HashMap<>();
         this.puedeHipotecar = new HashMap<>();
         this.deshipotecasDebloqueadas = new HashMap<>();
 
         // Inicializar las listas vacías para cada jugador
-        for (Jugador jugador : jugadores) {
+        for (Jugador jugador : juego.getJugadores()) {
             construccionesDesbloqueadas.put(jugador, new ArrayList<>());
             puedeVender.put(jugador, new ArrayList<>());
             puedeHipotecar.put(jugador, new ArrayList<>());
@@ -47,11 +50,13 @@ public class ValidadorAccionesCasilla implements Validador{
 
     public void registrarConstruccion(Propiedad propiedad, Jugador jugador){
         this.construccionesDesbloqueadas.get(jugador).remove(propiedad);
+
         if (this.construccionesDesbloqueadas.get(jugador).isEmpty()){
             this.registro.casasPorBarrio(propiedad.getColor()).forEach((clave, valor) -> {
                 this.construccionesDesbloqueadas.get(jugador).add(clave);
             });
         }
+
         int contruidos = propiedad.getCantConstruidos();
         AtomicBoolean habiaConstrucciones = new AtomicBoolean(false);
         this.registro.casasPorBarrio(propiedad.getColor()).forEach((clave, valor) -> {
@@ -62,6 +67,7 @@ public class ValidadorAccionesCasilla implements Validador{
                 habiaConstrucciones.set(true);
             }
         });
+
         if (!habiaConstrucciones.get()){
             this.registro.casasPorBarrio(propiedad.getColor()).forEach((clave, valor) -> {
                 this.registrarDeshipoteca(clave, jugador);
@@ -77,6 +83,7 @@ public class ValidadorAccionesCasilla implements Validador{
                 this.puedeVender.get(jugador).add(clave);
             });
         }
+
         int contruidos = propiedad.getCantConstruidos();
         AtomicBoolean hayConstrucciones = new AtomicBoolean(false);
         this.registro.casasPorBarrio(propiedad.getColor()).forEach((clave, valor) -> {
@@ -87,6 +94,7 @@ public class ValidadorAccionesCasilla implements Validador{
                 hayConstrucciones.set(true);
             }
         });
+
         if (!hayConstrucciones.get()){
             this.registro.casasPorBarrio(propiedad.getColor()).forEach((clave, valor) -> {
                 this.registrarHipoteca(clave, jugador);
@@ -103,25 +111,52 @@ public class ValidadorAccionesCasilla implements Validador{
         this.deshipotecasDebloqueadas.get(jugador).remove(propiedad);
     }
 
-    private List<Comprable> puedeComprar(Jugador jugador){
+
+    public List<Accion> accionesPosibles(Jugador jugador){
+        List<Accion> acciones = new ArrayList<Accion>();
+        if (!this.opcionesComprar(jugador).isEmpty()){acciones.add(new AccionComprar(this.juego));}
+        if (!this.construccionesDesbloqueadas.get(jugador).isEmpty()){acciones.add(new AccionConstruir(this.juego));}
+        if (!this.puedeVender.get(jugador).isEmpty()){acciones.add(new AccionVender(this.juego));}
+        if (!this.puedeHipotecar.get(jugador).isEmpty()){acciones.add(new AccionHipotecar(this.juego));}
+        if (!this.deshipotecasDebloqueadas.get(jugador).isEmpty()){acciones.add(new AccionDeshipotecar(this.juego));}
+        return acciones;
+    }
+
+    public List<Comprable> opcionesComprar(Jugador jugador){
         List<Comprable> comprables = new ArrayList<>();
         if (jugador.getCasillaActual() instanceof Comprable){
             Comprable casilla = (Comprable) jugador.getCasillaActual();
-            if (this.registro.tieneDuenio(casilla)){
-                comprables.add(casilla);
-            }
+            if (this.registro.tieneDuenio(casilla)){ comprables.add(casilla); }
         }
         return comprables;
     }
-    public List<List> accionesPosibles(Jugador jugador){
-        List<List> acciones = new ArrayList<>();
-        if (!this.puedeComprar(jugador).isEmpty()){acciones.add(new Accion)}
-        if (!this.construccionesDesbloqueadas.get(jugador).isEmpty()){}
-        if (!this.puedeVender.get(jugador).isEmpty()){}
-        if (!this.puedeHipotecar.get(jugador).isEmpty()){}
-        if (!this.deshipotecasDebloqueadas.get(jugador).isEmpty()){}
 
-
-        return acciones;
+    public List<Propiedad> opcionesConstruir(Jugador jugador){
+        List<Propiedad> opcionesFiltradas = new ArrayList<>();
+        for(Propiedad propiedad: this.construccionesDesbloqueadas.get(jugador)){
+            if (propiedad.getValorCompra()<jugador.)
+        }
+        return ;
     }
+
+    public List<Propiedad> opcionesVenta(Jugador jugador){
+        return this.puedeVender.get(jugador);
+    }
+
+    public List<Comprable> opcionesHipoteca(Jugador jugador){
+        return this.puedeHipotecar.get(jugador);
+    }
+
+    public List<Comprable> opcionesDeshipoteca(Jugador jugador){
+        return this.deshipotecasDebloqueadas.get(jugador);
+    }
+
+    private List<> filtroDinero(List<Comprable> opciones, int plata){
+        List<Comprable> opcionesFiltradas = new ArrayList<>();
+        for(Comprable comprable: opciones){
+            if (this.)
+        }
+
+    }
+
 }

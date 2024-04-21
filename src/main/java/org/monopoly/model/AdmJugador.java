@@ -85,6 +85,10 @@ public class AdmJugador {
         return this.registroComprables.obtenerDuenio(comprable);
     }
 
+    public RegistroComprables getRegistroComprables(){
+        return this.registroComprables;
+    }
+
     public boolean esGanador(Jugador jugador){
         return false;
     }

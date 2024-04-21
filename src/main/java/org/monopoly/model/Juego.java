@@ -33,8 +33,7 @@ public class Juego {
     }
 
     public void comprar(){
-        Casilla casilla = this.admTurnos.getCasillaActual();
-        if(casilla instanceof Comprable comprable)
+        if(this.getCasillaActual() instanceof Comprable comprable)
             this.admJugador.comprar(this.admTurnos.getJugadorActual(), comprable);
     }
     //la propiedad se sacará de los observers que tienen guardadas las opciones de propiedades donde contruir
@@ -54,6 +53,17 @@ public class Juego {
     public boolean terminado(){
         return this.unicoEnJuego() || this.hayGanador();
     }
+    public Jugador getJugadorActual(){return this.admTurnos.getJugadorActual();}
+    public List<Jugador> getJugadores(){return this.jugadores;}
+    public Casilla getCasillaActual(){return this.getJugadorActual().getCasillaActual();}
+
+    public RegistroComprables getRegistroComprables(){return this.admJugador.getRegistroComprables();}
+
+    public boolean alcanzaDinero(int cantidad){
+        return this.admJugador.alcanzaDinero(this.getJugadorActual(),cantidad);
+    }
+    public void entrarEnQuiebra(){this.admJugador.entrarEnQuiebra(this.getJugadorActual());}
+
     private boolean validarEncarcelamiento(){
         Jugador jugador = this.admTurnos.getJugadorActual();
         if (jugador.getEstado() == Config.EstadosJugadores.EN_JUEGO){return true;}
