@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-public class Validador {
+public class ValidadorAccionesCasilla implements Validador{
 
     private RegistroComprables registro;
     private Map<Jugador, List<Propiedad>> construccionesDesbloqueadas;
@@ -21,7 +21,7 @@ public class Validador {
     private Map<Jugador, List<Comprable>> puedeHipotecar;
     private Map<Jugador, List<Comprable>> deshipotecasDebloqueadas;
 
-    public Validador(RegistroComprables registro, List<Jugador> jugadores) {
+    public ValidadorAccionesCasilla(RegistroComprables registro, List<Jugador> jugadores) {
         this.registro = registro;
         this.construccionesDesbloqueadas = new HashMap<>();
         this.puedeVender = new HashMap<>();
@@ -115,11 +115,13 @@ public class Validador {
     }
     public List<List> accionesPosibles(Jugador jugador){
         List<List> acciones = new ArrayList<>();
-        acciones.add(this.puedeComprar(jugador));
-        acciones.add(this.construccionesDesbloqueadas.get(jugador));
-        acciones.add(this.puedeVender.get(jugador));
-        acciones.add(this.puedeHipotecar.get(jugador));
-        acciones.add(this.deshipotecasDebloqueadas.get(jugador));
+        if (!this.puedeComprar(jugador).isEmpty()){acciones.add(new )}
+        if (!this.construccionesDesbloqueadas.get(jugador).isEmpty()){}
+        if (!this.puedeVender.get(jugador).isEmpty()){}
+        if (!this.puedeHipotecar.get(jugador).isEmpty()){}
+        acciones.add(this.deshipotecasDebloqueadas.get(jugador))
+
+
         return acciones;
     }
 }
