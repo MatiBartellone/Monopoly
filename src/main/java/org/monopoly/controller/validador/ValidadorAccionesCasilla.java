@@ -115,11 +115,11 @@ public class ValidadorAccionesCasilla implements Validador{
     }
     public List<List> accionesPosibles(Jugador jugador){
         List<List> acciones = new ArrayList<>();
-        if (!this.puedeComprar(jugador).isEmpty()){acciones.add(new )}
+        if (!this.puedeComprar(jugador).isEmpty()){acciones.add(new Accion)}
         if (!this.construccionesDesbloqueadas.get(jugador).isEmpty()){}
         if (!this.puedeVender.get(jugador).isEmpty()){}
         if (!this.puedeHipotecar.get(jugador).isEmpty()){}
-        acciones.add(this.deshipotecasDebloqueadas.get(jugador))
+        if (!this.deshipotecasDebloqueadas.get(jugador).isEmpty()){}
 
 
         return acciones;
