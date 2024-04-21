@@ -25,6 +25,8 @@ public class Config {
     public static List<Casilla> ListaCasillas = new ArrayList<Casilla>(){{
 
     }};
+    //ahora hay que guardar para cada color una lista con todas los comprables con ese color.
+    // color -> [comprable, ...] y el len de la lista es el largo que se usa en registro comprable
     public static Map<Config.ColoresComprables, Integer> TablaColores = new HashMap<Config.ColoresComprables, Integer>(){{
         put(ColoresComprables.FERROCARRIL, 4);
         put(ColoresComprables.MARRON, 2);

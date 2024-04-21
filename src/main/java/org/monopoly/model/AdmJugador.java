@@ -11,10 +11,10 @@ public class AdmJugador {
     private Banco banco;
     private RegistroComprables registroComprables;
 
-    public AdmJugador(List<Jugador> jugadores, Map<Config.ColoresComprables, Integer> tablaColores){
+    public AdmJugador(List<Jugador> jugadores, Map<Config.ColoresComprables, List<Comprable> > tablaBarrios){
         this.jugadores = jugadores;
         this.banco = new Banco(this.jugadores);
-        this.registroComprables = new RegistroComprables(tablaColores, this.jugadores);
+        this.registroComprables = new RegistroComprables(tablaBarrios, this.jugadores);
     }
 
     public void comprar(Jugador jugador, Comprable comprable) {

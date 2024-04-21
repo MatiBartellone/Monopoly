@@ -5,17 +5,25 @@ import org.monopoly.model.Jugador;
 import org.monopoly.model.casilla.Comprable;
 import org.monopoly.model.casilla.Propiedad;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.HashMap;
 import java.util.Map;
 public class RegistroComprables {
     private Map<Comprable, Jugador> tablaPropiedades;
+    private Map<Config.ColoresComprables, List<Comprable>> barrios;
     private Map<Config.ColoresComprables, Integer> tablaColores;
     private Map<Jugador, Map<Config.ColoresComprables, Integer>> tablaColoresJugadores;
 
-    public RegistroComprables(Map<Config.ColoresComprables, Integer> tablacolores, List<Jugador> jugadores){
+    public RegistroComprables(Map<Config.ColoresComprables, List<Comprable> > tablaBarrios, List<Jugador> jugadores){
         this.tablaPropiedades = new HashMap<Comprable, Jugador>();
-        this.tablaColores = tablacolores;
+        this.barrios = tablaBarrios;
+
+        this.tablaColores = new HashMap<Config.ColoresComprables, Integer>();
+        tablaBarrios.forEach((clave, valor) -> {
+            this.tablaColores.put(clave, valor.size());
+        });
+
         this.tablaColoresJugadores = new HashMap<Jugador, Map<Config.ColoresComprables, Integer>>();
         for (Jugador jugador : jugadores) {
             Map<Config.ColoresComprables, Integer> tablaJugador = new HashMap<Config.ColoresComprables, Integer>();
@@ -54,6 +62,13 @@ public class RegistroComprables {
     }
 
     public HashMap<Propiedad, Integer> casasPorBarrio(Config.ColoresComprables color){
-        
+        HashMap<Propiedad, Integer> tabla = new HashMap<>();
+        for (Comprable comprable: this.barrios.get(color)) {
+            if (comprable instanceof Propiedad) {
+                Propiedad propiedad = (Propiedad) comprable;
+                tabla.put(propiedad, propiedad.getCantConstruidos());
+            }
+        }
+        return tabla;
     }
 }
