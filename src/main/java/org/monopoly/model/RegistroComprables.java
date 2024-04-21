@@ -3,6 +3,8 @@ import org.monopoly.model.Config;
 import org.monopoly.model.Juego;
 import org.monopoly.model.Jugador;
 import org.monopoly.model.casilla.Comprable;
+import org.monopoly.model.casilla.Propiedad;
+
 import java.util.List;
 import java.util.HashMap;
 import java.util.Map;
@@ -49,5 +51,9 @@ public class RegistroComprables {
     }
     public boolean poseeSetCompleto(Jugador jugador, Config.ColoresComprables color){
         return this.obtenerCantSet(jugador, color) == this.tablaColores.get(color);
+    }
+
+    public HashMap<Propiedad, Integer> casasPorBarrio(Config.ColoresComprables color){
+        
     }
 }

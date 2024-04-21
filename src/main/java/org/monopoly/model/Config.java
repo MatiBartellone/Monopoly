@@ -13,6 +13,7 @@ public class Config {
     public static enum TiposCasillas{PROPIEDAD, ESTACION, IR_A_CARCEL, MULTA, LOTERIA, CARCEL, SALIDA, PASO}
     public static enum ColoresComprables{FERROCARRIL, MARRON, CELESTE, ROSA, NARANJA, ROJO, AMARILLO, VERDE, AZUL}
     public static enum TiposConstrucciones{CASA, HOTEL}
+    public static int MaxConstrucciones = 5;
     public static int DineroInicial = 1500;
     public static int TurnosCarcel = 3;
     public static int MaxJugadores = 4;
