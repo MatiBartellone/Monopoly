@@ -14,12 +14,12 @@ public class Juego {
     private final AdmMovimientos admMovimientos;
     private final AdmJugador admJugador;
 
-    public Juego( Tablero tablero, List<Jugador> jugadores, Map<Config.ColoresComprables, Integer> tablaColores) {
+    public Juego( Tablero tablero, List<Jugador> jugadores, Map<Config.ColoresComprables, List<Comprable>> tablaBarrios) {
         this.jugadores = jugadores;
         this.tablero = tablero;
         this.admTurnos = new AdmTurnos(this.jugadores);
         this.admMovimientos = new AdmMovimientos(this.tablero);
-        this.admJugador = new AdmJugador(this.jugadores, tablaColores);
+        this.admJugador = new AdmJugador(this.jugadores, tablaBarrios);
     }
     public void siguienteTurno(){this.admTurnos.siguiente();}
     public void tirarDados(){this.admMovimientos.tirarDados();}
