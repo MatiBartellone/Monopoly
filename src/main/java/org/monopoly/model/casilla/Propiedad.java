@@ -8,18 +8,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Propiedad extends Comprable{
-    private List<Construccion> construcciones = new ArrayList<>();
+    private List<Construccion> construcciones;
     private int cantConstruidos;
     private int valorConstruir;
     private int valorDestruir;
     private int valorTotalConstruidos;
 
-    public Propiedad(Config.TiposCasillas tipo, String nombre, int valorCompra, int valorRentaBasica, Config.ColoresComprables color, int valorHipoteca, ArrayList<Construccion> listaConstruccion, int valorConstruir, int valorDestruir){
+    public Propiedad(Config.TiposCasillas tipo, String nombre, int valorCompra, int valorRentaBasica, Config.ColoresComprables color, List<Construccion> listaConstruccion, int valorConstruir){
         super(tipo, nombre, valorCompra, valorRentaBasica, color);
-        this.construcciones = new ArrayList<>();
-        this.valorHipoteca = valorHipoteca;
         this.valorConstruir = valorConstruir;
-        this.valorDestruir = valorDestruir;
+        this.valorDestruir = this.valorConstruir / 2;
         this.construcciones = listaConstruccion;
     }
 

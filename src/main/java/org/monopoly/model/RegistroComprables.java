@@ -71,4 +71,8 @@ public class RegistroComprables {
         }
         return tabla;
     }
+
+    public Map<Config.ColoresComprables, int> getTablaColoresJugador(Jugador jugador){
+
+    }
 }

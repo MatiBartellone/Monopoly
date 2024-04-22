@@ -89,8 +89,24 @@ public class AdmJugador {
         return this.registroComprables;
     }
 
+    private boolean condicionQuebrados(Jugador jugadorActual){
+        for (Jugador jugador : this.jugadores){
+            if (jugador.getEstado() != Config.EstadosJugadores.QUEBRADO && jugadorActual != jugador){
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public Map<Config.ColoresComprables, Integer> getTablaColoresJugador(Jugador jugador) {
+        return this.registroComprables.getTablaColoresJugador(jugador);
+    }
+    private boolean condicionConstrucciones(Jugador jugador){
+        casas
+    }
+
     public boolean esGanador(Jugador jugador){
-        return false;
+        return condicionQuebrados(jugador) || condicionConstrucciones(jugador);
     }
 
 

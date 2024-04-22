@@ -5,6 +5,7 @@ import org.monopoly.model.Config;
 import org.monopoly.model.Juego;
 import org.monopoly.model.Jugador;
 import org.monopoly.model.RegistroComprables;
+import org.monopoly.model.casilla.Casilla;
 import org.monopoly.model.casilla.Comprable;
 import org.monopoly.model.casilla.Propiedad;
 
@@ -18,10 +19,10 @@ import java.util.concurrent.atomic.AtomicBoolean;
 public class ValidadorAccionesCasilla implements Validador{
     private Juego juego;
     private RegistroComprables registro;
-    private Map<Jugador, List<Propiedad>> construccionesDesbloqueadas;
-    private Map<Jugador, List<Propiedad>> puedeVender;
-    private Map<Jugador, List<Comprable>> puedeHipotecar;
-    private Map<Jugador, List<Comprable>> deshipotecasDebloqueadas;
+    private Map<Jugador, List<Casilla>> construccionesDesbloqueadas;
+    private Map<Jugador, List<Casilla>> puedeVender;
+    private Map<Jugador, List<Casilla>> puedeHipotecar;
+    private Map<Jugador, List<Casilla>> deshipotecasDesbloqueadas;
 
     public ValidadorAccionesCasilla(Juego juego) {
         this.juego = juego;
@@ -29,14 +30,14 @@ public class ValidadorAccionesCasilla implements Validador{
         this.construccionesDesbloqueadas = new HashMap<>();
         this.puedeVender = new HashMap<>();
         this.puedeHipotecar = new HashMap<>();
-        this.deshipotecasDebloqueadas = new HashMap<>();
+        this.deshipotecasDesbloqueadas = new HashMap<>();
 
         // Inicializar las listas vacías para cada jugador
         for (Jugador jugador : juego.getJugadores()) {
             construccionesDesbloqueadas.put(jugador, new ArrayList<>());
             puedeVender.put(jugador, new ArrayList<>());
             puedeHipotecar.put(jugador, new ArrayList<>());
-            deshipotecasDebloqueadas.put(jugador, new ArrayList<>());
+            deshipotecasDesbloqueadas.put(jugador, new ArrayList<>());
         }
     }
     public void registrarCompraPropiedad(Propiedad propiedad, Jugador jugador){
@@ -102,61 +103,63 @@ public class ValidadorAccionesCasilla implements Validador{
         }
     }
 
-    public void registrarHipoteca(Propiedad propiedad, Jugador jugador){
-        this.puedeHipotecar.get(jugador).remove(propiedad);
-        this.deshipotecasDebloqueadas.get(jugador).add(propiedad);
+    public void registrarHipoteca(Comprable comprable, Jugador jugador){
+        this.puedeHipotecar.get(jugador).remove(comprable);
+        this.deshipotecasDesbloqueadas.get(jugador).add(comprable);
     }
-    public void registrarDeshipoteca(Propiedad propiedad, Jugador jugador){
-        this.puedeHipotecar.get(jugador).add(propiedad);
-        this.deshipotecasDebloqueadas.get(jugador).remove(propiedad);
+    public void registrarDeshipoteca(Comprable comprable, Jugador jugador){
+        this.puedeHipotecar.get(jugador).add(comprable);
+        this.deshipotecasDesbloqueadas.get(jugador).remove(comprable);
     }
 
 
     public List<Accion> accionesPosibles(Jugador jugador){
         List<Accion> acciones = new ArrayList<Accion>();
-        if (!this.opcionesComprar(jugador).isEmpty()){acciones.add(new AccionComprar(this.juego));}
-        if (!this.construccionesDesbloqueadas.get(jugador).isEmpty()){acciones.add(new AccionConstruir(this.juego));}
-        if (!this.puedeVender.get(jugador).isEmpty()){acciones.add(new AccionVender(this.juego));}
-        if (!this.puedeHipotecar.get(jugador).isEmpty()){acciones.add(new AccionHipotecar(this.juego));}
-        if (!this.deshipotecasDebloqueadas.get(jugador).isEmpty()){acciones.add(new AccionDeshipotecar(this.juego));}
+        if (!this.opcionesComprar(jugador).isEmpty()){acciones.add(new AccionComprar(this.juego, this.opcionesComprar(jugador),this));}
+        if (!this.construccionesDesbloqueadas.get(jugador).isEmpty()){acciones.add(new AccionConstruir(this.juego, this.opcionesConstruir(jugador),this));}
+        if (!this.puedeVender.get(jugador).isEmpty()){acciones.add(new AccionVender(this.juego, this.opcionesVenta(jugador), this));}
+        if (!this.puedeHipotecar.get(jugador).isEmpty()){acciones.add(new AccionHipotecar(this.juego, this.opcionesHipoteca(jugador), this));}
+        if (!this.deshipotecasDesbloqueadas.get(jugador).isEmpty()){acciones.add(new AccionDeshipotecar(this.juego, this.opcionesDeshipoteca(jugador), this));}
         return acciones;
     }
 
-    public List<Comprable> opcionesComprar(Jugador jugador){
-        List<Comprable> comprables = new ArrayList<>();
-        if (jugador.getCasillaActual() instanceof Comprable){
-            Comprable casilla = (Comprable) jugador.getCasillaActual();
-            if (this.registro.tieneDuenio(casilla)){ comprables.add(casilla); }
+    private List<Casilla> opcionesComprar(Jugador jugador){
+        List<Casilla> comprables = new ArrayList<>();
+        Casilla casilla = jugador.getCasillaActual();
+        if (casilla instanceof Comprable && this.registro.tieneDuenio((Comprable)casilla)){
+            comprables.add(casilla);
         }
         return comprables;
     }
 
-    public List<Propiedad> opcionesConstruir(Jugador jugador){
-        List<Propiedad> opcionesFiltradas = new ArrayList<>();
-        for(Propiedad propiedad: this.construccionesDesbloqueadas.get(jugador)){
-            if (propiedad.getValorCompra()<jugador.)
+    private List<Casilla> opcionesConstruir(Jugador jugador){
+        List<Casilla> opcionesFiltradas = new ArrayList<>();
+        for(Casilla casilla: this.construccionesDesbloqueadas.get(jugador)){
+            Propiedad propiedad = (Propiedad) casilla;
+            if (juego.alcanzaDinero(propiedad.getValorConstruir())){
+                opcionesFiltradas.add(propiedad);
+            }
         }
-        return ;
+        return opcionesFiltradas;
     }
 
-    public List<Propiedad> opcionesVenta(Jugador jugador){
+    private List<Casilla> opcionesVenta(Jugador jugador){
         return this.puedeVender.get(jugador);
     }
 
-    public List<Comprable> opcionesHipoteca(Jugador jugador){
+    private List<Casilla> opcionesHipoteca(Jugador jugador){
         return this.puedeHipotecar.get(jugador);
     }
 
-    public List<Comprable> opcionesDeshipoteca(Jugador jugador){
-        return this.deshipotecasDebloqueadas.get(jugador);
-    }
-
-    private List<> filtroDinero(List<Comprable> opciones, int plata){
-        List<Comprable> opcionesFiltradas = new ArrayList<>();
-        for(Comprable comprable: opciones){
-            if (this.)
+    private List<Casilla> opcionesDeshipoteca(Jugador jugador){
+        List<Casilla> opcionesFiltradas = new ArrayList<>();
+        for(Casilla casilla: this.deshipotecasDesbloqueadas.get(jugador)){
+            Comprable comprable = (Comprable) casilla;
+            if (juego.alcanzaDinero(comprable.getValorHipoteca())){
+                opcionesFiltradas.add(comprable);
+            }
         }
-
+        return opcionesFiltradas;
     }
 
 }

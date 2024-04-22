@@ -23,6 +23,7 @@ public abstract class Comprable implements Casilla{
         this.color = color;
         this.valorCompra = valorCompra;
         this.valorRentaBasica = valorRentaBasica;
+        this.valorHipoteca = this.valorCompra / 2;
     }
 
     public String getNombre() {

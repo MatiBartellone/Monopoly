@@ -3,9 +3,9 @@ package org.monopoly.controller.accion;
 import org.monopoly.model.Juego;
 import org.monopoly.controller.accion.AccionInicio;
 
-public class AccionTirarDatos extends AccionInicio{
+public class AccionTirarDados extends AccionInicio{
 
-    public AccionTirarDatos(Juego juego){
+    public AccionTirarDados(Juego juego){
         super(juego);
     }
 

@@ -6,7 +6,7 @@ public class Construccion {
     private Config.TiposConstrucciones tipo;
     private int valorAlquiler;
 
-    public Construccion (Config.TiposConstrucciones tipo, int valorConstruir, int valorDestruir, int valorAlquiler){
+    public Construccion (Config.TiposConstrucciones tipo, int valorAlquiler){
         this.tipo = tipo;
         this.valorAlquiler = valorAlquiler;
     }
