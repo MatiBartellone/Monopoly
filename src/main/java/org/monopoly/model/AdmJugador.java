@@ -3,6 +3,8 @@ package org.monopoly.model;
 import org.monopoly.model.casilla.Comprable;
 import org.monopoly.model.casilla.Propiedad;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -10,6 +12,7 @@ public class AdmJugador {
     private List<Jugador> jugadores;
     private Banco banco;
     private RegistroComprables registroComprables;
+    private Jugador ganador;
 
     public AdmJugador(List<Jugador> jugadores, Map<Config.ColoresComprables, List<Comprable> > tablaBarrios){
         this.jugadores = jugadores;
@@ -89,25 +92,50 @@ public class AdmJugador {
         return this.registroComprables;
     }
 
-    private boolean condicionQuebrados(Jugador jugadorActual){
-        for (Jugador jugador : this.jugadores){
-            if (jugador.getEstado() != Config.EstadosJugadores.QUEBRADO && jugadorActual != jugador){
+    private Map<Comprable, Jugador> getTablaPropiedades(){
+        return this.registroComprables.getTablaPropiedades();
+    }
+
+    private Map<Jugador, List<Integer>> construcciones(){
+        HashMap<Jugador, List<Integer>> construcciones = new HashMap<>();
+        for (Jugador jugador: this.jugadores){
+            construcciones.put(jugador, new ArrayList<>());
+        }
+        Map<Comprable, Jugador> propiedades = this.getTablaPropiedades();
+        propiedades.forEach((comprable, jugador) -> {
+            if (comprable instanceof Propiedad){
+                construcciones.get(jugador).add((((Propiedad) comprable).getCantConstruidos()));
+            }
+        });
+        return construcciones;
+    }
+
+    private boolean condicionConstrucciones(List<Integer> construccionesJugador){
+        if (construccionesJugador.isEmpty()){
+            return false;
+        }
+        for (Integer cantidad : construccionesJugador){
+            if (cantidad < Config.MaxConstrucciones){
                 return false;
             }
         }
         return true;
     }
 
-    //public Map<Config.ColoresComprables, Integer> getTablaColoresJugador(Jugador jugador) {
-   //     return this.registroComprables.getTablaColoresJugador(jugador);
-    //}
-    //private boolean condicionConstrucciones(Jugador jugador){
-       // casas
-   // }
-
-    public boolean esGanador(Jugador jugador){
-        //return condicionQuebrados(jugador) || condicionConstrucciones(jugador);
+    public boolean hayGanador(){
+        Map<Jugador, List<Integer>> construcciones = this.construcciones();
+        for (Jugador jugador: this.jugadores){
+            List<Integer> construccionesJugador = construcciones.get(jugador);
+            if (condicionConstrucciones(construccionesJugador)){
+                this.ganador = jugador;
+                return true;
+            }
+        }
         return false;
+    }
+
+    protected Jugador ganador(){
+        return this.ganador;
     }
 
     public Banco getBanco() {
