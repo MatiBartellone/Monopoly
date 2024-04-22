@@ -7,6 +7,7 @@ import org.monopoly.controller.validador.ValidadorAccionesCasilla;
 import org.monopoly.model.Juego;
 import org.monopoly.model.Jugador;
 import org.monopoly.model.casilla.Casilla;
+import org.monopoly.model.casilla.Comprable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -60,6 +61,15 @@ public class JuegoController {
         System.out.println("Seleccione Accion: ");
         for (int i = 0; i < listaAccion.size() ; i++){
             System.out.println(i + ": " + listaAccion.get(i).mostrar());
+        }
+        return Integer.parseInt(scanner.nextLine());
+    }
+    public int seleccionarCasilla(List<Casilla> listaCasilla){
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Seleccione Casilla: ");
+        for (int i = 0; i < listaCasilla.size() ; i++){
+            Comprable comparable = (Comprable)  listaCasilla.get(i);
+            System.out.println(i + ": " + comparable.getNombre());
         }
         return Integer.parseInt(scanner.nextLine());
     }

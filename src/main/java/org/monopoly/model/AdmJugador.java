@@ -98,15 +98,16 @@ public class AdmJugador {
         return true;
     }
 
-    public Map<Config.ColoresComprables, Integer> getTablaColoresJugador(Jugador jugador) {
-        return this.registroComprables.getTablaColoresJugador(jugador);
-    }
-    private boolean condicionConstrucciones(Jugador jugador){
-        casas
-    }
+    //public Map<Config.ColoresComprables, Integer> getTablaColoresJugador(Jugador jugador) {
+   //     return this.registroComprables.getTablaColoresJugador(jugador);
+    //}
+    //private boolean condicionConstrucciones(Jugador jugador){
+       // casas
+   // }
 
     public boolean esGanador(Jugador jugador){
-        return condicionQuebrados(jugador) || condicionConstrucciones(jugador);
+        //return condicionQuebrados(jugador) || condicionConstrucciones(jugador);
+        return false;
     }
 
 
