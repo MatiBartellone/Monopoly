@@ -11,10 +11,10 @@ public class AdmJugador {
     private Banco banco;
     private RegistroComprables registroComprables;
 
-    public AdmJugador(List<Jugador> jugadores, Map<Config.ColoresComprables, Integer> tablaColores){
+    public AdmJugador(List<Jugador> jugadores, Map<Config.ColoresComprables, List<Comprable> > tablaBarrios){
         this.jugadores = jugadores;
         this.banco = new Banco(this.jugadores);
-        this.registroComprables = new RegistroComprables(tablaColores, this.jugadores);
+        this.registroComprables = new RegistroComprables(tablaBarrios, this.jugadores);
     }
 
     public void comprar(Jugador jugador, Comprable comprable) {
@@ -85,10 +85,33 @@ public class AdmJugador {
         return this.registroComprables.obtenerDuenio(comprable);
     }
 
+    public RegistroComprables getRegistroComprables(){
+        return this.registroComprables;
+    }
+
+    private boolean condicionQuebrados(Jugador jugadorActual){
+        for (Jugador jugador : this.jugadores){
+            if (jugador.getEstado() != Config.EstadosJugadores.QUEBRADO && jugadorActual != jugador){
+                return false;
+            }
+        }
+        return true;
+    }
+
+    //public Map<Config.ColoresComprables, Integer> getTablaColoresJugador(Jugador jugador) {
+   //     return this.registroComprables.getTablaColoresJugador(jugador);
+    //}
+    //private boolean condicionConstrucciones(Jugador jugador){
+       // casas
+   // }
+
     public boolean esGanador(Jugador jugador){
+        //return condicionQuebrados(jugador) || condicionConstrucciones(jugador);
         return false;
     }
 
-
+    public Banco getBanco() {
+        return banco;
+    }
 }
 

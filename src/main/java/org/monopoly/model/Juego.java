@@ -14,12 +14,12 @@ public class Juego {
     private final AdmMovimientos admMovimientos;
     private final AdmJugador admJugador;
 
-    public Juego( Tablero tablero, List<Jugador> jugadores, Map<Config.ColoresComprables, Integer> tablaColores) {
+    public Juego( Tablero tablero, List<Jugador> jugadores, Map<Config.ColoresComprables, List<Comprable>> tablaBarrios) {
         this.jugadores = jugadores;
         this.tablero = tablero;
         this.admTurnos = new AdmTurnos(this.jugadores);
         this.admMovimientos = new AdmMovimientos(this.tablero);
-        this.admJugador = new AdmJugador(this.jugadores, tablaColores);
+        this.admJugador = new AdmJugador(this.jugadores, tablaBarrios);
     }
     public void siguienteTurno(){this.admTurnos.siguiente();}
     public void tirarDados(){this.admMovimientos.tirarDados();}
@@ -33,8 +33,7 @@ public class Juego {
     }
 
     public void comprar(){
-        Casilla casilla = this.admTurnos.getCasillaActual();
-        if(casilla instanceof Comprable comprable)
+        if(this.getCasillaActual() instanceof Comprable comprable)
             this.admJugador.comprar(this.admTurnos.getJugadorActual(), comprable);
     }
     //la propiedad se sacará de los observers que tienen guardadas las opciones de propiedades donde contruir
@@ -54,6 +53,17 @@ public class Juego {
     public boolean terminado(){
         return this.unicoEnJuego() || this.hayGanador();
     }
+    public Jugador getJugadorActual(){return this.admTurnos.getJugadorActual();}
+    public List<Jugador> getJugadores(){return this.jugadores;}
+    public Casilla getCasillaActual(){return this.getJugadorActual().getCasillaActual();}
+
+    public RegistroComprables getRegistroComprables(){return this.admJugador.getRegistroComprables();}
+
+    public boolean alcanzaDinero(int cantidad){
+        return this.admJugador.alcanzaDinero(this.getJugadorActual(),cantidad);
+    }
+    public void entrarEnQuiebra(){this.admJugador.entrarEnQuiebra(this.getJugadorActual());}
+
     private boolean validarEncarcelamiento(){
         Jugador jugador = this.admTurnos.getJugadorActual();
         if (jugador.getEstado() == Config.EstadosJugadores.EN_JUEGO){return true;}
@@ -81,4 +91,12 @@ public class Juego {
         return false;
     }
     private void pagarPasoSalida(Jugador jugador){ this.admJugador.otorgarDinero(jugador,Config.PagoPorSalida);}
+
+    public AdmJugador getAdmJugador() {
+        return admJugador;
+    }
+
+    public AdmTurnos getAdmTurnos() {
+        return admTurnos;
+    }
 }
