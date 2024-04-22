@@ -40,13 +40,13 @@ public class ValidadorAccionesCasilla implements Validador{
             deshipotecasDesbloqueadas.put(jugador, new ArrayList<>());
         }
     }
-    public void registrarCompraPropiedad(Propiedad propiedad, Jugador jugador){
-        if (this.registro.poseeSetCompleto(jugador, propiedad.getColor())){
-            this.registro.casasPorBarrio(propiedad.getColor()).forEach((clave, valor) -> {
+    public void registrarCompraPropiedad(Comprable comprable, Jugador jugador){
+        if (this.registro.poseeSetCompleto(jugador, comprable.getColor())){
+            this.registro.casasPorBarrio(comprable.getColor()).forEach((clave, valor) -> {
                 this.construccionesDesbloqueadas.get(jugador).add(clave);
             });
         }
-        this.puedeHipotecar.get(jugador).add(propiedad);
+        this.puedeHipotecar.get(jugador).add(comprable);
     }
 
     public void registrarConstruccion(Propiedad propiedad, Jugador jugador){
@@ -124,12 +124,9 @@ public class ValidadorAccionesCasilla implements Validador{
     }
 
     private List<Casilla> opcionesComprar(Jugador jugador){
-        List<Casilla> comprables = new ArrayList<>();
-        Casilla casilla = jugador.getCasillaActual();
-        if (casilla instanceof Comprable && this.registro.tieneDuenio((Comprable)casilla)){
-            comprables.add(casilla);
-        }
-        return comprables;
+        return (jugador.getCasillaActual() instanceof Comprable comprable && !this.registro.tieneDuenio(comprable)) ?
+                new ArrayList<>(){{ add(comprable);}} :
+                new ArrayList<>();
     }
 
     private List<Casilla> opcionesConstruir(Jugador jugador){

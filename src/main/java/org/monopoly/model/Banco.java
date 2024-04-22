@@ -33,4 +33,8 @@ public class Banco {
     public int consultarDinero(Jugador jugador){
         return  this.cuentasJugadores.get(jugador).getDinero();
     }
+
+    public CuentaBancaria getCuentaJugador(Jugador jugador) {
+        return this.cuentasJugadores.get(jugador);
+    }
 }

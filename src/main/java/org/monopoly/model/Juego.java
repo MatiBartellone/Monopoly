@@ -91,4 +91,12 @@ public class Juego {
         return false;
     }
     private void pagarPasoSalida(Jugador jugador){ this.admJugador.otorgarDinero(jugador,Config.PagoPorSalida);}
+
+    public AdmJugador getAdmJugador() {
+        return admJugador;
+    }
+
+    public AdmTurnos getAdmTurnos() {
+        return admTurnos;
+    }
 }

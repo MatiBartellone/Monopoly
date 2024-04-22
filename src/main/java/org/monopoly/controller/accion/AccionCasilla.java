@@ -16,6 +16,7 @@ public abstract class AccionCasilla implements Accion {
     public AccionCasilla(Juego juego, List<Casilla> opciones, ValidadorAccionesCasilla validador){
         this.juego = juego;
         this.opciones = opciones;
+        this.validador = validador;
     }
     public void setCasilla(Casilla casilla){
         this.casilla = casilla;

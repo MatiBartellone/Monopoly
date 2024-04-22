@@ -110,6 +110,8 @@ public class AdmJugador {
         return false;
     }
 
-
+    public Banco getBanco() {
+        return banco;
+    }
 }
 

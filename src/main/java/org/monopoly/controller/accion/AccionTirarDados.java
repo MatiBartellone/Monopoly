@@ -1,7 +1,6 @@
 package org.monopoly.controller.accion;
 
 import org.monopoly.model.Juego;
-import org.monopoly.controller.accion.AccionInicio;
 
 public class AccionTirarDados extends AccionInicio{
 
@@ -11,6 +10,7 @@ public class AccionTirarDados extends AccionInicio{
 
     public void accionar(){
         this.juego.tirarDados();
+        this.juego.mover();
     }
 
     public String mostrar(){

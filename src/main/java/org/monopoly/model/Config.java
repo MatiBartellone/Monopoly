@@ -78,8 +78,10 @@ public class Config {
 
     }};
 
-    public static Map<Config.ColoresComprables, List<Comprable>> TablaColores;
-    private void barrios(){
+
+    public static Map<Config.ColoresComprables, List<Comprable>> barrios(){
+        Map<Config.ColoresComprables, List<Comprable>> TablaColores = new HashMap<>();
+
         for (Config.ColoresComprables color : Config.ColoresComprables.values()){
             TablaColores.put(color, new ArrayList<>());
         }
@@ -88,6 +90,7 @@ public class Config {
                 TablaColores.get(comprable.getColor()).add(comprable);
             }
         }
+        return TablaColores;
     }
 
 

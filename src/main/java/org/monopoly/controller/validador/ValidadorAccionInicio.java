@@ -1,8 +1,8 @@
-package org.monopoly.controller;
+package org.monopoly.controller.validador;
 
 import org.monopoly.controller.accion.Accion;
 import org.monopoly.controller.accion.AccionPagarFianza;
-import org.monopoly.controller.accion.AccionTirarDatos;
+import org.monopoly.controller.accion.AccionTirarDados;
 import org.monopoly.controller.validador.Validador;
 import org.monopoly.model.Config;
 import org.monopoly.model.Juego;
@@ -21,7 +21,7 @@ public class ValidadorAccionInicio implements Validador {
 
     public List<Accion> accionesPosibles(Jugador jugador) {
         List<Accion> acciones = new ArrayList<>();
-        acciones.add( new AccionTirarDatos(this.juego));
+        acciones.add( new AccionTirarDados(this.juego));
         if (jugador.getEstado() == Config.EstadosJugadores.PRESO && this.juego.alcanzaDinero(Config.ValorFianza))
             acciones.add( new AccionPagarFianza(this.juego));
         return acciones;
