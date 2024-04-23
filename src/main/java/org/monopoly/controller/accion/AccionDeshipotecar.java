@@ -16,7 +16,7 @@ public class AccionDeshipotecar extends AccionCasilla{
         this.juego.deshipotecar((Comprable)casilla);
         this.validador.registrarDeshipoteca((Comprable)this.casilla, this.juego.getJugadorActual());
     }
-    public String mostrar(){
+    public String getNombre(){
         return "Deshipotecar propiedad";
     }
 }

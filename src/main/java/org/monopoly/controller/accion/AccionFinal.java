@@ -10,5 +10,5 @@ public abstract class AccionFinal implements Accion {
     }
 
     public abstract void accionar();
-    public abstract String mostrar();
+    public abstract String getNombre();
 }

@@ -13,7 +13,7 @@ public class AccionTirarDados extends AccionInicio{
         this.juego.mover();
     }
 
-    public String mostrar(){
+    public String getNombre(){
         return "Tirar Dados";
     }
 }

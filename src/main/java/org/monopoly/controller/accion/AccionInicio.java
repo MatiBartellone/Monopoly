@@ -11,5 +11,5 @@ abstract class AccionInicio implements Accion {
     }
 
     public abstract void accionar();
-    public abstract String mostrar();
+    public abstract String getNombre();
 }

@@ -14,7 +14,7 @@ public class AccionPagarFianza extends AccionInicio{
         this.juego.pagarFianza();
     }
 
-    public String mostrar(){
+    public String getNombre(){
         return "Pagar Fianza";
     }
 }

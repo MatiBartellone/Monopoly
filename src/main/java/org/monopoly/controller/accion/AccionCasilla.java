@@ -26,5 +26,5 @@ public abstract class AccionCasilla implements Accion {
         return this.opciones;
     }
     public abstract void accionar();
-    public abstract String mostrar();
+    public abstract String getNombre();
 }

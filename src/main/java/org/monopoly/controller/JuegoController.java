@@ -81,7 +81,7 @@ public class JuegoController {
         System.out.println("Jugador actual:" + this.juego.getJugadorActual().getColor());
         System.out.println("Seleccione Accion: ");
         for (int i = 0; i < listaAccion.size() ; i++){
-            System.out.println(i + ": " + listaAccion.get(i).mostrar());
+            System.out.println(i + ": " + listaAccion.get(i).getNombre());
         }
         return Integer.parseInt(scanner.nextLine());
     }

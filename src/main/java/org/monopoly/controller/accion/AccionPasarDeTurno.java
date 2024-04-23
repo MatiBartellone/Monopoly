@@ -12,7 +12,7 @@ public class AccionPasarDeTurno extends AccionFinal{
         juego.siguienteTurno();
     }
 
-    public String mostrar(){
+    public String getNombre(){
         return "Pasar De Turno";
     }
 }

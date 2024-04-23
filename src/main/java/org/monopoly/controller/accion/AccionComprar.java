@@ -19,7 +19,7 @@ public class AccionComprar extends AccionCasilla{
         this.validador.registrarCompraPropiedad((Comprable) this.casilla, this.juego.getJugadorActual());
     }
 
-    public String mostrar(){
+    public String getNombre(){
         return "Comprar";
     }
 }

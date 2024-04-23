@@ -15,7 +15,7 @@ public class AccionHipotecar extends AccionCasilla{
         this.juego.hipotecar((Comprable)casilla);
         this.validador.registrarHipoteca((Comprable) this.casilla, this.juego.getJugadorActual());
     }
-    public String mostrar(){
+    public String getNombre(){
         return "Hipotecar propiedad";
     }
 }

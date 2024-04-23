@@ -19,7 +19,7 @@ public class AccionConstruir extends AccionCasilla{
         this.validador.registrarConstruccion((Propiedad) this.casilla, this.juego.getJugadorActual());
     }
 
-    public String mostrar(){
+    public String getNombre(){
         return "Construir Construccion";
     }
 }

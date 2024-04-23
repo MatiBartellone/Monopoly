@@ -12,7 +12,7 @@ public class AccionEntrarEnQuiebra extends AccionFinal {
         this.juego.entrarEnQuiebra();
     }
 
-    public String mostrar(){
+    public String getNombre(){
         return "Aceptar La Muerte";
     }
 }
