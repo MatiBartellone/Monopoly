@@ -124,7 +124,10 @@ public class ValidadorAccionesCasilla implements Validador{
     }
 
     private List<Casilla> opcionesComprar(Jugador jugador){
-        return (jugador.getCasillaActual() instanceof Comprable comprable && !this.registro.tieneDuenio(comprable)) ?
+        Comprable comprable = (Comprable) jugador.getCasillaActual();
+        return (jugador.estaSobreCasillaComprable()
+                && !this.registro.tieneDuenio(comprable)
+                && juego.alcanzaDinero(comprable.getValorCompra())) ?
                 new ArrayList<>(){{ add(comprable);}} :
                 new ArrayList<>();
     }

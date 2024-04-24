@@ -33,9 +33,8 @@ public class Juego {
         }
     }
 
-    public void comprar(){
-        if(this.getCasillaActual() instanceof Comprable comprable)
-            this.admJugador.comprar(this.admTurnos.getJugadorActual(), comprable);
+    public void comprar(Comprable comprable){
+        this.admJugador.comprar(this.admTurnos.getJugadorActual(), comprable);
     }
     //la propiedad se sacará de los observers que tienen guardadas las opciones de propiedades donde contruir
 
@@ -56,7 +55,6 @@ public class Juego {
     }
     public Jugador getJugadorActual(){return this.admTurnos.getJugadorActual();}
     public List<Jugador> getJugadores(){return this.jugadores;}
-    public Casilla getCasillaActual(){return this.getJugadorActual().getCasillaActual();}
 
     public RegistroComprables getRegistroComprables(){return this.admJugador.getRegistroComprables();}
 

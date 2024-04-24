@@ -15,7 +15,7 @@ public class AccionComprar extends AccionCasilla{
     }
 
     public void accionar(){
-        this.juego.comprar();
+        this.juego.comprar((Comprable) this.casilla);
         this.validador.registrarCompraPropiedad((Comprable) this.casilla, this.juego.getJugadorActual());
     }
 
