@@ -41,6 +41,10 @@ public class Jugador {
 
     public Config.ColoresJugadores getColor() { return this.color; }
 
+    public boolean estaSobreCasillaComprable(){
+        return (this.casillaActual.getTipo() == Config.TiposCasillas.PROPIEDAD ||
+                this.casillaActual.getTipo() == Config.TiposCasillas.ESTACION);
+    }
     @Override
     public int hashCode() {
         return Objects.hash(this.color);

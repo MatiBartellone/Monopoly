@@ -13,6 +13,7 @@ public class Juego {
     private final AdmTurnos admTurnos;
     private final AdmMovimientos admMovimientos;
     private final AdmJugador admJugador;
+    private Jugador ganador;
 
     public Juego( Tablero tablero, List<Jugador> jugadores, Map<Config.ColoresComprables, List<Comprable>> tablaBarrios) {
         this.jugadores = jugadores;
@@ -32,9 +33,8 @@ public class Juego {
         }
     }
 
-    public void comprar(){
-        if(this.getCasillaActual() instanceof Comprable comprable)
-            this.admJugador.comprar(this.admTurnos.getJugadorActual(), comprable);
+    public void comprar(Comprable comprable){
+        this.admJugador.comprar(this.admTurnos.getJugadorActual(), comprable);
     }
     //la propiedad se sacará de los observers que tienen guardadas las opciones de propiedades donde contruir
 
@@ -55,7 +55,6 @@ public class Juego {
     }
     public Jugador getJugadorActual(){return this.admTurnos.getJugadorActual();}
     public List<Jugador> getJugadores(){return this.jugadores;}
-    public Casilla getCasillaActual(){return this.getJugadorActual().getCasillaActual();}
 
     public RegistroComprables getRegistroComprables(){return this.admJugador.getRegistroComprables();}
 
@@ -77,18 +76,26 @@ public class Juego {
     }
     private boolean unicoEnJuego(){
         int enJuego = 0;
-        for (Jugador jugador: jugadores){
-            if (jugador.getEstado()==Config.EstadosJugadores.EN_JUEGO ||
-                    jugador.getEstado()==Config.EstadosJugadores.PRESO) enJuego++;
-            if (enJuego > 1){return false;}
+        Jugador posibleGanador = null;
+        for (Jugador jugador: this.jugadores){
+            if (jugador.getEstado() != Config.EstadosJugadores.QUEBRADO) {
+                enJuego++;
+                if (enJuego > 1){return false;}
+                posibleGanador = jugador;
+            }
         }
+        this.ganador = posibleGanador;
         return true;
     }
     private boolean hayGanador(){
-        for (Jugador jugador: jugadores){
-            if (this.admJugador.esGanador(jugador)){return true;}
+        if (this.admJugador.hayGanador()){
+            this.ganador = this.admJugador.ganador();
+            return true;
         }
         return false;
+    }
+    public Jugador ganador(){
+        return this.ganador;
     }
     private void pagarPasoSalida(Jugador jugador){ this.admJugador.otorgarDinero(jugador,Config.PagoPorSalida);}
 

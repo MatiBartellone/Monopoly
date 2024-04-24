@@ -27,6 +27,7 @@ public class Main {
         while(!juego.terminado()){
             controller.jugarTurno();
         }
+        Jugador ganador = juego.ganador();
     }
 
     private static List<Jugador> seleccionarJugadores(Casilla salida){
