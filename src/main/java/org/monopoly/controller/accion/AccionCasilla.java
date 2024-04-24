@@ -21,10 +21,10 @@ public abstract class AccionCasilla implements Accion {
     public void setCasilla(Casilla casilla){
         this.casilla = casilla;
     }
-
     public List<Casilla> getOpciones(){
         return this.opciones;
     }
+    public Etapa getEtapa() {return Etapa.CASILLA;}
     public abstract void accionar();
     public abstract String getNombre();
 }

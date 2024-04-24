@@ -56,7 +56,8 @@ public class JuegoController {
             accionElegida = this.seleccionarAccion(opcionesAcciones(this.juego.getJugadorActual()));
 
             Accion accion = acciones.get(accionElegida);
-            if (accion instanceof AccionCasilla accionCasilla){
+            if (accion.getEtapa()== Accion.Etapa.CASILLA ){
+                AccionCasilla accionCasilla = (AccionCasilla)accion;
                 List<Casilla> casillas = accionCasilla.getOpciones();
 
 
@@ -66,7 +67,7 @@ public class JuegoController {
             }
             accion.accionar();
 
-            if (accion instanceof AccionFinal) terminoTurno = true;
+            if (accion.getEtapa()== Accion.Etapa.FIN) terminoTurno = true;
         }
     }
 
