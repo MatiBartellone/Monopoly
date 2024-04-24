@@ -101,12 +101,13 @@ public class AdmJugador {
         for (Jugador jugador: this.jugadores){
             construcciones.put(jugador, new ArrayList<>());
         }
-        Map<Comprable, Jugador> propiedades = this.getTablaPropiedades();
-        propiedades.forEach((comprable, jugador) -> {
-            if (comprable instanceof Propiedad){
-                construcciones.get(jugador).add((((Propiedad) comprable).getCantConstruidos()));
+        Map<Comprable, Jugador> propiedadesJugador = this.getTablaPropiedades();
+        for(Propiedad propiedad : Config.ListaPropiedades){
+            if (propiedadesJugador.containsKey(propiedad)){
+                Jugador duenio = propiedadesJugador.get(propiedad);
+                construcciones.get(duenio).add(propiedad.getCantConstruidos());
             }
-        });
+        }
         return construcciones;
     }
 
