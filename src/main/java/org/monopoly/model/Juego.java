@@ -26,11 +26,12 @@ public class Juego {
     public void tirarDados(){this.admMovimientos.tirarDados();}
     public void pagarFianza(){this.admJugador.pagarFianza(this.admTurnos.getJugadorActual());}
     public void mover() {
-        if (this.validarEncarcelamiento()) {
-            Jugador jugador = this.admTurnos.getJugadorActual();
-            if (this.admMovimientos.mover(jugador)) this.pagarPasoSalida(jugador);
-            jugador.getCasillaActual().accionar(this.admJugador,jugador);
+        Jugador jugador = this.admTurnos.getJugadorActual();
+        if (!this.validarEncarcelamiento(jugador)) {
+            return;
         }
+        if (this.admMovimientos.mover(jugador)) this.pagarPasoSalida(jugador);
+        jugador.activarPasiva(this.admJugador,jugador);
     }
 
     public void comprar(Comprable comprable){
@@ -63,8 +64,7 @@ public class Juego {
     }
     public void entrarEnQuiebra(){this.admJugador.entrarEnQuiebra(this.getJugadorActual());}
 
-    private boolean validarEncarcelamiento(){
-        Jugador jugador = this.admTurnos.getJugadorActual();
+    private boolean validarEncarcelamiento(Jugador jugador){
         if (jugador.getEstado() == Config.EstadosJugadores.EN_JUEGO){return true;}
         if (jugador.getTurnosCarcel() == 0 || this.admMovimientos.sonDadosIguales()){
             this.admJugador.liberar(jugador);

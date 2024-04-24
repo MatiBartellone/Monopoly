@@ -13,7 +13,7 @@ import java.util.*;
 public class Main {
     public static void main(String[] args) {
 
-        List<Casilla> casillas = Config.ListaCasillas;
+        List<Casilla> casillas = Config.ListaCasillas();
 
         Map<Config.ColoresComprables, List<Comprable>> tablaColores = Config.barrios();
 

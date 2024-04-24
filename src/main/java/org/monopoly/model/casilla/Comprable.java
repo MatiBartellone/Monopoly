@@ -54,17 +54,7 @@ public abstract class Comprable implements Casilla{
         return this.tipo;
     }
 
-    public void accionar(AdmJugador admJugador, Jugador jugador) {
-        if (admJugador.obtenerDuenio(this) != null && !this.estaHipotecada) {
-            int renta = this.calcularAlquiler(admJugador, jugador);
-            if (admJugador.alcanzaDinero(jugador, renta)) {
-                admJugador.transferir(admJugador.obtenerDuenio(this), jugador, renta);
-                return;
-            }
-            jugador.setEstado(Config.EstadosJugadores.CRISIS);
-        }
-    }
-    abstract int calcularAlquiler(AdmJugador admJugador, Jugador jugador);
+    public abstract void accionar(AdmJugador admJugador, Jugador jugador);
 
     public Boolean estaHipotecada(){
         return this.estaHipotecada;
