@@ -2,6 +2,7 @@ package org.monopoly.model;
 
 
 import org.monopoly.model.casilla.Comprable;
+import org.monopoly.model.casilla.Construible;
 import org.monopoly.model.casilla.Propiedad;
 
 import java.util.*;
@@ -39,10 +40,10 @@ public class Juego {
     }
     //la propiedad se sacará de los observers que tienen guardadas las opciones de propiedades donde contruir
 
-    public void construirConstruccion(Propiedad lugar){
+    public void construirConstruccion(Construible lugar){
         this.admJugador.construirConstruccion(this.admTurnos.getJugadorActual(),lugar);
     }
-    public void venderConstruccion(Propiedad lugar){
+    public void venderConstruccion(Construible lugar){
         this.admJugador.venderConstruccion(this.admTurnos.getJugadorActual(), lugar);
     }
     public void hipotecar(Comprable compra){
@@ -64,6 +65,8 @@ public class Juego {
     }
     public void entrarEnQuiebra(){this.admJugador.entrarEnQuiebra(this.getJugadorActual());}
 
+
+    //REVISAR Y CAMBIAR
     private boolean validarEncarcelamiento(Jugador jugador){
         if (jugador.getEstado() == Config.EstadosJugadores.EN_JUEGO){return true;}
         if (jugador.getTurnosCarcel() == 0 || this.admMovimientos.sonDadosIguales()){
