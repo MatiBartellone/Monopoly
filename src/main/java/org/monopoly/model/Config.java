@@ -56,6 +56,13 @@ public class Config {
         add(new Propiedad(TiposCasillas.PROPIEDAD, "Boardwalk", 400, 70, ColoresComprables.AZUL, construcciones, 200));
     }};
 
+    public static List<Estacion> ListaEstaciones= new ArrayList<Estacion>(){{
+        add(new Estacion(TiposCasillas.ESTACION, "Reading", 200, 25, ColoresComprables.FERROCARRIL));
+        add(new Estacion(TiposCasillas.ESTACION, "Pennsylvania", 200, 25, ColoresComprables.FERROCARRIL));
+        add(new Estacion(TiposCasillas.ESTACION, "B & O", 200, 25, ColoresComprables.FERROCARRIL));
+        add(new Estacion(TiposCasillas.ESTACION, "Sort Line", 200, 25, ColoresComprables.FERROCARRIL));
+    }};
+
     public static void agregarPropiedad(List<Casilla> lista, AtomicInteger indice, int cantidad){
         for(int i = indice.get(); i < cantidad + indice.get(); i++) {
             lista.add(ListaPropiedades.get(i));
@@ -68,7 +75,7 @@ public class Config {
          AtomicInteger indice = new AtomicInteger(0);
          agregarPropiedad(listaCasillas, indice, 2);
          listaCasillas.add(new Multa(TiposCasillas.MULTA, 200));
-         listaCasillas.add(new Estacion(TiposCasillas.ESTACION, "Reading", 200, 25, ColoresComprables.FERROCARRIL));
+         listaCasillas.add(ListaEstaciones.get(0));
          agregarPropiedad(listaCasillas, indice, 2);
          listaCasillas.add(new Loteria(TiposCasillas.LOTERIA, 200));
          agregarPropiedad(listaCasillas, indice, 1);
@@ -76,7 +83,7 @@ public class Config {
          listaCasillas.add(carcel);
 
          agregarPropiedad(listaCasillas, indice, 3);
-         listaCasillas.add(new Estacion(TiposCasillas.ESTACION, "Pennsylvania", 200, 25, ColoresComprables.FERROCARRIL));
+         listaCasillas.add(ListaEstaciones.get(1));
          agregarPropiedad(listaCasillas, indice, 1);
          listaCasillas.add(new Multa(TiposCasillas.MULTA, 200));
          agregarPropiedad(listaCasillas, indice, 2);
@@ -85,7 +92,7 @@ public class Config {
          agregarPropiedad(listaCasillas, indice, 1);
          listaCasillas.add(new Multa(TiposCasillas.MULTA, 200));
          agregarPropiedad(listaCasillas, indice, 2);
-         listaCasillas.add(new Estacion(TiposCasillas.ESTACION, "B & O", 200, 25, ColoresComprables.FERROCARRIL));
+         listaCasillas.add(ListaEstaciones.get(2));
          agregarPropiedad(listaCasillas, indice, 3);
 
          listaCasillas.add(new IrACarcel(TiposCasillas.IR_A_CARCEL, carcel));
@@ -93,7 +100,7 @@ public class Config {
          agregarPropiedad(listaCasillas, indice, 2);
          listaCasillas.add(new Loteria(TiposCasillas.LOTERIA, 200));
          agregarPropiedad(listaCasillas, indice, 1);
-         listaCasillas.add(new Estacion(TiposCasillas.ESTACION, "Sort Line", 200, 25, ColoresComprables.FERROCARRIL));
+         listaCasillas.add(ListaEstaciones.get(3));
          agregarPropiedad(listaCasillas, indice, 1);
          listaCasillas.add(new Multa(TiposCasillas.MULTA, 200));
          agregarPropiedad(listaCasillas, indice, 1);
@@ -108,10 +115,11 @@ public class Config {
         for (Config.ColoresComprables color : Config.ColoresComprables.values()){
             TablaColores.put(color, new ArrayList<>());
         }
-        for (Casilla casilla: Config.ListaCasillas()) {
-            if (casilla instanceof Comprable comprable){
-                TablaColores.get(comprable.getColor()).add(comprable);
-            }
+        for (Comprable propiedad: Config.ListaPropiedades) {
+            TablaColores.get(propiedad.getColor()).add(propiedad);
+        }
+        for (Comprable estacion: Config.ListaEstaciones) {
+            TablaColores.get(estacion.getColor()).add(estacion);
         }
         return TablaColores;
     }
