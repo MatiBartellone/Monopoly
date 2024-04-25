@@ -7,10 +7,10 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import org.monopoly.controller.accion.*;
-import org.monopoly.controller.validador.Validador;
-import org.monopoly.controller.validador.ValidadorAccionFinal;
-import org.monopoly.controller.validador.ValidadorAccionInicio;
-import org.monopoly.controller.validador.ValidadorAccionesCasilla;
+import org.monopoly.controller.validador.CalculadoraDeAcciones;
+import org.monopoly.controller.validador.CalculadorAccionFinal;
+import org.monopoly.controller.validador.CalculadorAccionInicio;
+import org.monopoly.controller.validador.CalculadoraAccionesCasilla;
 import org.monopoly.model.Juego;
 import org.monopoly.model.Jugador;
 import org.monopoly.model.casilla.Casilla;
@@ -25,7 +25,7 @@ import java.util.List;
 
 public class JuegoController {
     private Juego juego;
-    private Validador validadorInicio;
+    private CalculadoraDeAcciones validadorInicio;
 
     private List<JugadorView> jugadorViews;
 
@@ -54,14 +54,14 @@ public class JuegoController {
     private static final String ESTILO_BOTON = "-fx-min-width: 150; -fx-min-height: 50; -fx-border-radius: 25; -fx-background-radius: 25; -fx-background-color: #F8C471; -fx-border-color: #E59866; -fx-border-width: 3;";
     private static final String ESTILO_BOTON_HOVER = "-fx-min-width: 150; -fx-min-height: 50; -fx-border-radius: 25; -fx-background-radius: 25; -fx-background-color: #A04000; -fx-border-color: #E59866; -fx-border-width: 3;";
 
-    private List<Validador> validadores;
+    private List<CalculadoraDeAcciones> validadores;
 
     public void setJuego(Juego juego){
         this.juego = juego;
-        this.validadorInicio = new ValidadorAccionInicio(this.juego);
+        this.validadorInicio = new CalculadorAccionInicio(this.juego);
         this.validadores = new ArrayList<>(){{
-            add(new ValidadorAccionesCasilla(juego));
-            add(new ValidadorAccionFinal(juego));
+            add(new CalculadoraAccionesCasilla(juego));
+            add(new CalculadorAccionFinal(juego));
         }};
 
         List<String> nombres = new ArrayList<>(){{
@@ -90,7 +90,7 @@ public class JuegoController {
 
     public List<Accion> opcionesAcciones (Jugador jugador){
         List<Accion> acciones = new ArrayList<>();
-        for (Validador v : this.validadores){acciones.addAll(v.accionesPosibles(jugador));}
+        for (CalculadoraDeAcciones calc : this.validadores){acciones.addAll(calc.accionesPosibles(jugador));}
         return acciones;
     }
 
