@@ -29,11 +29,22 @@ public class CalculadoraAccionesCasilla implements CalculadoraDeAcciones {
 
     public List<Accion> accionesPosibles(Jugador jugador) {
         List<Accion> acciones = new ArrayList<Accion>();
-        if (!opcionesComprar(jugador).isEmpty()){acciones.add(new AccionComprar(this.juego, this.opcionesComprar(jugador)));}
-        if (!opcionesConstruirEnPropiedad(jugador).isEmpty()){acciones.add(new AccionConstruir(this.juego, this.opcionesConstruirEnPropiedad(jugador)));}
-        if (!opcionesVentaConstruccion(jugador).isEmpty()){acciones.add(new AccionVender(this.juego, this.opcionesVentaConstruccion(jugador)));}
-        if (!opcionesHipoteca(jugador).isEmpty()){acciones.add(new AccionHipotecar(this.juego, this.opcionesHipoteca(jugador)));}
-        if (!opcionesDeshipoteca(jugador).isEmpty()){acciones.add(new AccionDeshipotecar(this.juego, this.opcionesDeshipoteca(jugador)));}
+
+        List<Casilla> opcionesComprar = this.opcionesComprar(jugador);
+        if (!opcionesComprar.isEmpty()){acciones.add(new AccionComprar(this.juego, opcionesComprar));}
+
+        List<Casilla> opcionesConstruirEnPropiedad = this.opcionesConstruirEnPropiedad(jugador);
+        if (!opcionesConstruirEnPropiedad.isEmpty()){acciones.add(new AccionConstruir(this.juego, opcionesComprar));}
+
+        List<Casilla> opcionesVentaConstruccion = this.opcionesVentaConstruccion(jugador);
+        if (!opcionesVentaConstruccion.isEmpty()){acciones.add(new AccionVender(this.juego, opcionesVentaConstruccion));}
+
+        List<Casilla> opcionesHipoteca = this.opcionesHipoteca(jugador);
+        if (!opcionesHipoteca.isEmpty()){acciones.add(new AccionHipotecar(this.juego, opcionesHipoteca));}
+
+        List<Casilla> opcionesDeshipoteca = this.opcionesHipoteca(jugador);
+        if (!opcionesDeshipoteca.isEmpty()){acciones.add(new AccionDeshipotecar(this.juego, opcionesDeshipoteca));}
+
         return acciones;
     }
 
