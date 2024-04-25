@@ -20,6 +20,21 @@ public class Propiedad extends Comprable{
         this.valorDestruir = this.valorConstruir / 2;
         this.construcciones = listaConstruccion;
     }
+    public void accionar(AdmJugador admJugador, Jugador jugador) {
+        if (admJugador.obtenerDuenio(this) == null || this.estaHipotecada){
+            return;
+        }
+        int renta = this.calcularAlquiler();
+        if (!admJugador.alcanzaDinero(jugador, renta)) {
+            jugador.setEstado(Config.EstadosJugadores.CRISIS);
+            return;
+        }
+        admJugador.transferir(admJugador.obtenerDuenio(this), jugador, renta);
+    }
+
+    protected int calcularAlquiler(){
+        return this.valorRentaBasica + this.valorTotalConstruidos;
+    }
 
     public int getValorConstruir() {
         return this.valorConstruir;
@@ -43,9 +58,5 @@ public class Propiedad extends Comprable{
         int valorAlquiler = this.construcciones.get(cantConstruidos).getValorAlquiler();
         this.valorTotalConstruidos -= valorAlquiler;
         this.cantConstruidos--;
-    }
-
-    protected int calcularAlquiler(AdmJugador admJugador, Jugador jugador){
-        return this.valorRentaBasica + this.valorTotalConstruidos;
     }
 }

@@ -5,21 +5,21 @@ import org.monopoly.model.Config;
 import org.monopoly.model.Jugador;
 
 public class Estacion extends Comprable {
-
-    private int cantEstaciones;
     public Estacion(Config.TiposCasillas tipo, String nombre, int valorCompra, int valorRentaBasica, Config.ColoresComprables color){
         super(tipo, nombre, valorCompra, valorRentaBasica, color);
     }
-
-    public void aumentarEstaciones(){
-        this.cantEstaciones++;
+    public void accionar(AdmJugador admJugador, Jugador jugador) {
+        if (admJugador.obtenerDuenio(this) == null || this.estaHipotecada || admJugador.obtenerCantSet(jugador, this.color) > 0){
+            return;
+        }
+        int renta = this.calcularAlquiler(admJugador, jugador);
+        if (!admJugador.alcanzaDinero(jugador, renta)) {
+            jugador.setEstado(Config.EstadosJugadores.CRISIS);
+            return;
+        }
+        admJugador.transferir(admJugador.obtenerDuenio(this), jugador, renta);
     }
-
-    public void disminuirEstaciones(){
-        this.cantEstaciones--;
-    }
-
     protected int calcularAlquiler(AdmJugador admJugador, Jugador jugador){
-        return this.valorRentaBasica * admJugador.obtenerCantSet(jugador, this.color);
+        return this.valorRentaBasica * admJugador.obtenerCantSet(admJugador.obtenerDuenio(this), this.color);
     }
 }

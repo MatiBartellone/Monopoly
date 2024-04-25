@@ -45,6 +45,10 @@ public class Jugador {
         return (this.casillaActual.getTipo() == Config.TiposCasillas.PROPIEDAD ||
                 this.casillaActual.getTipo() == Config.TiposCasillas.ESTACION);
     }
+    public void activarPasiva(AdmJugador admJugador, Jugador jugador){
+        this.casillaActual.accionar(admJugador, jugador);
+    }
+
     @Override
     public int hashCode() {
         return Objects.hash(this.color);

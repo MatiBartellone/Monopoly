@@ -37,8 +37,8 @@ public class JuegoController {
     }
 
     public void jugarTurno(){
-        mostrarInfoJugadores(this.juego, this.juego.getJugadores(), Config.ListaCasillas);
-        mostrarInfoTablero(this.juego, this.juego.getJugadores(), Config.ListaCasillas);
+        mostrarInfoJugadores(this.juego, this.juego.getJugadores(), Config.ListaCasillas());
+        mostrarInfoTablero(this.juego, this.juego.getJugadores(), Config.ListaCasillas());
         List<Accion> accionesInicio = validadorInicio.accionesPosibles(this.juego.getJugadorActual());
 
         int accionElegida = this.seleccionarAccion(accionesInicio);
@@ -47,8 +47,8 @@ public class JuegoController {
 
         boolean terminoTurno = false;
         while (!terminoTurno) {
-            mostrarInfoJugadores(this.juego, this.juego.getJugadores(), Config.ListaCasillas);
-            mostrarInfoTablero(this.juego, this.juego.getJugadores(), Config.ListaCasillas);
+            mostrarInfoJugadores(this.juego, this.juego.getJugadores(), Config.ListaCasillas());
+            mostrarInfoTablero(this.juego, this.juego.getJugadores(), Config.ListaCasillas());
 
 
             List<Accion> acciones = this.opcionesAcciones(juego.getJugadorActual());
