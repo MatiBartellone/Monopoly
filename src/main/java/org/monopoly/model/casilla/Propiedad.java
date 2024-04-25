@@ -26,7 +26,7 @@ public class Propiedad extends Comprable implements Construible{
         }
         int renta = this.calcularAlquiler();
         if (!admJugador.alcanzaDinero(jugador, renta)) {
-            jugador.setEstado(Config.EstadosJugadores.CRISIS);
+            admJugador.entrarEnCrisis(jugador);
             return;
         }
         admJugador.transferir(admJugador.obtenerDuenio(this), jugador, renta);

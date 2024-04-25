@@ -111,11 +111,11 @@ public class SeleccionadorController {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/textoMonopoly.fxml"));
             HBox root = loader.load();
             JuegoController juegoController = loader.getController();
-            juegoController.setJuego(crearJuego());
             Scene escena = new Scene(root);
             Stage stage = new Stage();
             stage.setScene(escena);
-            stage.show();
+            juegoController.setJuego(crearJuego(), stage);
+
         }catch (IOException ex) {}
     }
 

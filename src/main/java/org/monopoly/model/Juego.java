@@ -32,6 +32,11 @@ public class Juego {
             return;
         }
         if (this.admMovimientos.mover(jugador)) this.pagarPasoSalida(jugador);
+        this.activarPasiva();
+    }
+
+    public void activarPasiva(){
+        Jugador jugador = this.admTurnos.getJugadorActual();
         jugador.activarPasiva(this.admJugador,jugador);
     }
 

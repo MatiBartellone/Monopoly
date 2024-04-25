@@ -58,6 +58,14 @@ public class AdmJugador {
 
     public void entrarEnQuiebra(Jugador jugador) {
         jugador.setEstado(Config.EstadosJugadores.QUEBRADO);
+        this.banco.quitarDinero(jugador, this.banco.consultarDinero(jugador));
+    }
+
+    public void entrarEnCrisis(Jugador jugador) {
+        jugador.setEstado(Config.EstadosJugadores.CRISIS);
+    }
+    public void salirDeCrisis(Jugador jugador) {
+        jugador.setEstado(Config.EstadosJugadores.EN_JUEGO);
     }
 
     public void pagarFianza(Jugador jugador) {

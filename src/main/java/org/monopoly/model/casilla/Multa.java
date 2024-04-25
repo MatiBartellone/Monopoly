@@ -10,6 +10,10 @@ public class Multa extends Monetaria {
     }
 
     public void accionar(AdmJugador administrador, Jugador jugador) {
-        administrador.quitarDinero(jugador, this.getMonto());
+        if (administrador.alcanzaDinero(jugador, getMonto()))
+            administrador.quitarDinero(jugador, this.getMonto());
+        else {
+            administrador.entrarEnCrisis(jugador);
+        }
     }
 }

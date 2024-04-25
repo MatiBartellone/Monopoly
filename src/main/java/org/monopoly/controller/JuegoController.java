@@ -6,11 +6,13 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 import org.monopoly.controller.accion.*;
 import org.monopoly.controller.validador.CalculadoraDeAcciones;
 import org.monopoly.controller.validador.CalculadorAccionFinal;
 import org.monopoly.controller.validador.CalculadorAccionInicio;
 import org.monopoly.controller.validador.CalculadoraAccionesCasilla;
+import org.monopoly.model.Config;
 import org.monopoly.model.Juego;
 import org.monopoly.model.Jugador;
 import org.monopoly.model.casilla.Casilla;
@@ -28,6 +30,8 @@ public class JuegoController {
     private CalculadoraDeAcciones calculadoraInicio;
 
     private List<JugadorView> jugadorViews;
+
+    private Stage stage;
 
     @FXML
     private VBox botonera;
@@ -56,7 +60,8 @@ public class JuegoController {
 
     private List<CalculadoraDeAcciones> calculadoras;
 
-    public void setJuego(Juego juego){
+    public void setJuego(Juego juego, Stage stage){
+        this.stage = stage;
         this.juego = juego;
         this.calculadoraInicio = new CalculadorAccionInicio(this.juego);
         this.calculadoras = new ArrayList<>(){{
@@ -85,7 +90,7 @@ public class JuegoController {
                 jugadorView.cerrarPropiedades();
             }
         });
-
+        this.stage.show();
     }
 
     public List<Accion> opcionesAcciones (Jugador jugador){
@@ -101,6 +106,7 @@ public class JuegoController {
         actualizarDados();
         actualizarJugadores();
         tableroView.actualizarTablero(this.juego.getJugadores());
+        if (this.juego.terminado()) this.terminarJuego();
     }
     public void actualizarBotonesAccion(){
         setBotonesAccion(this.opcionesAcciones(this.juego.getJugadorActual()));
@@ -110,7 +116,7 @@ public class JuegoController {
     }
 
     private void terminarJuego(){
-
+        this.stage.close();
     }
     public void setBotonesAccion(List<Accion> listaAccion){
         for (int i = 0; i < listaAccion.size() ; i++){
@@ -119,7 +125,6 @@ public class JuegoController {
             Button nuevo;
             if (accion instanceof AccionCasilla accionCasilla) {
                 nuevo = BotonView.crearBoton(accion.getNombre(), ESTILO_BOTON, ESTILO_BOTON_HOVER, e -> {
-
                     botonera.getChildren().clear();
                     setBotonesCasillas(accionCasilla.getOpciones(), accionCasilla);
                 });
@@ -128,12 +133,7 @@ public class JuegoController {
                     botonera.getChildren().clear();
                     accion.accionar();
                     actualizarDatos();
-
-                    if ((accion instanceof AccionEntrarEnQuiebra || accion instanceof AccionTirarDados) && this.juego.terminado()) {
-                        this.terminarJuego();// cerrar escena?
-                    }
-                    if (accion instanceof AccionFinal) actualizarBotonesInicio();
-
+                    if (accion instanceof AccionPasarDeTurno || accion instanceof AccionPagarFianza) actualizarBotonesInicio();
                     else actualizarBotonesAccion();
                 });
             }
