@@ -59,7 +59,7 @@ public class CalculadoraAccionesCasilla implements CalculadoraDeAcciones {
     private List<Casilla> opcionesDeshipoteca(Jugador jugador) {
         List<Casilla> opcionesFiltradas = new ArrayList<>();
         for (Comprable comprable : this.comprables(jugador)) {
-            if (juego.alcanzaDinero(comprable.getValorHipoteca())
+            if (this.juego.alcanzaDinero(comprable.getValorHipoteca())
             && comprable.estaHipotecada()) {
                 opcionesFiltradas.add(comprable);
             }
@@ -72,7 +72,7 @@ public class CalculadoraAccionesCasilla implements CalculadoraDeAcciones {
         Comprable comprable = (Comprable) jugador.getCasillaActual();
         return (jugador.estaSobreCasillaComprable()
                 && !this.registro.tieneDuenio(comprable)
-                && juego.alcanzaDinero(comprable.getValorCompra())) ?
+                && this.juego.alcanzaDinero(comprable.getValorCompra())) ?
                 new ArrayList<>() {{add(comprable);}} : new ArrayList<>();
     }
 
@@ -86,7 +86,7 @@ public class CalculadoraAccionesCasilla implements CalculadoraDeAcciones {
         }
         for (Casilla casilla: opcionesFiltradas){
             Propiedad propiedad = (Propiedad) casilla;
-            if (!juego.alcanzaDinero(propiedad.getValorConstruir())){
+            if (!this.juego.alcanzaDinero(propiedad.getValorConstruir())){
                 opcionesFiltradas.remove(propiedad);
             }
         }
@@ -103,7 +103,7 @@ public class CalculadoraAccionesCasilla implements CalculadoraDeAcciones {
         }
         for (Casilla casilla: opcionesFiltradas){
             Propiedad propiedad = (Propiedad) casilla;
-            if (!juego.alcanzaDinero(propiedad.getValorConstruir())
+            if (!this.juego.alcanzaDinero(propiedad.getValorConstruir())
             || !(propiedad.getCantConstruidos()>0)){
                 opcionesFiltradas.remove(propiedad);
             }
