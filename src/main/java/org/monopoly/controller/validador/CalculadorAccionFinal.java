@@ -10,11 +10,11 @@ import org.monopoly.model.Jugador;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ValidadorAccionFinal implements Validador{
+public class CalculadorAccionFinal implements CalculadoraDeAcciones{
 
     private Juego juego;
 
-    public ValidadorAccionFinal(Juego juego){
+    public CalculadorAccionFinal(Juego juego){
         this.juego = juego;
     }
     public List<Accion> accionesPosibles(Jugador jugador) {

@@ -1,6 +1,5 @@
 package org.monopoly.controller.accion;
 
-import org.monopoly.controller.validador.ValidadorAccionesCasilla;
 import org.monopoly.model.Juego;
 import org.monopoly.model.casilla.Casilla;
 import org.monopoly.model.casilla.Comprable;
@@ -11,12 +10,10 @@ public abstract class AccionCasilla implements Accion {
     protected Juego juego;
     protected Casilla casilla;
     protected List<Casilla> opciones;
-    protected ValidadorAccionesCasilla validador;
 
-    public AccionCasilla(Juego juego, List<Casilla> opciones, ValidadorAccionesCasilla validador){
+    public AccionCasilla(Juego juego, List<Casilla> opciones){
         this.juego = juego;
         this.opciones = opciones;
-        this.validador = validador;
     }
     public void setCasilla(Casilla casilla){
         this.casilla = casilla;

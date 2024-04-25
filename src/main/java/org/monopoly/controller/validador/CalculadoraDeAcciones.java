@@ -5,6 +5,6 @@ import org.monopoly.model.Jugador;
 
 import java.util.List;
 
-public interface Validador {
+public interface CalculadoraDeAcciones {
     public List<Accion> accionesPosibles(Jugador jugador);
 }
