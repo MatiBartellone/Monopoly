@@ -7,6 +7,7 @@ import org.monopoly.model.Jugador;
 import org.monopoly.model.RegistroComprables;
 import org.monopoly.model.casilla.Casilla;
 import org.monopoly.model.casilla.Comprable;
+import org.monopoly.model.casilla.Construible;
 import org.monopoly.model.casilla.Propiedad;
 
 
@@ -38,6 +39,30 @@ public class CalculadoraAccionesCasilla implements CalculadoraDeAcciones{
             });
         }
         this.puedeHipotecar.get(jugador).add(comprable);
+    }
+    private List<Comprable> comprables(Jugador jugadorActual){
+        List<Comprable> comprables = new ArrayList<>();
+        Map<Comprable, Jugador> comprablesJugadores = this.registro.getTablaPropiedades();
+        comprablesJugadores.forEach((comprable, jugador) -> {
+          if (jugador == jugadorActual) {
+              comprables.add((comprable));
+          }
+        });
+        return comprables;
+    }
+
+    private List<Casilla> opcionesHipoteca(Jugador jugador){
+        return List<Casilla> opcionesFiltradas = this.registro.hipotecadas(jugador);
+    }
+
+    private List<Casilla> opcionesDeshipoteca(Jugador jugador){
+        List<Casilla> opcionesFiltradas = new ArrayList<>();
+        for (Comprable comprable : this.registro.hipotecadas(jugador)){
+            if (juego.alcanzaDinero(comprable.getValorCompra())){
+                opcionesFiltradas.add()
+            }
+        }
+        return ;
     }
 
     public void registrarConstruccion(Propiedad propiedad, Jugador jugador){
@@ -138,19 +163,5 @@ public class CalculadoraAccionesCasilla implements CalculadoraDeAcciones{
         return this.puedeVender.get(jugador);
     }
 
-    private List<Casilla> opcionesHipoteca(Jugador jugador){
-        return this.puedeHipotecar.get(jugador);
-    }
-
-    private List<Casilla> opcionesDeshipoteca(Jugador jugador){
-        List<Casilla> opcionesFiltradas = new ArrayList<>();
-        for(Casilla casilla: this.deshipotecasDesbloqueadas.get(jugador)){
-            Comprable comprable = (Comprable) casilla;
-            if (juego.alcanzaDinero(comprable.getValorHipoteca())){
-                opcionesFiltradas.add(comprable);
-            }
-        }
-        return opcionesFiltradas;
-    }
 
 }

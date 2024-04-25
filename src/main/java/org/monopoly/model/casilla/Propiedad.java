@@ -7,7 +7,7 @@ import org.monopoly.model.Jugador;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Propiedad extends Comprable{
+public class Propiedad extends Comprable implements Construible{
     private List<Construccion> construcciones;
     private int cantConstruidos;
     private int valorConstruir;
