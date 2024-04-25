@@ -56,7 +56,7 @@ public class PropiedadesView {
                 Label propiedad = new Label("| "+ comprable.getNombre().toUpperCase() + " |\t   | HIPOTECADA: " + ((comprable.estaHipotecada()) ? " SI |" : " NO |\t  | ALQUILER: " + comprable.getValorAlquiler()+" |" ));
                 if (comprable instanceof Propiedad p) propiedad.setText(propiedad.getText() + "\t| CONST.: " + p.getCantConstruidos() +" |" );
                 color.setStyle("-fx-min-width: 80; -fx-min-height: 50;-fx-border-color: grey; -fx-border-width: 2px;");
-                propiedad.setStyle("-fx-min-width: 516; -fx-min-height: 50;-fx-border-color: grey; -fx-border-width: 2px;");
+                propiedad.setStyle("-fx-min-width: 616; -fx-min-height: 50;-fx-border-color: grey; -fx-border-width: 2px;");
                 HBox marco = new HBox(color, propiedad);
                 marco.setStyle("-fx-border-color: grey; -fx-border-width: 2px;");
 

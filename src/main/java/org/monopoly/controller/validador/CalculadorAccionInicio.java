@@ -21,7 +21,7 @@ public class CalculadorAccionInicio implements CalculadoraDeAcciones {
     public List<Accion> accionesPosibles(Jugador jugador) {
         List<Accion> acciones = new ArrayList<>();
         acciones.add( new AccionTirarDados(this.juego));
-        if (jugador.getEstado() == Config.EstadosJugadores.PRESO && this.juego.alcanzaDinero(Config.ValorFianza))
+        if (jugador.getEstado() == Config.EstadosJugadores.PRESO && this.juego.alcanzaDinero(Config.ValorFianza) && jugador.getTurnosCarcel() != 0)
             acciones.add( new AccionPagarFianza(this.juego));
         return acciones;
     }

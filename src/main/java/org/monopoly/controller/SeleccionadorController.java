@@ -68,7 +68,9 @@ public class SeleccionadorController {
                 this.botonera1.getChildren().clear();
                 this.cantJugadores = cantJugadores;
                 this.instruccion.setText("Seleccione "+cantJugadores+" Jugadores");
+                MainJavaFx.resizeStage();
                 this.setearBotonesJugadores();
+
             }));
         }
     }

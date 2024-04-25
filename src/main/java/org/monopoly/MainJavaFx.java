@@ -42,9 +42,12 @@ public class MainJavaFx extends Application {
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.setTitle("Monopoly");
+        stage.setMaxHeight(400);
+        stage.setResizable(true);
         stage.show();
     }
 
+    public static void resizeStage(){stage.setMinHeight(630);}
 
     public static void closeStage(){
         stage.close();
