@@ -14,6 +14,9 @@ import org.monopoly.model.casilla.Propiedad;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import static org.monopoly.model.Config.TiposCasillas.ESTACION;
+import static org.monopoly.model.Config.TiposCasillas.PROPIEDAD;
+
 public class CalculadoraAccionesCasilla implements CalculadoraDeAcciones {
     private Juego juego;
     private RegistroComprables registro;
@@ -41,6 +44,7 @@ public class CalculadoraAccionesCasilla implements CalculadoraDeAcciones {
 
         List<Casilla> opcionesDeshipoteca = this.opcionesHipoteca(jugador);
         if (!opcionesDeshipoteca.isEmpty()){acciones.add(new AccionDeshipotecar(this.juego, opcionesDeshipoteca));}
+
         return acciones;
     }
 
@@ -59,7 +63,7 @@ public class CalculadoraAccionesCasilla implements CalculadoraDeAcciones {
     }
 
     private boolean sinConstrucciones(Casilla casilla){
-        if (casilla.getTipo() == Config.TiposCasillas.PROPIEDAD){
+        if (casilla.getTipo() == PROPIEDAD){
             Construible casteada = (Construible) casilla;
             return casteada.getCantConstruidos() == 0;
         }
@@ -79,11 +83,11 @@ public class CalculadoraAccionesCasilla implements CalculadoraDeAcciones {
 
 
     private List<Casilla> opcionesComprar(Jugador jugador) {
-        Comprable comprable = (Comprable) jugador.getCasillaActual();
-        return (jugador.estaSobreCasillaComprable()
-                && !this.registro.tieneDuenio(comprable)
-                && this.juego.alcanzaDinero(comprable.getValorCompra())) ?
-                new ArrayList<>() {{add(comprable);}} : new ArrayList<>();
+        if (jugador.estaSobreCasillaComprable()){
+            Comprable comprable = (Comprable) jugador.getCasillaActual();
+            if (!this.registro.tieneDuenio(comprable) && this.juego.alcanzaDinero(comprable.getValorCompra())){ return new ArrayList<>() {{add(comprable);}}; }
+        }
+        return new ArrayList<>();
     }
 
     private List<Casilla> opcionesConstruirEnPropiedad(Jugador jugador) {

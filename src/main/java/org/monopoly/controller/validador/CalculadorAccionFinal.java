@@ -18,7 +18,6 @@ public class CalculadorAccionFinal implements CalculadoraDeAcciones{
         this.juego = juego;
     }
     public List<Accion> accionesPosibles(Jugador jugador) {
-
         return (jugador.getEstado() == Config.EstadosJugadores.CRISIS) ?
                 new ArrayList<>(){{ add(new AccionEntrarEnQuiebra(juego));}} :
                 new ArrayList<>(){{ add(new AccionPasarDeTurno(juego));}};

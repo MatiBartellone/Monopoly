@@ -90,7 +90,9 @@ public class JuegoController {
 
     public List<Accion> opcionesAcciones (Jugador jugador){
         List<Accion> acciones = new ArrayList<>();
+
         for (CalculadoraDeAcciones calc : this.calculadoras){acciones.addAll(calc.accionesPosibles(jugador));}
+
         return acciones;
     }
 
@@ -110,13 +112,14 @@ public class JuegoController {
     private void terminarJuego(){
 
     }
-
     public void setBotonesAccion(List<Accion> listaAccion){
         for (int i = 0; i < listaAccion.size() ; i++){
             Accion accion = listaAccion.get(i);
+
             Button nuevo;
             if (accion instanceof AccionCasilla accionCasilla) {
                 nuevo = BotonView.crearBoton(accion.getNombre(), ESTILO_BOTON, ESTILO_BOTON_HOVER, e -> {
+
                     botonera.getChildren().clear();
                     setBotonesCasillas(accionCasilla.getOpciones(), accionCasilla);
                 });
@@ -125,10 +128,12 @@ public class JuegoController {
                     botonera.getChildren().clear();
                     accion.accionar();
                     actualizarDatos();
+
                     if ((accion instanceof AccionEntrarEnQuiebra || accion instanceof AccionTirarDados) && this.juego.terminado()) {
                         this.terminarJuego();// cerrar escena?
                     }
                     if (accion instanceof AccionFinal) actualizarBotonesInicio();
+
                     else actualizarBotonesAccion();
                 });
             }
