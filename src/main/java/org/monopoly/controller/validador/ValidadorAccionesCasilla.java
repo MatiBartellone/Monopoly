@@ -16,30 +16,21 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-public class ValidadorAccionesCasilla implements Validador{
+public class CalculadoraAccionesCasilla implements CalculadoraDeAcciones{
     private Juego juego;
     private RegistroComprables registro;
-    private Map<Jugador, List<Casilla>> construccionesDesbloqueadas;
-    private Map<Jugador, List<Casilla>> puedeVender;
-    private Map<Jugador, List<Casilla>> puedeHipotecar;
-    private Map<Jugador, List<Casilla>> deshipotecasDesbloqueadas;
+    private List<Casilla> construccionesDesbloqueadas;
+    private List<Casilla> puedeVender;
+    private List<Casilla> puedeHipotecar;
+    private List<Casilla> deshipotecasDesbloqueadas;
 
-    public ValidadorAccionesCasilla(Juego juego) {
+    public CalculadoraAccionesCasilla(Juego juego) {
         this.juego = juego;
         this.registro = juego.getRegistroComprables();
-        this.construccionesDesbloqueadas = new HashMap<>();
-        this.puedeVender = new HashMap<>();
-        this.puedeHipotecar = new HashMap<>();
-        this.deshipotecasDesbloqueadas = new HashMap<>();
-
-        // Inicializar las listas vacías para cada jugador
-        for (Jugador jugador : juego.getJugadores()) {
-            construccionesDesbloqueadas.put(jugador, new ArrayList<>());
-            puedeVender.put(jugador, new ArrayList<>());
-            puedeHipotecar.put(jugador, new ArrayList<>());
-            deshipotecasDesbloqueadas.put(jugador, new ArrayList<>());
-        }
     }
+
+    @Override
+
     public void registrarCompraPropiedad(Comprable comprable, Jugador jugador){
         if (this.registro.poseeSetCompleto(jugador, comprable.getColor())){
             this.registro.casasPorBarrio(comprable.getColor()).forEach((clave, valor) -> {

@@ -1,13 +1,10 @@
 package org.monopoly.controller.validador;
 
-import org.monopoly.model.RegistroComprables;
+import org.monopoly.controller.accion.Accion;
 import org.monopoly.model.Jugador;
-import org.monopoly.model.Juego;
 
-public class CalculadoraDeAcciones implements Validador{
-    private Juego juego;
-    private RegistroComprables registro;
+import java.util.List;
 
-
-
+public interface CalculadoraDeAcciones {
+    public List<Accion> accionesPosibles(Jugador jugador);
 }
