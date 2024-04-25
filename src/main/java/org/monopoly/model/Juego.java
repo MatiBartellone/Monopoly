@@ -106,4 +106,12 @@ public class Juego {
     public AdmTurnos getAdmTurnos() {
         return admTurnos;
     }
+
+    public Tablero getTablero() {
+        return tablero;
+    }
+
+    public AdmMovimientos getAdmMovimientos() {
+        return admMovimientos;
+    }
 }

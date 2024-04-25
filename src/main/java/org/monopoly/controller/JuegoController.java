@@ -1,74 +1,91 @@
 package org.monopoly.controller;
 
+import javafx.fxml.FXML;
+import javafx.scene.control.Button;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import org.monopoly.controller.accion.*;
 import org.monopoly.controller.validador.Validador;
 import org.monopoly.controller.validador.ValidadorAccionFinal;
 import org.monopoly.controller.validador.ValidadorAccionInicio;
 import org.monopoly.controller.validador.ValidadorAccionesCasilla;
-import org.monopoly.model.Config;
 import org.monopoly.model.Juego;
 import org.monopoly.model.Jugador;
 import org.monopoly.model.casilla.Casilla;
 import org.monopoly.model.casilla.Comprable;
-import org.monopoly.model.casilla.Monetaria;
-import org.monopoly.model.casilla.Propiedad;
+import org.monopoly.view.BotonView;
+import org.monopoly.view.CasillaView;
+import org.monopoly.view.JugadorView;
+import org.monopoly.view.TableroView;
 
-import java.io.Console;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
 public class JuegoController {
     private Juego juego;
     private Validador validadorInicio;
 
+    private List<JugadorView> jugadorViews;
+
+    @FXML
+    private VBox botonera;
+    @FXML
+    private VBox jugadores;
+
+    @FXML
+    private ImageView dado1;
+
+    @FXML
+    private ImageView dado2;
+
+    @FXML
+    private ImageView jugadorActual;
+
+    @FXML
+    private HBox contenedorJuego;
+
+    @FXML
+    private VBox contenedorCentral;
+
+    private TableroView tableroView;
+
+    private static final String ESTILO_BOTON = "-fx-min-width: 150; -fx-min-height: 50; -fx-border-radius: 25; -fx-background-radius: 25; -fx-background-color: #F8C471; -fx-border-color: #E59866; -fx-border-width: 3;";
+    private static final String ESTILO_BOTON_HOVER = "-fx-min-width: 150; -fx-min-height: 50; -fx-border-radius: 25; -fx-background-radius: 25; -fx-background-color: #A04000; -fx-border-color: #E59866; -fx-border-width: 3;";
 
     private List<Validador> validadores;
-    public JuegoController(Juego juego){
+
+    public void setJuego(Juego juego){
         this.juego = juego;
         this.validadorInicio = new ValidadorAccionInicio(this.juego);
         this.validadores = new ArrayList<>(){{
             add(new ValidadorAccionesCasilla(juego));
             add(new ValidadorAccionFinal(juego));
         }};
-    }
 
-    public void jugarTurno(){
-        mostrarInfoJugadores(this.juego, this.juego.getJugadores(), Config.ListaCasillas());
-        mostrarInfoTablero(this.juego, this.juego.getJugadores(), Config.ListaCasillas());
-        List<Accion> accionesInicio = validadorInicio.accionesPosibles(this.juego.getJugadorActual());
+        List<String> nombres = new ArrayList<>(){{
+            add("MATI");
+            add("THIAGO");
+            add("IVAN");
+            add("ANDREA");
+        }};
 
-        int accionElegida = this.seleccionarAccion(accionesInicio);
+        this.jugadorViews = setJugadores(this.juego.getJugadores(), nombres);
+        TableroView tableroView = new TableroView(juego.getTablero(), this.juego.getJugadores());
+        this.tableroView = tableroView;
+        contenedorCentral.getChildren().add(tableroView.getTablero());
 
-        accionesInicio.get(accionElegida).accionar();
+        actualizarDatos();
 
-        boolean terminoTurno = false;
-        while (!terminoTurno) {
-            mostrarInfoJugadores(this.juego, this.juego.getJugadores(), Config.ListaCasillas());
-            mostrarInfoTablero(this.juego, this.juego.getJugadores(), Config.ListaCasillas());
+        actualizarBotonesInicio();
 
-
-            List<Accion> acciones = this.opcionesAcciones(juego.getJugadorActual());
-
-            accionElegida = this.seleccionarAccion(opcionesAcciones(this.juego.getJugadorActual()));
-
-            Accion accion = acciones.get(accionElegida);
-            if (accion.getEtapa()== Accion.Etapa.CASILLA ){
-                AccionCasilla accionCasilla = (AccionCasilla)accion;
-                List<Casilla> casillas = accionCasilla.getOpciones();
-
-
-                int casillaElegida = seleccionarCasilla(casillas);
-
-                accionCasilla.setCasilla(casillas.get(casillaElegida));
+        contenedorJuego.setOnMouseClicked(e -> {
+            for (JugadorView jugadorView : jugadorViews) {
+                jugadorView.cerrarPropiedades();
             }
-            accion.accionar();
+        });
 
-            if (accion.getEtapa()== Accion.Etapa.FIN) terminoTurno = true;
-        }
     }
 
     public List<Accion> opcionesAcciones (Jugador jugador){
@@ -77,81 +94,86 @@ public class JuegoController {
         return acciones;
     }
 
-    public int seleccionarAccion(List<Accion> listaAccion){
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Jugador actual:" + this.juego.getJugadorActual().getColor());
-        System.out.println("Seleccione Accion: ");
+    public void actualizarDatos(){
+        actualizarJugadorActual();
+        actualizarDados();
+        actualizarJugadores();
+        tableroView.actualizarTablero(this.juego.getJugadores());
+    }
+    public void actualizarBotonesAccion(){
+        setBotonesAccion(this.opcionesAcciones(this.juego.getJugadorActual()));
+    }
+    public void actualizarBotonesInicio(){
+        setBotonesAccion(this.validadorInicio.accionesPosibles(this.juego.getJugadorActual()));
+    }
+
+    public void setBotonesAccion(List<Accion> listaAccion){
         for (int i = 0; i < listaAccion.size() ; i++){
-            System.out.println(i + ": " + listaAccion.get(i).getNombre());
-        }
-        return Integer.parseInt(scanner.nextLine());
-    }
-    public int seleccionarCasilla(List<Casilla> listaCasilla){
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Seleccione Casilla: ");
-        for (int i = 0; i < listaCasilla.size() ; i++){
-            Comprable comparable = (Comprable)  listaCasilla.get(i);
-            System.out.println(i + ": " + comparable.getNombre());
-        }
-        return Integer.parseInt(scanner.nextLine());
-    }
-
-    public static void mostrarInfoJugadores(Juego juego, List<Jugador> jugadores, List<Casilla> casillas){
-
-        File original = new File("src/main/java/org/monopoly/infoJugadores.txt");
-        File temp = new File("src/main/java/org/monopoly/TempinfoJugadores.txt");
-        try {
-            FileWriter myWritter = new FileWriter(temp);
-            myWritter.write("Jugador actual: " + juego.getAdmTurnos().getJugadorActual().getColor() + "\n");
-            for (Jugador j : jugadores) {
-                myWritter.write("\n\nJugador: " + j.getColor());
-                myWritter.write("\n\tEstado: " + j.getEstado());
-                myWritter.write("\n\tDinero: " + juego.getAdmJugador().getBanco().getCuentaJugador(j).getDinero());
-                myWritter.write("\n\tPosicion actual: " + j.getCasillaActual().getTipo() + "\tnum: " + casillas.indexOf(j.getCasillaActual()));
-                if (j.getEstado() == Config.EstadosJugadores.PRESO) myWritter.write("\n\tTurnos carcel: " + j.getTurnosCarcel());
-                myWritter.write("\n\tPropiedades: ");
-                for (Casilla c : casillas) {
-                    if (c instanceof Comprable comprable)
-                        if (juego.getAdmJugador().getRegistroComprables().obtenerDuenio(comprable) == j) {
-                            myWritter.write("\n\t" + comprable.getNombre() + "\t color:" + comprable.getColor());
-                            if (comprable.estaHipotecada()) myWritter.write("\tHIPOTECADA");
-                        }
-                }
-
+            Accion accion = listaAccion.get(i);
+            if (accion instanceof AccionCasilla accionCasilla) {
+                Button nuevo = BotonView.crearBoton(accion.getNombre(), ESTILO_BOTON, ESTILO_BOTON_HOVER, e -> {
+                    botonera.getChildren().clear();
+                    setBotonesCasillas(accionCasilla.getOpciones(), accionCasilla);
+                });
+                this.botonera.getChildren().add(nuevo);
+            } else {
+                Button nuevo = BotonView.crearBoton(accion.getNombre(), ESTILO_BOTON, ESTILO_BOTON_HOVER ,e -> {
+                    botonera.getChildren().clear();
+                    accion.accionar();
+                    actualizarDatos();
+                    if (accion instanceof AccionFinal) actualizarBotonesInicio();
+                    else actualizarBotonesAccion();
+                });
+                this.botonera.getChildren().add(nuevo);
             }
-
-            myWritter.close();
-            original.delete();
-            temp.renameTo(original);
-        } catch (IOException e){
-            System.out.println("ocurrio un error");
-            e.printStackTrace();
+        }
+    }
+    public void setBotonesCasillas(List<Casilla> casillas, AccionCasilla accion){
+        for (int i = 0; i < casillas.size() ; i++){
+            Comprable comprable = (Comprable) casillas.get(i);
+            Button nuevo = BotonView.crearBoton(comprable.getNombre(), ESTILO_BOTON, ESTILO_BOTON_HOVER, e -> {
+                botonera.getChildren().clear();
+                accion.setCasilla(comprable);
+                accion.accionar();
+                this.actualizarDatos();
+                this.actualizarBotonesAccion();
+            });
+            this.botonera.getChildren().add(nuevo);
         }
     }
 
-    public static void mostrarInfoTablero(Juego juego, List<Jugador> jugadores, List<Casilla> casillas){
-        try {
-            FileWriter myWritter = new FileWriter("src/main/java/org/monopoly/infoTablero.txt");
+    private List<JugadorView> setJugadores(List<Jugador> jugadores, List<String> nombres){
+        List<JugadorView> jugadorViews = new ArrayList<>();
+        for (int i = 0 ; i<jugadores.size() ; i++){
+            jugadorViews.add(new JugadorView(this.juego ,jugadores.get(i), nombres.get(i)));
+        }
+        return jugadorViews;
+    }
 
-            for (Casilla c : casillas) {
-                myWritter.write( "\n" + casillas.indexOf(c) + ":\t");
-                myWritter.write(  "Tipo: " + c.getTipo());
-                if (c instanceof Comprable comp) {
-                    myWritter.write("\t" + comp.getNombre());
-                    myWritter.write("\t" + comp.getColor());
-                    myWritter.write("\tValor: " + comp.getValorCompra());
-                }
-                if (c instanceof Propiedad p)
-                    myWritter.write("\tConstrucciones: " + p.getCantConstruidos());
-                if (c instanceof Monetaria m)
-                    myWritter.write("\tmonto: " + m.getMonto());
+    private void actualizarJugadores(){
+        this.jugadores.getChildren().remove(0, jugadores.getChildren().size());
+        for (JugadorView jugadorView : this.jugadorViews){
+            jugadorView.actualizarTarjeta();
+            this.jugadores.getChildren().add(jugadorView.getTarjeta());
+        }
+    }
+
+    public void actualizarJugadorActual(){
+        for (JugadorView jugadorView : this.jugadorViews){
+            if (jugadorView.getJugador() == this.juego.getJugadorActual()){
+                this.jugadorActual.setImage(new Image(this.getClass().getResourceAsStream(jugadorView.getImagen())));
             }
+        }
+    }
 
-
-            myWritter.close();
-        } catch (IOException e){
-            System.out.println("ocurrio un error");
-            e.printStackTrace();
+    public void actualizarDados(){
+        List<ImageView> dados = new ArrayList<>(){{
+            add(dado1);
+            add(dado2);
+        }};
+        for (int i = 0 ; i < dados.size() ; i++ ){
+            int dado = this.juego.getAdmMovimientos().getDados()[i];
+            if (dado != 0) dados.get(i).setImage(new Image(this.getClass().getResourceAsStream("/images/"+dado+".png")));
         }
     }
 }

@@ -60,6 +60,10 @@ public abstract class Comprable implements Casilla{
         return this.estaHipotecada;
     }
 
+    public int getValorAlquiler() {
+        return valorRentaBasica;
+    }
+
     @Override
     public int hashCode() {
         return Objects.hash(this.nombre, this.color);

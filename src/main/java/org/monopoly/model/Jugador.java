@@ -1,9 +1,7 @@
 package org.monopoly.model;
 
 import org.monopoly.model.casilla.Casilla;
-import org.monopoly.model.casilla.Comprable;
 
-import java.rmi.server.UnicastRemoteObject;
 import java.util.*;
 
 public class Jugador {

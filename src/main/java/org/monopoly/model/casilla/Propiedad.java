@@ -59,4 +59,9 @@ public class Propiedad extends Comprable{
         this.valorTotalConstruidos -= valorAlquiler;
         this.cantConstruidos--;
     }
+
+    @Override
+    public int getValorAlquiler(){
+        return this.valorRentaBasica + this.valorTotalConstruidos;
+    }
 }
