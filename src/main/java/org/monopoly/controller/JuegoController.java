@@ -106,7 +106,6 @@ public class JuegoController {
     public void actualizarBotonesInicio(){
         setBotonesAccion(this.validadorInicio.accionesPosibles(this.juego.getJugadorActual()));
     }
-//se lo llama cada vez que se llama a actualizar botones
     public void setBotonesAccion(List<Accion> listaAccion){
         for (int i = 0; i < listaAccion.size() ; i++){
             Accion accion = listaAccion.get(i);
