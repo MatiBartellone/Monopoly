@@ -1,6 +1,7 @@
 package org.monopoly.model;
 
 import org.monopoly.model.casilla.Comprable;
+import org.monopoly.model.casilla.Construible;
 import org.monopoly.model.casilla.Propiedad;
 
 import java.util.ArrayList;
@@ -25,14 +26,14 @@ public class AdmJugador {
         this.registroComprables.registrarCompra(comprable, jugador);
     }
 
-    public void construirConstruccion(Jugador jugador, Propiedad propiedad) {
-        this.banco.quitarDinero(jugador, propiedad.getValorConstruir());
-        propiedad.construir();
+    public void construirConstruccion(Jugador jugador, Construible construible) {
+        this.banco.quitarDinero(jugador, construible.getValorConstruir());
+        construible.construir();
     }
 
-    public void venderConstruccion(Jugador jugador, Propiedad propiedad) {
-        this.banco.otorgarDinero(jugador, propiedad.getValorDestruir());
-        propiedad.destruir();
+    public void venderConstruccion(Jugador jugador, Construible construible) {
+        this.banco.otorgarDinero(jugador, construible.getValorDestruir());
+        construible.destruir();
     }
 
     public void hipotecar(Jugador jugador, Comprable comprable) {

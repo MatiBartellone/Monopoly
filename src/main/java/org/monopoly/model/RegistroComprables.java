@@ -64,7 +64,7 @@ public class RegistroComprables {
     public HashMap<Propiedad, Integer> casasPorBarrio(Config.ColoresComprables color){
         HashMap<Propiedad, Integer> tabla = new HashMap<>();
         for (Comprable comprable: this.barrios.get(color)) {
-            if (comprable instanceof Propiedad) {
+            if (comprable.getTipo() == Config.TiposCasillas.PROPIEDAD) {
                 Propiedad propiedad = (Propiedad) comprable;
                 tabla.put(propiedad, propiedad.getCantConstruidos());
             }
