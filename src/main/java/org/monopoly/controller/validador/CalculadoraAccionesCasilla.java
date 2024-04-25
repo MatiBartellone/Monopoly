@@ -14,6 +14,9 @@ import org.monopoly.model.casilla.Propiedad;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import static org.monopoly.model.Config.TiposCasillas.ESTACION;
+import static org.monopoly.model.Config.TiposCasillas.PROPIEDAD;
+
 public class CalculadoraAccionesCasilla implements CalculadoraDeAcciones {
     private Juego juego;
     private RegistroComprables registro;
@@ -27,10 +30,10 @@ public class CalculadoraAccionesCasilla implements CalculadoraDeAcciones {
     public List<Accion> accionesPosibles(Jugador jugador) {
         List<Accion> acciones = new ArrayList<Accion>();
         if (!opcionesComprar(jugador).isEmpty()){acciones.add(new AccionComprar(this.juego, this.opcionesComprar(jugador)));}
-        if (!opcionesConstruirEnPropiedad(jugador).isEmpty()){acciones.add(new AccionConstruir(this.juego, this.opcionesComprar(jugador)));}
-        if (!opcionesVentaConstruccion(jugador).isEmpty()){acciones.add(new AccionVender(this.juego, this.opcionesComprar(jugador)));}
-        if (!opcionesHipoteca(jugador).isEmpty()){acciones.add(new AccionHipotecar(this.juego, this.opcionesComprar(jugador)));}
-        if (!opcionesDeshipoteca(jugador).isEmpty()){acciones.add(new AccionDeshipotecar(this.juego, this.opcionesComprar(jugador)));}
+        if (!opcionesConstruirEnPropiedad(jugador).isEmpty()){acciones.add(new AccionConstruir(this.juego, this.opcionesConstruirEnPropiedad(jugador)));}
+        if (!opcionesVentaConstruccion(jugador).isEmpty()){acciones.add(new AccionVender(this.juego, this.opcionesVentaConstruccion(jugador)));}
+        if (!opcionesHipoteca(jugador).isEmpty()){acciones.add(new AccionHipotecar(this.juego, this.opcionesHipoteca(jugador)));}
+        if (!opcionesDeshipoteca(jugador).isEmpty()){acciones.add(new AccionDeshipotecar(this.juego, this.opcionesDeshipoteca(jugador)));}
         return acciones;
     }
 
@@ -49,7 +52,7 @@ public class CalculadoraAccionesCasilla implements CalculadoraDeAcciones {
     }
 
     private boolean sinConstrucciones(Casilla casilla){
-        if (casilla.getTipo() == Config.TiposCasillas.PROPIEDAD){
+        if (casilla.getTipo() == PROPIEDAD){
             Construible casteada = (Construible) casilla;
             return casteada.getCantConstruidos() == 0;
         }
@@ -69,11 +72,11 @@ public class CalculadoraAccionesCasilla implements CalculadoraDeAcciones {
 
 
     private List<Casilla> opcionesComprar(Jugador jugador) {
-        Comprable comprable = (Comprable) jugador.getCasillaActual();
-        return (jugador.estaSobreCasillaComprable()
-                && !this.registro.tieneDuenio(comprable)
-                && this.juego.alcanzaDinero(comprable.getValorCompra())) ?
-                new ArrayList<>() {{add(comprable);}} : new ArrayList<>();
+        if (jugador.estaSobreCasillaComprable()){
+            Comprable comprable = (Comprable) jugador.getCasillaActual();
+            if (!this.registro.tieneDuenio(comprable) && this.juego.alcanzaDinero(comprable.getValorCompra())){ return new ArrayList<>() {{add(comprable);}}; }
+        }
+        return new ArrayList<>();
     }
 
     private List<Casilla> opcionesConstruirEnPropiedad(Jugador jugador) {

@@ -90,7 +90,7 @@ public class JuegoController {
 
     public List<Accion> opcionesAcciones (Jugador jugador){
         List<Accion> acciones = new ArrayList<>();
-        for (CalculadoraDeAcciones calc : this.validadores){acciones.addAll(calc.accionesPosibles(jugador));}
+        for (CalculadoraDeAcciones calc : this.validadores){ acciones.addAll(calc.accionesPosibles(jugador)); }
         return acciones;
     }
 
@@ -106,11 +106,12 @@ public class JuegoController {
     public void actualizarBotonesInicio(){
         setBotonesAccion(this.validadorInicio.accionesPosibles(this.juego.getJugadorActual()));
     }
-
+//se lo llama cada vez que se llama a actualizar botones
     public void setBotonesAccion(List<Accion> listaAccion){
         for (int i = 0; i < listaAccion.size() ; i++){
             Accion accion = listaAccion.get(i);
-            if (accion instanceof AccionCasilla accionCasilla) {
+            if (accion.getEtapa()== Accion.Etapa.CASILLA) {
+                AccionCasilla accionCasilla = (AccionCasilla) accion;
                 Button nuevo = BotonView.crearBoton(accion.getNombre(), ESTILO_BOTON, ESTILO_BOTON_HOVER, e -> {
                     botonera.getChildren().clear();
                     setBotonesCasillas(accionCasilla.getOpciones(), accionCasilla);
@@ -121,7 +122,7 @@ public class JuegoController {
                     botonera.getChildren().clear();
                     accion.accionar();
                     actualizarDatos();
-                    if (accion instanceof AccionFinal) actualizarBotonesInicio();
+                    if (accion.getEtapa()== Accion.Etapa.FIN) actualizarBotonesInicio();
                     else actualizarBotonesAccion();
                 });
                 this.botonera.getChildren().add(nuevo);
