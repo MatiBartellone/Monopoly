@@ -11,15 +11,13 @@ import org.monopoly.model.casilla.Construible;
 import org.monopoly.model.casilla.Propiedad;
 
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class CalculadoraAccionesCasilla implements CalculadoraDeAcciones{
     private Juego juego;
     private RegistroComprables registro;
+    private List<Propiedad> propiedades;
     private List<Casilla> construccionesDesbloqueadas;
     private List<Casilla> puedeVender;
     private List<Casilla> puedeHipotecar;
@@ -29,16 +27,9 @@ public class CalculadoraAccionesCasilla implements CalculadoraDeAcciones{
         this.juego = juego;
         this.registro = juego.getRegistroComprables();
     }
-
-    @Override
-
-    public void registrarCompraPropiedad(Comprable comprable, Jugador jugador){
-        if (this.registro.poseeSetCompleto(jugador, comprable.getColor())){
-            this.registro.casasPorBarrio(comprable.getColor()).forEach((clave, valor) -> {
-                this.construccionesDesbloqueadas.get(jugador).add(clave);
-            });
-        }
-        this.puedeHipotecar.get(jugador).add(comprable);
+    public List<Accion> accionesPosibles(Jugador jugador){
+        List<Accion> acciones = new ArrayList<Accion>();
+        return acciones;
     }
     private List<Comprable> comprables(Jugador jugadorActual){
         List<Comprable> comprables = new ArrayList<>();
@@ -65,79 +56,6 @@ public class CalculadoraAccionesCasilla implements CalculadoraDeAcciones{
         return ;
     }
 
-    public void registrarConstruccion(Propiedad propiedad, Jugador jugador){
-        this.construccionesDesbloqueadas.get(jugador).remove(propiedad);
-
-        if (this.construccionesDesbloqueadas.get(jugador).isEmpty()){
-            this.registro.casasPorBarrio(propiedad.getColor()).forEach((clave, valor) -> {
-                this.construccionesDesbloqueadas.get(jugador).add(clave);
-            });
-        }
-
-        int contruidos = propiedad.getCantConstruidos();
-        AtomicBoolean habiaConstrucciones = new AtomicBoolean(false);
-        this.registro.casasPorBarrio(propiedad.getColor()).forEach((clave, valor) -> {
-            if (clave.getCantConstruidos() == contruidos-1){
-                this.puedeVender.get(jugador).remove(clave);
-            }
-            if (clave.getCantConstruidos() > 0 && clave != propiedad){
-                habiaConstrucciones.set(true);
-            }
-        });
-
-        if (!habiaConstrucciones.get()){
-            this.registro.casasPorBarrio(propiedad.getColor()).forEach((clave, valor) -> {
-                this.registrarDeshipoteca(clave, jugador);
-            });
-        }
-}
-
-
-    public void registrarVenta(Propiedad propiedad, Jugador jugador){
-        this.puedeVender.get(jugador).remove(propiedad);
-        if (this.puedeVender.get(jugador).isEmpty()){
-            this.registro.casasPorBarrio(propiedad.getColor()).forEach((clave, valor) -> {
-                this.puedeVender.get(jugador).add(clave);
-            });
-        }
-
-        int contruidos = propiedad.getCantConstruidos();
-        AtomicBoolean hayConstrucciones = new AtomicBoolean(false);
-        this.registro.casasPorBarrio(propiedad.getColor()).forEach((clave, valor) -> {
-            if (clave.getCantConstruidos() == contruidos+1){
-                this.construccionesDesbloqueadas.get(jugador).remove(clave);
-            }
-            if (clave.getCantConstruidos() > 0){
-                hayConstrucciones.set(true);
-            }
-        });
-
-        if (!hayConstrucciones.get()){
-            this.registro.casasPorBarrio(propiedad.getColor()).forEach((clave, valor) -> {
-                this.registrarHipoteca(clave, jugador);
-            });
-        }
-    }
-
-    public void registrarHipoteca(Comprable comprable, Jugador jugador){
-        this.puedeHipotecar.get(jugador).remove(comprable);
-        this.deshipotecasDesbloqueadas.get(jugador).add(comprable);
-    }
-    public void registrarDeshipoteca(Comprable comprable, Jugador jugador){
-        this.puedeHipotecar.get(jugador).add(comprable);
-        this.deshipotecasDesbloqueadas.get(jugador).remove(comprable);
-    }
-
-
-    public List<Accion> accionesPosibles(Jugador jugador){
-        List<Accion> acciones = new ArrayList<Accion>();
-        if (!this.opcionesComprar(jugador).isEmpty()){acciones.add(new AccionComprar(this.juego, this.opcionesComprar(jugador),this));}
-        if (!this.construccionesDesbloqueadas.get(jugador).isEmpty()){acciones.add(new AccionConstruir(this.juego, this.opcionesConstruir(jugador),this));}
-        if (!this.puedeVender.get(jugador).isEmpty()){acciones.add(new AccionVender(this.juego, this.opcionesVenta(jugador), this));}
-        if (!this.puedeHipotecar.get(jugador).isEmpty()){acciones.add(new AccionHipotecar(this.juego, this.opcionesHipoteca(jugador), this));}
-        if (!this.deshipotecasDesbloqueadas.get(jugador).isEmpty()){acciones.add(new AccionDeshipotecar(this.juego, this.opcionesDeshipoteca(jugador), this));}
-        return acciones;
-    }
 
     private List<Casilla> opcionesComprar(Jugador jugador){
         Comprable comprable = (Comprable) jugador.getCasillaActual();
@@ -148,10 +66,17 @@ public class CalculadoraAccionesCasilla implements CalculadoraDeAcciones{
                 new ArrayList<>();
     }
 
-    private List<Casilla> opcionesConstruir(Jugador jugador){
+    private List<Casilla> opcionesConstruirEnPropiedad(Jugador jugador){
         List<Casilla> opcionesFiltradas = new ArrayList<>();
-        for(Casilla casilla: this.construccionesDesbloqueadas.get(jugador)){
-            Propiedad propiedad = (Propiedad) casilla;
+        for(Config.ColoresComprables color: Config.ColoresComprables.values()){
+            if(this.registro.poseeSetCompleto(jugador, color)
+            && barrioSinHipotecar(this.registro.casasPorBarrio(color).keySet())
+            ){
+            }
+        }
+
+
+        for(Propiedad propiedad: this.propiedades){
             if (juego.alcanzaDinero(propiedad.getValorConstruir())){
                 opcionesFiltradas.add(propiedad);
             }
@@ -159,9 +84,26 @@ public class CalculadoraAccionesCasilla implements CalculadoraDeAcciones{
         return opcionesFiltradas;
     }
 
-    private List<Casilla> opcionesVenta(Jugador jugador){
-        return this.puedeVender.get(jugador);
+    private boolean barrioSinHipotecar(Set<Propiedad> propiedades){
+        for (Propiedad propiedad: propiedades){
+            if (propiedad.estaHipotecada()){
+                return false;
+            }
+        }
+        return true;
     }
+
+
+    private List<Casilla> opcionesVentaConstruccion(Jugador jugador){
+        List<Casilla> opcionesFiltradas = new ArrayList<>();
+        for(Propiedad propiedad: this.propiedades){
+            if (propiedad.getCantConstruidos()>0
+                    && juego.alcanzaDinero(propiedad.getValorConstruir())
+                    && !propiedad.estaHipotecada()){
+                opcionesFiltradas.add(propiedad);
+        return opcionesFiltradas;
+    }
+
 
 
 }
