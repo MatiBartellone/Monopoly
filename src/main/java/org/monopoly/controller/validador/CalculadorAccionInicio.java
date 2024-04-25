@@ -3,7 +3,6 @@ package org.monopoly.controller.validador;
 import org.monopoly.controller.accion.Accion;
 import org.monopoly.controller.accion.AccionPagarFianza;
 import org.monopoly.controller.accion.AccionTirarDados;
-import org.monopoly.controller.validador.Validador;
 import org.monopoly.model.Config;
 import org.monopoly.model.Juego;
 import org.monopoly.model.Jugador;

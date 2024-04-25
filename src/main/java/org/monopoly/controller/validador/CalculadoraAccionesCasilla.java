@@ -7,6 +7,7 @@ import org.monopoly.model.Jugador;
 import org.monopoly.model.RegistroComprables;
 import org.monopoly.model.casilla.Casilla;
 import org.monopoly.model.casilla.Comprable;
+import org.monopoly.model.casilla.Construible;
 import org.monopoly.model.casilla.Propiedad;
 
 
@@ -25,33 +26,41 @@ public class CalculadoraAccionesCasilla implements CalculadoraDeAcciones {
 
     public List<Accion> accionesPosibles(Jugador jugador) {
         List<Accion> acciones = new ArrayList<Accion>();
+        if (!opcionesComprar(jugador).isEmpty()){acciones.add(new AccionComprar(this.juego, this.opcionesComprar(jugador)));}
+        if (!opcionesConstruirEnPropiedad(jugador).isEmpty()){acciones.add(new AccionConstruir(this.juego, this.opcionesComprar(jugador)));}
+        if (!opcionesVentaConstruccion(jugador).isEmpty()){acciones.add(new AccionVender(this.juego, this.opcionesComprar(jugador)));}
+        if (!opcionesHipoteca(jugador).isEmpty()){acciones.add(new AccionHipotecar(this.juego, this.opcionesComprar(jugador)));}
+        if (!opcionesDeshipoteca(jugador).isEmpty()){acciones.add(new AccionDeshipotecar(this.juego, this.opcionesComprar(jugador)));}
         return acciones;
     }
 
-    private List<Casilla> comprables(Jugador jugadorActual) {
-        List<Casilla> comprables = new ArrayList<>();
-        Map<Comprable, Jugador> comprablesJugadores = this.registro.getTablaPropiedades();
-        comprablesJugadores.forEach((comprable, jugador) -> {
-            if (jugador == jugadorActual) {
-                comprables.add(comprable);
-            }
-        });
-        return comprables;
-    }
+
+    //CALCULADORAS DE ACCIONES
 
     private List<Casilla> opcionesHipoteca(Jugador jugador) {
         List<Casilla> opcionesFiltradas = new ArrayList<>();
-        List<Casilla> comprables = this.comprables(jugador);
-        for (Comprable comprable : this.registro.hipotecadas(jugador)) {
-            comprables.remove(comprable);
+        for (Comprable comprable : this.comprables(jugador)) {
+            if (!comprable.estaHipotecada()
+            && sinConstrucciones(comprable)){
+                opcionesFiltradas.add(comprable);
+            }
         }
         return opcionesFiltradas;
     }
 
+    private boolean sinConstrucciones(Casilla casilla){
+        if (casilla.getTipo() == Config.TiposCasillas.PROPIEDAD){
+            Construible casteada = (Construible) casilla;
+            return casteada.getCantConstruidos() == 0;
+        }
+        return true;
+    }
+
     private List<Casilla> opcionesDeshipoteca(Jugador jugador) {
         List<Casilla> opcionesFiltradas = new ArrayList<>();
-        for (Comprable comprable : this.registro.hipotecadas(jugador)) {
-            if (juego.alcanzaDinero(comprable.getValorCompra())) {
+        for (Comprable comprable : this.comprables(jugador)) {
+            if (juego.alcanzaDinero(comprable.getValorHipoteca())
+            && comprable.estaHipotecada()) {
                 opcionesFiltradas.add(comprable);
             }
         }
@@ -64,18 +73,15 @@ public class CalculadoraAccionesCasilla implements CalculadoraDeAcciones {
         return (jugador.estaSobreCasillaComprable()
                 && !this.registro.tieneDuenio(comprable)
                 && juego.alcanzaDinero(comprable.getValorCompra())) ?
-                new ArrayList<>() {{
-                    add(comprable);
-                }} :
-                new ArrayList<>();
+                new ArrayList<>() {{add(comprable);}} : new ArrayList<>();
     }
 
     private List<Casilla> opcionesConstruirEnPropiedad(Jugador jugador) {
         List<Casilla> opcionesFiltradas = new ArrayList<>();
-        for (Config.ColoresComprables color : Config.ColoresComprables.values()) {
-            if (this.registro.poseeSetCompleto(jugador, color)
-                    && barrioSinHipotecar(this.registro.casasPorBarrio(color).keySet())) {
-                opcionesFiltradas.addAll(this.mantieneDiferencia(color, 1));
+        for (Config.ColoresComprables color : Config.ColoresComprables.values()) { //Nos fijamos Barrio por Barrio
+            if (this.registro.poseeSetCompleto(jugador, color)                     //Si tiene todo el Barrio
+                    && barrioSinHipotecar(this.registro.casasPorBarrio(color).keySet())) {//No tiene ninguna hipoteca en el Barrio
+                opcionesFiltradas.addAll(this.mantieneDiferenciaConst(color, 1));//Se filtra las que cumplirian con la regla diferencia de 1
             }
         }
         for (Casilla casilla: opcionesFiltradas){
@@ -87,7 +93,35 @@ public class CalculadoraAccionesCasilla implements CalculadoraDeAcciones {
         return opcionesFiltradas;
     }
 
-    private List<Casilla> mantieneDiferencia(Config.ColoresComprables color, int diferencia) {
+    private List<Casilla> opcionesVentaConstruccion(Jugador jugador){
+        List<Casilla> opcionesFiltradas = new ArrayList<>();
+        for (Config.ColoresComprables color : Config.ColoresComprables.values()) {
+            if (this.registro.poseeSetCompleto(jugador, color)
+                    && barrioSinHipotecar(this.registro.casasPorBarrio(color).keySet())) {
+                opcionesFiltradas.addAll(this.mantieneDiferenciaVenta(color, 1));
+            }
+        }
+        for (Casilla casilla: opcionesFiltradas){
+            Propiedad propiedad = (Propiedad) casilla;
+            if (!juego.alcanzaDinero(propiedad.getValorConstruir())
+            || !(propiedad.getCantConstruidos()>0)){
+                opcionesFiltradas.remove(propiedad);
+            }
+        }
+        return opcionesFiltradas;
+    }
+
+    private List<Comprable> comprables(Jugador jugadorActual) {
+        List<Comprable> comprables = new ArrayList<>();
+        Map<Comprable, Jugador> comprablesJugadores = this.registro.getTablaPropiedades();
+        comprablesJugadores.forEach((comprable, jugador) -> {
+            if (jugador == jugadorActual) {
+                comprables.add(comprable);
+            }
+        });
+        return comprables;
+    }
+    private List<Casilla> mantieneDiferenciaConst(Config.ColoresComprables color, int diferencia) {
         AtomicInteger min = new AtomicInteger(Integer.MAX_VALUE);
         this.registro.casasPorBarrio(color).forEach((comprable, cant) -> {
             if (cant< min.get()) {
@@ -127,14 +161,5 @@ public class CalculadoraAccionesCasilla implements CalculadoraDeAcciones {
         });
         return mantienenDif;
     }
-
-    private List<Casilla> opcionesVentaConstruccion(Jugador jugador){
-        List<Casilla> opcion-esFiltradas = new ArrayList<>();
-        for(Propiedad propiedad: this.propiedades){
-            if (propiedad.getCantConstruidos()>0
-                    && juego.alcanzaDinero(propiedad.getValorConstruir())
-                    && !propiedad.estaHipotecada()){
-                opcionesFiltradas.add(propiedad);
-        return opcionesFiltradas;
-    }
 }
+
