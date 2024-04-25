@@ -25,7 +25,7 @@ import java.util.List;
 
 public class JuegoController {
     private Juego juego;
-    private CalculadoraDeAcciones validadorInicio;
+    private CalculadoraDeAcciones calculadoraInicio;
 
     private List<JugadorView> jugadorViews;
 
@@ -54,12 +54,12 @@ public class JuegoController {
     private static final String ESTILO_BOTON = "-fx-min-width: 150; -fx-min-height: 50; -fx-border-radius: 25; -fx-background-radius: 25; -fx-background-color: #F8C471; -fx-border-color: #E59866; -fx-border-width: 3;";
     private static final String ESTILO_BOTON_HOVER = "-fx-min-width: 150; -fx-min-height: 50; -fx-border-radius: 25; -fx-background-radius: 25; -fx-background-color: #A04000; -fx-border-color: #E59866; -fx-border-width: 3;";
 
-    private List<CalculadoraDeAcciones> validadores;
+    private List<CalculadoraDeAcciones> calculadoras;
 
     public void setJuego(Juego juego){
         this.juego = juego;
-        this.validadorInicio = new CalculadorAccionInicio(this.juego);
-        this.validadores = new ArrayList<>(){{
+        this.calculadoraInicio = new CalculadorAccionInicio(this.juego);
+        this.calculadoras = new ArrayList<>(){{
             add(new CalculadoraAccionesCasilla(juego));
             add(new CalculadorAccionFinal(juego));
         }};
@@ -90,7 +90,7 @@ public class JuegoController {
 
     public List<Accion> opcionesAcciones (Jugador jugador){
         List<Accion> acciones = new ArrayList<>();
-        for (CalculadoraDeAcciones calc : this.validadores){acciones.addAll(calc.accionesPosibles(jugador));}
+        for (CalculadoraDeAcciones calc : this.calculadoras){acciones.addAll(calc.accionesPosibles(jugador));}
         return acciones;
     }
 
@@ -104,28 +104,35 @@ public class JuegoController {
         setBotonesAccion(this.opcionesAcciones(this.juego.getJugadorActual()));
     }
     public void actualizarBotonesInicio(){
-        setBotonesAccion(this.validadorInicio.accionesPosibles(this.juego.getJugadorActual()));
+        setBotonesAccion(this.calculadoraInicio.accionesPosibles(this.juego.getJugadorActual()));
+    }
+
+    private void terminarJuego(){
+
     }
 
     public void setBotonesAccion(List<Accion> listaAccion){
         for (int i = 0; i < listaAccion.size() ; i++){
             Accion accion = listaAccion.get(i);
+            Button nuevo;
             if (accion instanceof AccionCasilla accionCasilla) {
-                Button nuevo = BotonView.crearBoton(accion.getNombre(), ESTILO_BOTON, ESTILO_BOTON_HOVER, e -> {
+                nuevo = BotonView.crearBoton(accion.getNombre(), ESTILO_BOTON, ESTILO_BOTON_HOVER, e -> {
                     botonera.getChildren().clear();
                     setBotonesCasillas(accionCasilla.getOpciones(), accionCasilla);
                 });
-                this.botonera.getChildren().add(nuevo);
             } else {
-                Button nuevo = BotonView.crearBoton(accion.getNombre(), ESTILO_BOTON, ESTILO_BOTON_HOVER ,e -> {
+                nuevo = BotonView.crearBoton(accion.getNombre(), ESTILO_BOTON, ESTILO_BOTON_HOVER, e -> {
                     botonera.getChildren().clear();
                     accion.accionar();
                     actualizarDatos();
+                    if ((accion instanceof AccionEntrarEnQuiebra || accion instanceof AccionTirarDados) && this.juego.terminado()) {
+                        this.terminarJuego();// cerrar escena?
+                    }
                     if (accion instanceof AccionFinal) actualizarBotonesInicio();
                     else actualizarBotonesAccion();
                 });
-                this.botonera.getChildren().add(nuevo);
             }
+            this.botonera.getChildren().add(nuevo);
         }
     }
     public void setBotonesCasillas(List<Casilla> casillas, AccionCasilla accion){
