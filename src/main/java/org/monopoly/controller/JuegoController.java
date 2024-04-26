@@ -1,11 +1,16 @@
 package org.monopoly.controller;
 
 import javafx.fxml.FXML;
+import javafx.geometry.Pos;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import org.monopoly.controller.accion.*;
 import org.monopoly.controller.validador.CalculadoraDeAcciones;
@@ -18,7 +23,6 @@ import org.monopoly.model.Jugador;
 import org.monopoly.model.casilla.Casilla;
 import org.monopoly.model.casilla.Comprable;
 import org.monopoly.view.BotonView;
-import org.monopoly.view.CasillaView;
 import org.monopoly.view.JugadorView;
 import org.monopoly.view.TableroView;
 
@@ -116,6 +120,27 @@ public class JuegoController {
     }
 
     private void terminarJuego(){
+
+        Label titulo = new Label("!!!GANADOR!!!");
+        titulo.setMinSize(300, 80);
+        titulo.setAlignment(Pos.CENTER);
+        titulo.setStyle("-fx-background-color: #8FBC72;");
+        titulo.setFont(new Font("Arial", 20));
+        Label img = new Label();
+        ImageView imagen = new ImageView(new Image(getClass().getResourceAsStream("/images/"+this.juego.ganador().getColor().toString()+".png")));
+        img.setGraphic(imagen);
+        imagen.setFitHeight(100);
+        imagen.setFitWidth(100);
+        VBox contImg = new VBox(img);
+        VBox.setVgrow(contImg, Priority.ALWAYS);
+        contImg.setAlignment(Pos.CENTER);
+        VBox contenedor = new VBox(titulo,contImg);
+        contenedor.setMinSize(300, 400);
+        contenedor.setStyle("-fx-background-color: #BFDBAE;");
+        Scene scene = new Scene(contenedor);
+        Stage stageFinal = new Stage();
+        stageFinal.setScene(scene);
+        stageFinal.show();
         this.stage.close();
     }
     public void setBotonesAccion(List<Accion> listaAccion){

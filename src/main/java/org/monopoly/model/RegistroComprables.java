@@ -1,14 +1,10 @@
 package org.monopoly.model;
-import org.monopoly.model.Config;
-import org.monopoly.model.Juego;
-import org.monopoly.model.Jugador;
 import org.monopoly.model.casilla.Comprable;
 import org.monopoly.model.casilla.Propiedad;
-
-import java.util.ArrayList;
 import java.util.List;
 import java.util.HashMap;
 import java.util.Map;
+
 public class RegistroComprables {
     private Map<Comprable, Jugador> tablaPropiedades;
     private Map<Config.ColoresComprables, List<Comprable>> barrios;
