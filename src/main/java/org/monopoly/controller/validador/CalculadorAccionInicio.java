@@ -6,7 +6,6 @@ import org.monopoly.controller.accion.AccionTirarDados;
 import org.monopoly.model.Config;
 import org.monopoly.model.Juego;
 import org.monopoly.model.Jugador;
-
 import java.util.ArrayList;
 import java.util.List;
 

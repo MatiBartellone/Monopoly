@@ -1,19 +1,15 @@
 package org.monopoly.view;
 
-import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.stage.Stage;
 import org.monopoly.model.Jugador;
 import org.monopoly.model.RegistroComprables;
 import org.monopoly.model.casilla.Comprable;
 import org.monopoly.model.casilla.Propiedad;
-
-import javax.swing.*;
 import java.io.IOException;
 
 public class PropiedadesView {

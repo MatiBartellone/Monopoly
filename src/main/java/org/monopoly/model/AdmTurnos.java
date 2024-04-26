@@ -1,7 +1,6 @@
 package org.monopoly.model;
 
 import org.monopoly.model.casilla.Casilla;
-
 import java.util.*;
 
 public class AdmTurnos {

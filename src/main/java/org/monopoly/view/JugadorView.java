@@ -1,9 +1,6 @@
 package org.monopoly.view;
 
-import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -13,13 +10,9 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
-import javafx.stage.Stage;
-import org.monopoly.MainJavaFx;
 import org.monopoly.model.Config;
 import org.monopoly.model.Juego;
 import org.monopoly.model.Jugador;
-
-import java.io.IOException;
 
 public class JugadorView {
 

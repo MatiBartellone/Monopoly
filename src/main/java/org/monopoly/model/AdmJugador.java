@@ -3,7 +3,6 @@ package org.monopoly.model;
 import org.monopoly.model.casilla.Comprable;
 import org.monopoly.model.casilla.Construible;
 import org.monopoly.model.casilla.Propiedad;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;

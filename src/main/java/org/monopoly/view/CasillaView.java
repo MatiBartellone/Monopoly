@@ -1,6 +1,5 @@
 package org.monopoly.view;
 
-import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
@@ -15,7 +14,6 @@ import javafx.stage.Stage;
 import org.monopoly.model.Config;
 import org.monopoly.model.Jugador;
 import org.monopoly.model.casilla.*;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;

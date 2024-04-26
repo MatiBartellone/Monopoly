@@ -1,7 +1,6 @@
 package org.monopoly.model;
 
 import org.monopoly.model.casilla.*;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
