@@ -58,6 +58,7 @@ public class AdmJugador {
     public void entrarEnQuiebra(Jugador jugador) {
         jugador.setEstado(Config.EstadosJugadores.QUEBRADO);
         this.banco.quitarDinero(jugador, this.banco.consultarDinero(jugador));
+        this.registroComprables.muerteJugador(jugador);
     }
 
     public void entrarEnCrisis(Jugador jugador) {

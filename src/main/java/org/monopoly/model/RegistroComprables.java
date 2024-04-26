@@ -77,6 +77,10 @@ public class RegistroComprables {
     public void muerteJugador(Jugador jugador) {
         this.tablaPropiedades.forEach((comprable, dueño) -> {
             if (dueño == jugador) {
+                if (comprable.getTipo() == Config.TiposCasillas.PROPIEDAD){
+                    Propiedad propiedad = (Propiedad) comprable;
+                    propiedad.demolerConstrucciones();
+                }
                 this.tablaPropiedades.remove(comprable);
             }
         });

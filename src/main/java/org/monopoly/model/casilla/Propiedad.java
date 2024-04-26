@@ -61,6 +61,10 @@ public class Propiedad extends Comprable implements Construible{
         this.cantConstruidos--;
     }
 
+    public void demolerConstrucciones(){
+        this.cantConstruidos = 0;
+    }
+
     @Override
     public int getValorAlquiler(){
         return this.valorRentaBasica + this.valorTotalConstruidos;

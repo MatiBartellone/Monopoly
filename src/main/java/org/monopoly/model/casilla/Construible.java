@@ -6,4 +6,5 @@ public interface Construible {
     public int getCantConstruidos();
     public int getValorConstruir();
     public int getValorDestruir();
+    public void demolerConstrucciones();
 }
