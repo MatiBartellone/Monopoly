@@ -1,8 +1,5 @@
 package org.monopoly.controller.accion;
 
-import org.monopoly.controller.accion.AccionInicio;
-
-
 import org.monopoly.model.Juego;
 
 public class AccionPagarFianza extends AccionInicio{

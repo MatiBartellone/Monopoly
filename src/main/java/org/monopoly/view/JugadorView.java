@@ -59,7 +59,10 @@ public class JugadorView {
         imagen.setFitWidth(70);
         Label marco = new Label();
         marco.setAlignment(Pos.CENTER);
-        marco.setStyle("-fx-min-height: 110; -fx-min-width: 115; -fx-background-color: white; -fx-border-color: grey; -fx-border-width: 2.5;");
+        String colorEnJuego = " -fx-background-color: lightgrey";
+        String colorCrisis = " -fx-background-color: orange";
+        String colorQuebrado = " -fx-background-color: #A04000";
+        marco.setStyle("-fx-min-height: 110; -fx-min-width: 115;; -fx-border-color: grey; -fx-border-width: 2.5;");
         marco.setGraphic(imagen);
         AnchorPane pane = new AnchorPane();
         Button propiedades = BotonView.crearBoton("Propiedades", ESTILO_BOTON, ESTILO_BOTON_HOVER, e -> {
@@ -69,18 +72,21 @@ public class JugadorView {
         });
         VBox contenedorBoton = new VBox(propiedades);
         contenedorBoton.setAlignment(Pos.CENTER);
-        contenedorBoton.setStyle("-fx-min-height: 55; -fx-min-width: 90; -fx-background-color: lightgrey; -fx-border-color: grey; -fx-border-width: 2.5;");
+        contenedorBoton.setStyle("-fx-min-height: 55; -fx-min-width: 90;"+((jugador.getEstado() == Config.EstadosJugadores.CRISIS) ?
+                colorCrisis : (jugador.getEstado() == Config.EstadosJugadores.QUEBRADO) ? colorQuebrado : colorEnJuego ) +"; -fx-border-color: grey; -fx-border-width: 2.5;");
 
         VBox vbox1 = new VBox(marco, contenedorBoton);
 
 
         Label labelNombre = new Label(nombre);
-        labelNombre.setStyle("-fx-min-height: 40; -fx-min-width: 155; -fx-background-color: lightgrey; -fx-border-color: grey; -fx-border-width: 2.5;");
+        labelNombre.setStyle("-fx-min-height: 40; -fx-min-width: 155; "+((jugador.getEstado() == Config.EstadosJugadores.CRISIS) ?
+                               colorCrisis : (jugador.getEstado() == Config.EstadosJugadores.QUEBRADO) ? colorQuebrado : colorEnJuego ) +"; -fx-border-color: grey; -fx-border-width: 2.5;");
         labelNombre.setAlignment(Pos.CENTER);
 
         Label datos = new Label();
         datos.setText(this.mostrarInfoJugadores(this.juego, this.jugador));
-        datos.setStyle(" -fx-min-height: 125; -fx-min-width: 155; -fx-background-color: lightgrey; -fx-border-color: grey; -fx-border-width: 2.5;");
+        datos.setStyle(" -fx-min-height: 125; -fx-min-width: 155; "+((jugador.getEstado() == Config.EstadosJugadores.CRISIS) ?
+                               colorCrisis : (jugador.getEstado() == Config.EstadosJugadores.QUEBRADO) ? colorQuebrado : colorEnJuego ) +"; -fx-border-color: grey; -fx-border-width: 2.5;");
         datos.setTextAlignment(TextAlignment.LEFT);
         datos.setAlignment(Pos.CENTER);
         datos.setFont(new Font("Arial", 15));
@@ -89,7 +95,8 @@ public class JugadorView {
 
         VBox vbox2 = new VBox(labelNombre, datos, pane);
         HBox tarjeta = new HBox(vbox1, vbox2);
-        tarjeta.setStyle(" -fx-pref-width: 275.0; -fx-min-width: 275; -fx-max-width: 275.0; -fx-max-height: 170.0; -fx-min-height: 170.0; -fx-background-color: lightgrey; -fx-border-color: grey; -fx-border-width: 2.5 ");
+        tarjeta.setStyle(" -fx-pref-width: 275.0; -fx-min-width: 275; -fx-max-width: 275.0; -fx-max-height: 170.0; -fx-min-height: 170.0; "+((jugador.getEstado() == Config.EstadosJugadores.CRISIS) ?
+                                colorCrisis : (jugador.getEstado() == Config.EstadosJugadores.QUEBRADO) ? colorQuebrado : colorEnJuego ) +"; -fx-border-color: grey; -fx-border-width: 2.5 ");
         return tarjeta;
     }
 

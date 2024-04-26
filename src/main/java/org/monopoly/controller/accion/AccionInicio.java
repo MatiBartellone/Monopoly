@@ -1,6 +1,5 @@
 package org.monopoly.controller.accion;
 
-import org.monopoly.controller.accion.Accion;
 import org.monopoly.model.Juego;
 
 abstract class AccionInicio implements Accion {
