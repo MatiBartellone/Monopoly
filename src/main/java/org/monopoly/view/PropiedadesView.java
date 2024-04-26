@@ -6,6 +6,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Paint;
 import javafx.stage.Stage;
+import org.monopoly.model.Config;
 import org.monopoly.model.Jugador;
 import org.monopoly.model.RegistroComprables;
 import org.monopoly.model.casilla.Comprable;
@@ -50,7 +51,8 @@ public class PropiedadesView {
                 Label color = new Label();
                 color.setBackground(new Background(new BackgroundFill(Paint.valueOf(comprable.getColor().toString()), null, null)));
                 Label propiedad = new Label("| "+ comprable.getNombre().toUpperCase() + " |\t   | HIPOTECADA: " + ((comprable.estaHipotecada()) ? " SI |" : " NO |\t  | ALQUILER: " + comprable.getValorAlquiler()+" |" ));
-                if (comprable instanceof Propiedad p) propiedad.setText(propiedad.getText() + "\t| CONST.: " + p.getCantConstruidos() +" |" );
+                if (comprable.getTipo() == Config.TiposCasillas.PROPIEDAD)
+                    propiedad.setText(propiedad.getText() + "\t| CONST.: " + ((Propiedad)comprable).getCantConstruidos() +" |" );
                 color.setStyle("-fx-min-width: 80; -fx-min-height: 50;-fx-border-color: grey; -fx-border-width: 2px;");
                 propiedad.setStyle("-fx-min-width: 616; -fx-min-height: 50;-fx-border-color: grey; -fx-border-width: 2px;");
                 HBox marco = new HBox(color, propiedad);
