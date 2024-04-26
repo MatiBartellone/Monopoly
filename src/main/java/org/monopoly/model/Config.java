@@ -37,6 +37,7 @@ public class Config {
         construcciones.add(new Construccion(TiposConstrucciones.CASA, valorCasa));
         construcciones.add(new Construccion(TiposConstrucciones.CASA, valorCasa));
         construcciones.add(new Construccion(TiposConstrucciones.HOTEL, valorHotel));
+        return construcciones;
     }
     public static CasillaSinEfecto carcel = new CasillaSinEfecto(TiposCasillas.CARCEL);
     public static List<Propiedad> ListaPropiedades = new ArrayList<Propiedad>(){{
