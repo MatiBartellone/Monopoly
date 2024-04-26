@@ -1,6 +1,8 @@
 package org.monopoly.model;
 import org.monopoly.model.casilla.Comprable;
 import org.monopoly.model.casilla.Propiedad;
+
+import java.util.ArrayList;
 import java.util.List;
 import java.util.HashMap;
 import java.util.Map;
@@ -75,15 +77,19 @@ public class RegistroComprables {
     }
 
     public void muerteJugador(Jugador jugador) {
-        this.tablaPropiedades.forEach((comprable, dueño) -> {
-            if (dueño == jugador) {
-                if (comprable.getTipo() == Config.TiposCasillas.PROPIEDAD){
+        List<Comprable> comprablesABorrar = new ArrayList<>();
+        for(Comprable comprable : this.tablaPropiedades.keySet()) {
+            if (this.tablaPropiedades.get(comprable) == jugador) {
+                if (comprable.getTipo() == Config.TiposCasillas.PROPIEDAD) {
                     Propiedad propiedad = (Propiedad) comprable;
                     propiedad.demolerConstrucciones();
                 }
-                this.tablaPropiedades.remove(comprable);
+                comprablesABorrar.add(comprable);
             }
-        });
-        this.tablaColoresJugadores.remove(jugador);
+        }
+        for (Comprable comprable : comprablesABorrar) {
+            this.tablaPropiedades.remove(comprable);
+        }
+
     }
 }

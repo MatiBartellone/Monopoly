@@ -77,6 +77,9 @@ public class JuegoController {
             add("THIAGO");
             add("IVAN");
             add("ANDREA");
+            add("ANDREA");
+            add("ANDREA");
+            add("ANDREA");
         }};
 
         this.jugadorViews = setJugadores(this.juego.getJugadores(), nombres);

@@ -57,7 +57,7 @@ public class SeleccionadorController {
     }
 
     private void setearBotones(){
-        for (int i = 2 ; i <= 4 ; i++){
+        for (int i = 2 ; i <= Config.MaxJugadores ; i++){
             String texto = i + " Jugadores";
             int cantJugadores = i;
             botonera1.getChildren().add(BotonView.crearBoton(texto, ESTILO_BOTON, ESTILO_BOTON_HOVER, e -> {

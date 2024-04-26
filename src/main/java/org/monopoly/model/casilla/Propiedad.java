@@ -62,7 +62,9 @@ public class Propiedad extends Comprable implements Construible{
     }
 
     public void demolerConstrucciones(){
-        this.cantConstruidos = 0;
+        while (this.cantConstruidos > 0){
+            this.destruir();
+        }
     }
 
     @Override
