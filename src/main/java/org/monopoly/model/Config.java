@@ -20,9 +20,9 @@ public class Config {
     public static int MaxCasas = 4;
     public static int MaxHoteles = 1;
     public static int MaxConstrucciones = MaxCasas + MaxHoteles;
-    public static int DiferenciaContrucciones;
+    public static int DiferenciaContrucciones = 1;
     public static int PagoPorSalida = 200;
-    public static int CantDados;
+    public static int CantDados = 2;
 
     public static List<Construccion> construcciones(int valorCasa, int valorHotel){
         List<Construccion> construcciones = new ArrayList<>();
