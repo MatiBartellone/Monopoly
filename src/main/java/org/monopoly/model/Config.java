@@ -30,30 +30,38 @@ public class Config {
         add(new Construccion(TiposConstrucciones.CASA, 50));
         add(new Construccion(TiposConstrucciones.HOTEL, 50));
     }};
+    public static List<Construccion> construcciones(int valorCasa, int valorHotel){
+        List<Construccion> construcciones = new ArrayList<>();
+        construcciones.add(new Construccion(TiposConstrucciones.CASA, valorCasa));
+        construcciones.add(new Construccion(TiposConstrucciones.CASA, valorCasa));
+        construcciones.add(new Construccion(TiposConstrucciones.CASA, valorCasa));
+        construcciones.add(new Construccion(TiposConstrucciones.CASA, valorCasa));
+        construcciones.add(new Construccion(TiposConstrucciones.HOTEL, valorHotel));
+    }
     public static CasillaSinEfecto carcel = new CasillaSinEfecto(TiposCasillas.CARCEL);
     public static List<Propiedad> ListaPropiedades = new ArrayList<Propiedad>(){{
-        add(new Propiedad(TiposCasillas.PROPIEDAD, "Mediterraneo", 60, 4, ColoresComprables.brown,  construcciones, 50));
-        add(new Propiedad(TiposCasillas.PROPIEDAD, "Baltco", 60, 6, ColoresComprables.brown,  construcciones, 50));
-        add(new Propiedad(TiposCasillas.PROPIEDAD, "Central", 100, 10, ColoresComprables.lightblue,  construcciones, 50));
-        add(new Propiedad(TiposCasillas.PROPIEDAD, "Vermont", 100, 12, ColoresComprables.lightblue, construcciones, 50));
-        add(new Propiedad(TiposCasillas.PROPIEDAD, "Connecticut", 120, 16, ColoresComprables.lightblue, construcciones, 50));
-        add(new Propiedad(TiposCasillas.PROPIEDAD, "St.Charles", 140, 20, ColoresComprables.pink, construcciones, 100));
-        add(new Propiedad(TiposCasillas.PROPIEDAD, "States", 140, 22, ColoresComprables.pink, construcciones, 150));
-        add(new Propiedad(TiposCasillas.PROPIEDAD, "Virginia", 160, 28, ColoresComprables.pink, construcciones, 150));
-        add(new Propiedad(TiposCasillas.PROPIEDAD, "St.James", 180, 30, ColoresComprables.orange, construcciones, 150));
-        add(new Propiedad(TiposCasillas.PROPIEDAD, "Tennesse", 180, 32, ColoresComprables.orange, construcciones, 150));
-        add(new Propiedad(TiposCasillas.PROPIEDAD, "New York", 200, 36, ColoresComprables.orange, construcciones, 150));
-        add(new Propiedad(TiposCasillas.PROPIEDAD, "Kentucky", 220, 38, ColoresComprables.red, construcciones, 150));
-        add(new Propiedad(TiposCasillas.PROPIEDAD, "Indiana", 220, 40, ColoresComprables.red, construcciones, 150));
-        add(new Propiedad(TiposCasillas.PROPIEDAD, "Illinois", 240, 44, ColoresComprables.red, construcciones, 150));
-        add(new Propiedad(TiposCasillas.PROPIEDAD, "Atlantic", 260, 46, ColoresComprables.yellow, construcciones, 150));
-        add(new Propiedad(TiposCasillas.PROPIEDAD, "Ventor", 260, 48, ColoresComprables.yellow, construcciones, 150));
-        add(new Propiedad(TiposCasillas.PROPIEDAD, "Marvin", 280, 52, ColoresComprables.yellow, construcciones, 150));
-        add(new Propiedad(TiposCasillas.PROPIEDAD, "Pacific", 300, 54, ColoresComprables.green, construcciones, 200));
-        add(new Propiedad(TiposCasillas.PROPIEDAD, "North Carolina", 300, 56, ColoresComprables.green, construcciones, 200));
-        add(new Propiedad(TiposCasillas.PROPIEDAD, "Pennsylvania", 320, 60, ColoresComprables.green, construcciones, 200));
-        add(new Propiedad(TiposCasillas.PROPIEDAD, "Park Place", 350, 65, ColoresComprables.blue, construcciones, 200));
-        add(new Propiedad(TiposCasillas.PROPIEDAD, "Boardwalk", 400, 70, ColoresComprables.blue, construcciones, 200));
+        add(new Propiedad(TiposCasillas.PROPIEDAD, "Mediterraneo", 60, 4, ColoresComprables.brown,  construcciones(50, 100), 50));
+        add(new Propiedad(TiposCasillas.PROPIEDAD, "Baltco", 60, 6, ColoresComprables.brown,  construcciones(50, 100), 50));
+        add(new Propiedad(TiposCasillas.PROPIEDAD, "Central", 100, 10, ColoresComprables.lightblue,  construcciones(50, 100), 50));
+        add(new Propiedad(TiposCasillas.PROPIEDAD, "Vermont", 100, 12, ColoresComprables.lightblue, construcciones(50, 100), 50));
+        add(new Propiedad(TiposCasillas.PROPIEDAD, "Connecticut", 120, 16, ColoresComprables.lightblue, construcciones(50, 100), 50));
+        add(new Propiedad(TiposCasillas.PROPIEDAD, "St.Charles", 140, 20, ColoresComprables.pink, construcciones(50, 100), 100));
+        add(new Propiedad(TiposCasillas.PROPIEDAD, "States", 140, 22, ColoresComprables.pink, construcciones(50, 100), 150));
+        add(new Propiedad(TiposCasillas.PROPIEDAD, "Virginia", 160, 28, ColoresComprables.pink, construcciones(50, 100), 150));
+        add(new Propiedad(TiposCasillas.PROPIEDAD, "St.James", 180, 30, ColoresComprables.orange, construcciones(50, 100), 150));
+        add(new Propiedad(TiposCasillas.PROPIEDAD, "Tennesse", 180, 32, ColoresComprables.orange, construcciones(50, 100), 150));
+        add(new Propiedad(TiposCasillas.PROPIEDAD, "New York", 200, 36, ColoresComprables.orange, construcciones(50, 100), 150));
+        add(new Propiedad(TiposCasillas.PROPIEDAD, "Kentucky", 220, 38, ColoresComprables.red, construcciones(50, 100), 150));
+        add(new Propiedad(TiposCasillas.PROPIEDAD, "Indiana", 220, 40, ColoresComprables.red, construcciones(50, 100), 150));
+        add(new Propiedad(TiposCasillas.PROPIEDAD, "Illinois", 240, 44, ColoresComprables.red, construcciones(50, 100), 150));
+        add(new Propiedad(TiposCasillas.PROPIEDAD, "Atlantic", 260, 46, ColoresComprables.yellow, construcciones(50, 100), 150));
+        add(new Propiedad(TiposCasillas.PROPIEDAD, "Ventor", 260, 48, ColoresComprables.yellow, construcciones(50, 100), 150));
+        add(new Propiedad(TiposCasillas.PROPIEDAD, "Marvin", 280, 52, ColoresComprables.yellow, construcciones(50, 100), 150));
+        add(new Propiedad(TiposCasillas.PROPIEDAD, "Pacific", 300, 54, ColoresComprables.green, construcciones(50, 100), 200));
+        add(new Propiedad(TiposCasillas.PROPIEDAD, "North Carolina", 300, 56, ColoresComprables.green, construcciones(50, 100), 200));
+        add(new Propiedad(TiposCasillas.PROPIEDAD, "Pennsylvania", 320, 60, ColoresComprables.green, construcciones(50, 100), 200));
+        add(new Propiedad(TiposCasillas.PROPIEDAD, "Park Place", 350, 65, ColoresComprables.blue, construcciones(50, 100), 200));
+        add(new Propiedad(TiposCasillas.PROPIEDAD, "Boardwalk", 400, 70, ColoresComprables.blue, construcciones(50, 100), 200));
     }};
 
     public static List<Estacion> ListaEstaciones= new ArrayList<Estacion>(){{
