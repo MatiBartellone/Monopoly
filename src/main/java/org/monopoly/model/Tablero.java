@@ -15,10 +15,7 @@ public class Tablero {
     }
 
     public Casilla casillaSiguiente(Casilla casillaActual, int avances){
-        int index = this.listaCasillas.indexOf(casillaActual) + avances;
-        if (index>=this.listaCasillas.size()){
-            index = index - this.listaCasillas.size();
-        }
+        int index = (this.listaCasillas.indexOf(casillaActual) + avances )% this.listaCasillas.size();
         return this.listaCasillas.get(index);
     }
 
