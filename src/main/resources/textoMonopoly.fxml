@@ -11,7 +11,7 @@
 <?import javafx.scene.text.Font?>
 
 
-<HBox fx:id="contenedorJuego" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="900.0" prefWidth="1200" style="-fx-border-width: 5; -fx-border-color: grey; -fx-min-height: 900; -fx-min-width: 1200;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.monopoly.controller.JuegoController" >
+<HBox fx:id="contenedorJuego" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="900.0" prefWidth="1200" style="-fx-border-width: 5; -fx-border-color: grey; -fx-min-height: 900; -fx-min-width: 1200;" xmlns="http://javafx.com/javafx/17.0.6" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.monopoly.controller.JuegoController" >
 
    <children>
       <VBox fx:id="jugadores" alignment="CENTER" prefHeight="900.0" prefWidth="300.0" style=" -fx-min-width: 300; -fx-background-color: #8FBC72; -fx-spacing: 30;">

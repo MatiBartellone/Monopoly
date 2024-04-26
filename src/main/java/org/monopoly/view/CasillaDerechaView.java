@@ -8,7 +8,6 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import org.monopoly.model.Jugador;
 import org.monopoly.model.casilla.Casilla;
-
 import java.util.List;
 
 public class CasillaDerechaView extends CasillaView {

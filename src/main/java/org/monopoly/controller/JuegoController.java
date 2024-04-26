@@ -25,7 +25,6 @@ import org.monopoly.model.casilla.Comprable;
 import org.monopoly.view.BotonView;
 import org.monopoly.view.JugadorView;
 import org.monopoly.view.TableroView;
-
 import java.util.ArrayList;
 import java.util.List;
 

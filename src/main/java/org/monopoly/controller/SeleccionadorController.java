@@ -18,8 +18,6 @@ import org.monopoly.model.Tablero;
 import org.monopoly.model.casilla.Casilla;
 import org.monopoly.model.casilla.Comprable;
 import org.monopoly.view.BotonView;
-
-import java.awt.*;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;

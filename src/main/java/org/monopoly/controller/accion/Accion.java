@@ -5,5 +5,4 @@ public interface Accion {
     enum Etapa{INICIO, CASILLA, FIN}
     Etapa getEtapa();
     String getNombre();
-
 }

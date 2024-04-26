@@ -1,6 +1,5 @@
 package org.monopoly.view;
 
-import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
@@ -12,7 +11,6 @@ import javafx.scene.layout.VBox;
 import org.monopoly.model.Jugador;
 import org.monopoly.model.Tablero;
 import org.monopoly.model.casilla.Casilla;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;

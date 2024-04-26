@@ -9,12 +9,8 @@ import org.monopoly.model.casilla.Casilla;
 import org.monopoly.model.casilla.Comprable;
 import org.monopoly.model.casilla.Construible;
 import org.monopoly.model.casilla.Propiedad;
-
-
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
-
-import static org.monopoly.model.Config.TiposCasillas.ESTACION;
 import static org.monopoly.model.Config.TiposCasillas.PROPIEDAD;
 
 public class CalculadoraAccionesCasilla implements CalculadoraDeAcciones {
