@@ -126,7 +126,7 @@ public class JuegoController {
             Accion accion = listaAccion.get(i);
 
             Button nuevo;
-            if (accion.getEtapa() == Accion.Etapa.CASILLA) {
+            if (accion.getEtapa() == Config.EtapaAcciones.CASILLA) {
                 AccionCasilla accionCasilla = (AccionCasilla) accion;
                 nuevo = BotonView.crearBoton(accion.getNombre(), ESTILO_BOTON, ESTILO_BOTON_HOVER, e -> {
                     botonera.getChildren().clear();
@@ -139,7 +139,7 @@ public class JuegoController {
                     accion.accionar();
                     actualizarDatos();
                     if (this.juego.getJugadorActual().getEstado() == Config.EstadosJugadores.CRISIS) this.juego.activarPasiva();
-                    if (accion instanceof AccionPasarDeTurno || accion instanceof AccionPagarFianza) actualizarBotonesInicio();
+                    if (accion.getTipo() == Config.TipoAcciones.PASAR_TURNO || accion.getTipo() == Config.TipoAcciones.PAGAR_FIANZA) actualizarBotonesInicio();
                     else actualizarBotonesAccion();
                 });
             }
