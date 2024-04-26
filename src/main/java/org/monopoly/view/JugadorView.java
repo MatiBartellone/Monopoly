@@ -65,6 +65,7 @@ public class JugadorView {
         Button propiedades = BotonView.crearBoton("Propiedades", ESTILO_BOTON, ESTILO_BOTON_HOVER, e -> {
             this.propiedades.actualizarPropiedades();
             this.propiedades.mostrarPropiedades();
+
         });
         VBox contenedorBoton = new VBox(propiedades);
         contenedorBoton.setAlignment(Pos.CENTER);

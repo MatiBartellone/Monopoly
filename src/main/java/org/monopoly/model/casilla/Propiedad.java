@@ -29,6 +29,7 @@ public class Propiedad extends Comprable implements Construible{
             admJugador.entrarEnCrisis(jugador);
             return;
         }
+        admJugador.salirDeCrisis(jugador);
         admJugador.transferir(admJugador.obtenerDuenio(this), jugador, renta);
     }
 

@@ -127,12 +127,14 @@ public class JuegoController {
                 nuevo = BotonView.crearBoton(accion.getNombre(), ESTILO_BOTON, ESTILO_BOTON_HOVER, e -> {
                     botonera.getChildren().clear();
                     setBotonesCasillas(accionCasilla.getOpciones(), accionCasilla);
+                    if (this.juego.getJugadorActual().getEstado() == Config.EstadosJugadores.CRISIS) this.juego.activarPasiva();
                 });
             } else {
                 nuevo = BotonView.crearBoton(accion.getNombre(), ESTILO_BOTON, ESTILO_BOTON_HOVER, e -> {
                     botonera.getChildren().clear();
                     accion.accionar();
                     actualizarDatos();
+                    if (this.juego.getJugadorActual().getEstado() == Config.EstadosJugadores.CRISIS) this.juego.activarPasiva();
                     if (accion instanceof AccionPasarDeTurno || accion instanceof AccionPagarFianza) actualizarBotonesInicio();
                     else actualizarBotonesAccion();
                 });

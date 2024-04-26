@@ -97,8 +97,8 @@ public class CalculadoraAccionesCasilla implements CalculadoraDeAcciones {
                 opcionesFiltradas.addAll(this.mantieneDiferenciaConst(color, 1));//Se filtra las que cumplirian con la regla diferencia de 1
             }
         }
-        for (Casilla casilla: opcionesFiltradas){
-            Propiedad propiedad = (Propiedad) casilla;
+        for (int i = 0 ; i < opcionesFiltradas.size(); i++){
+            Propiedad propiedad = (Propiedad) opcionesFiltradas.get(i);
             if (!this.juego.alcanzaDinero(propiedad.getValorConstruir())){
                 opcionesFiltradas.remove(propiedad);
             }
@@ -114,8 +114,8 @@ public class CalculadoraAccionesCasilla implements CalculadoraDeAcciones {
                 opcionesFiltradas.addAll(this.mantieneDiferenciaVenta(color, 1));
             }
         }
-        for (Casilla casilla: opcionesFiltradas){
-            Propiedad propiedad = (Propiedad) casilla;
+        for (int i = 0; i < opcionesFiltradas.size(); i++){
+            Propiedad propiedad = (Propiedad) opcionesFiltradas.get(i);
             if (!this.juego.alcanzaDinero(propiedad.getValorConstruir())
             || !(propiedad.getCantConstruidos()>0)){
                 opcionesFiltradas.remove(propiedad);

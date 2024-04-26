@@ -71,6 +71,7 @@ public class TableroView {
 
     public void setCasillas(List<Casilla> casillas){
         casillasPorLado = (casillas.size()-4) / 4;
+        int casillasRestantes = (casillas.size()-4) % 4;
         List<List<Casilla>> listasCasillas = new ArrayList<>(){{
             add(casillasArriba);
             add(casillasDerecha);
@@ -85,6 +86,11 @@ public class TableroView {
             for (int j = 0;j < casillas.size() && j < casillasPorLado; j++) {
                 listasCasillas.get(i).add(casillas.get(cont));
                 cont++;
+            }
+            if (casillasRestantes > 0){
+                listasCasillas.get(i).add(casillas.get(cont));
+                cont++;
+                casillasRestantes--;
             }
         }
 

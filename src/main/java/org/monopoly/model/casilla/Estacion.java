@@ -17,6 +17,7 @@ public class Estacion extends Comprable {
             admJugador.entrarEnCrisis(jugador);
             return;
         }
+        admJugador.salirDeCrisis(jugador);
         admJugador.transferir(admJugador.obtenerDuenio(this), jugador, renta);
     }
     protected int calcularAlquiler(AdmJugador admJugador, Jugador jugador){
