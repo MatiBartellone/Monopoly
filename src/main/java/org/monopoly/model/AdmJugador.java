@@ -1,5 +1,6 @@
 package org.monopoly.model;
 
+import org.monopoly.model.casilla.Casilla;
 import org.monopoly.model.casilla.Comprable;
 import org.monopoly.model.casilla.Construible;
 import org.monopoly.model.casilla.Propiedad;

@@ -1,6 +1,7 @@
 package org.monopoly.model;
 
 
+import org.monopoly.model.casilla.Casilla;
 import org.monopoly.model.casilla.Comprable;
 import org.monopoly.model.casilla.Construible;
 import java.util.*;
@@ -39,8 +40,9 @@ public class Juego {
 
     public void activarPasiva(){
         Jugador jugador = this.admTurnos.getJugadorActual();
-        jugador.activarPasiva(this.admJugador,jugador);
+        this.casillaActual().accionar(this.admJugador, jugador);
     }
+
 
     public void comprar(Comprable comprable){
         this.admJugador.comprar(this.admTurnos.getJugadorActual(), comprable);
@@ -111,6 +113,9 @@ public class Juego {
         return false;
     }
 
+    private Casilla casillaActual(){
+        return this.getJugadorActual().getCasillaActual();
+    }
     public Jugador ganador(){
         return this.ganador;
     }
