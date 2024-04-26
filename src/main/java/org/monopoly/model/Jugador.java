@@ -5,7 +5,7 @@ import org.monopoly.model.casilla.Casilla;
 import java.util.*;
 
 public class Jugador {
-    private Config.ColoresJugadores color;
+    private final Config.ColoresJugadores color;
     private Casilla casillaActual;
     private Config.EstadosJugadores estado;
     private int turnosCarcel;
@@ -39,7 +39,7 @@ public class Jugador {
 
     public Config.ColoresJugadores getColor() { return this.color; }
 
-    public boolean estaSobreCasillaComprable(){
+    public boolean estaSobreComprable(){
         return (this.casillaActual.getTipo() == Config.TiposCasillas.PROPIEDAD ||
                 this.casillaActual.getTipo() == Config.TiposCasillas.ESTACION);
     }

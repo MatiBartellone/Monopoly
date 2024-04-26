@@ -12,7 +12,6 @@ public class AccionVender extends AccionCasilla{
     }
 
     public void accionar(){
-
         this.juego.venderConstruccion((Propiedad) this.casilla);
     }
 

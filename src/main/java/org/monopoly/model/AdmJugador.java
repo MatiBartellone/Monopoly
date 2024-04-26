@@ -9,9 +9,9 @@ import java.util.List;
 import java.util.Map;
 
 public class AdmJugador {
-    private List<Jugador> jugadores;
-    private Banco banco;
-    private RegistroComprables registroComprables;
+    private final List<Jugador> jugadores;
+    private final Banco banco;
+    private final RegistroComprables registroComprables;
     private Jugador ganador;
 
     public AdmJugador(List<Jugador> jugadores, Map<Config.ColoresComprables, List<Comprable> > tablaBarrios){

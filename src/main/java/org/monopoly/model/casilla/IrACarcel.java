@@ -6,8 +6,8 @@ import org.monopoly.model.Jugador;
 
 public class IrACarcel implements Casilla{
 
-    private Config.TiposCasillas tipo;
-    private Casilla casillaCarcel;
+    private final Config.TiposCasillas tipo;
+    private final Casilla casillaCarcel;
 
     public IrACarcel(Config.TiposCasillas tipo, Casilla carcel){
         this.casillaCarcel = carcel;

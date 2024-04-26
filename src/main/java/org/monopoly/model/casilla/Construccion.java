@@ -3,8 +3,8 @@ package org.monopoly.model.casilla;
 import org.monopoly.model.Config;
 
 public class Construccion {
-    private Config.TiposConstrucciones tipo;
-    private int valorAlquiler;
+    private final Config.TiposConstrucciones tipo;
+    private final int valorAlquiler;
 
     public Construccion (Config.TiposConstrucciones tipo, int valorAlquiler){
         this.tipo = tipo;

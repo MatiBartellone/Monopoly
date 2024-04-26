@@ -5,7 +5,7 @@ import org.monopoly.model.Config;
 import org.monopoly.model.Jugador;
 
 public class CasillaSinEfecto implements Casilla {
-    private Config.TiposCasillas tipo;
+    private final Config.TiposCasillas tipo;
 
     public CasillaSinEfecto(Config.TiposCasillas tipo){
         this.tipo = tipo;

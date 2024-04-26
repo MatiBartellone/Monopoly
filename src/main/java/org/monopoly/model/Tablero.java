@@ -4,7 +4,7 @@ import org.monopoly.model.casilla.Casilla;
 import java.util.List;
 
 public class Tablero {
-    private List<Casilla> casillas;
+    private final List<Casilla> casillas;
 
     public Tablero(List<Casilla> lista){
         this.casillas = lista;

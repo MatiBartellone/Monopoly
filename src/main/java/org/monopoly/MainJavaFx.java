@@ -14,7 +14,7 @@ public class MainJavaFx extends Application {
 
     @Override
     public void start(Stage stage) throws Exception{
-        this.stage = stage;
+        MainJavaFx.stage = stage;
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/escena-inicio.fxml"));
         AnchorPane root = loader.load();
 

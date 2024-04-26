@@ -25,6 +25,9 @@ import org.monopoly.model.casilla.Comprable;
 import org.monopoly.view.BotonView;
 import org.monopoly.view.JugadorView;
 import org.monopoly.view.TableroView;
+
+import java.awt.event.MouseEvent;
+import java.beans.EventHandler;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -77,9 +80,6 @@ public class JuegoController {
             add("THIAGO");
             add("IVAN");
             add("ANDREA");
-            add("ANDREA");
-            add("ANDREA");
-            add("ANDREA");
         }};
 
         this.jugadorViews = setJugadores(this.juego.getJugadores(), nombres);
@@ -121,36 +121,13 @@ public class JuegoController {
         setBotonesAccion(this.calculadoraInicio.accionesPosibles(this.juego.getJugadorActual()));
     }
 
-    private void terminarJuego(){
-
-        Label titulo = new Label("!!!GANADOR!!!");
-        titulo.setMinSize(300, 80);
-        titulo.setAlignment(Pos.CENTER);
-        titulo.setStyle("-fx-background-color: #8FBC72;");
-        titulo.setFont(new Font("Arial", 20));
-        Label img = new Label();
-        ImageView imagen = new ImageView(new Image(getClass().getResourceAsStream("/images/"+this.juego.ganador().getColor().toString()+".png")));
-        img.setGraphic(imagen);
-        imagen.setFitHeight(100);
-        imagen.setFitWidth(100);
-        VBox contImg = new VBox(img);
-        VBox.setVgrow(contImg, Priority.ALWAYS);
-        contImg.setAlignment(Pos.CENTER);
-        VBox contenedor = new VBox(titulo,contImg);
-        contenedor.setMinSize(300, 400);
-        contenedor.setStyle("-fx-background-color: #BFDBAE;");
-        Scene scene = new Scene(contenedor);
-        Stage stageFinal = new Stage();
-        stageFinal.setScene(scene);
-        stageFinal.show();
-        this.stage.close();
-    }
     public void setBotonesAccion(List<Accion> listaAccion){
         for (int i = 0; i < listaAccion.size() ; i++){
             Accion accion = listaAccion.get(i);
 
             Button nuevo;
-            if (accion instanceof AccionCasilla accionCasilla) {
+            if (accion.getEtapa() == Accion.Etapa.CASILLA) {
+                AccionCasilla accionCasilla = (AccionCasilla) accion;
                 nuevo = BotonView.crearBoton(accion.getNombre(), ESTILO_BOTON, ESTILO_BOTON_HOVER, e -> {
                     botonera.getChildren().clear();
                     setBotonesCasillas(accionCasilla.getOpciones(), accionCasilla);
@@ -169,6 +146,7 @@ public class JuegoController {
             this.botonera.getChildren().add(nuevo);
         }
     }
+
     public void setBotonesCasillas(List<Casilla> casillas, AccionCasilla accion){
         for (int i = 0; i < casillas.size() ; i++){
             Comprable comprable = (Comprable) casillas.get(i);
@@ -216,5 +194,30 @@ public class JuegoController {
             int dado = this.juego.getAdmMovimientos().getDados()[i];
             if (dado != 0) dados.get(i).setImage(new Image(this.getClass().getResourceAsStream("/images/"+dado+".png")));
         }
+    }
+
+    private void terminarJuego(){
+
+        Label titulo = new Label("!!!GANADOR!!!");
+        titulo.setMinSize(300, 80);
+        titulo.setAlignment(Pos.CENTER);
+        titulo.setStyle("-fx-background-color: #8FBC72;");
+        titulo.setFont(new Font("Arial", 20));
+        Label img = new Label();
+        ImageView imagen = new ImageView(new Image(getClass().getResourceAsStream("/images/"+this.juego.ganador().getColor().toString()+".png")));
+        img.setGraphic(imagen);
+        imagen.setFitHeight(100);
+        imagen.setFitWidth(100);
+        VBox contImg = new VBox(img);
+        VBox.setVgrow(contImg, Priority.ALWAYS);
+        contImg.setAlignment(Pos.CENTER);
+        VBox contenedor = new VBox(titulo,contImg);
+        contenedor.setMinSize(300, 400);
+        contenedor.setStyle("-fx-background-color: #BFDBAE;");
+        Scene scene = new Scene(contenedor);
+        Stage stageFinal = new Stage();
+        stageFinal.setScene(scene);
+        stageFinal.show();
+        this.stage.close();
     }
 }

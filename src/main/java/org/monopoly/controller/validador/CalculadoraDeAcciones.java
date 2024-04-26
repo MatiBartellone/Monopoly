@@ -6,5 +6,5 @@ import org.monopoly.model.Jugador;
 import java.util.List;
 
 public interface CalculadoraDeAcciones {
-    public List<Accion> accionesPosibles(Jugador jugador);
+    List<Accion> accionesPosibles(Jugador jugador);
 }

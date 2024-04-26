@@ -8,23 +8,21 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class RegistroComprables {
-    private Map<Comprable, Jugador> tablaPropiedades;
-    private Map<Config.ColoresComprables, List<Comprable>> barrios;
-    private Map<Config.ColoresComprables, Integer> tablaColores;
-    private Map<Jugador, Map<Config.ColoresComprables, Integer>> tablaColoresJugadores;
+    private final Map<Comprable, Jugador> tablaPropiedades;
+    private final Map<Config.ColoresComprables, List<Comprable>> barrios;
+    private final Map<Config.ColoresComprables, Integer> tablaColores;
+    private final Map<Jugador, Map<Config.ColoresComprables, Integer>> tablaColoresJugadores;
 
     public RegistroComprables(Map<Config.ColoresComprables, List<Comprable>> tablaBarrios, List<Jugador> jugadores) {
-        this.tablaPropiedades = new HashMap<Comprable, Jugador>();
+        this.tablaPropiedades = new HashMap<>();
         this.barrios = tablaBarrios;
 
-        this.tablaColores = new HashMap<Config.ColoresComprables, Integer>();
-        tablaBarrios.forEach((clave, valor) -> {
-            this.tablaColores.put(clave, valor.size());
-        });
+        this.tablaColores = new HashMap<>();
+        tablaBarrios.forEach((clave, valor) -> this.tablaColores.put(clave, valor.size()));
 
-        this.tablaColoresJugadores = new HashMap<Jugador, Map<Config.ColoresComprables, Integer>>();
+        this.tablaColoresJugadores = new HashMap<>();
         for (Jugador jugador : jugadores) {
-            Map<Config.ColoresComprables, Integer> tablaJugador = new HashMap<Config.ColoresComprables, Integer>();
+            Map<Config.ColoresComprables, Integer> tablaJugador = new HashMap<>();
             this.tablaColoresJugadores.put(jugador, tablaJugador);
         }
     }
@@ -90,6 +88,5 @@ public class RegistroComprables {
         for (Comprable comprable : comprablesABorrar) {
             this.tablaPropiedades.remove(comprable);
         }
-
     }
 }

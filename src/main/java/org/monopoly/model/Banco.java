@@ -5,10 +5,10 @@ import java.util.List;
 import java.util.Map;
 
 public class Banco {
-    private Map<Jugador, CuentaBancaria> cuentasJugadores;
+    private final Map<Jugador, CuentaBancaria> cuentasJugadores;
 
     public Banco(List<Jugador> jugadores){
-        this.cuentasJugadores = new HashMap<Jugador, CuentaBancaria>();
+        this.cuentasJugadores = new HashMap<>();
         for (Jugador j : jugadores){
             this.cuentasJugadores.put(j, new CuentaBancaria(Config.DineroInicial));
         }
@@ -16,9 +16,10 @@ public class Banco {
     public void otorgarDinero(Jugador jugador, int monto){
         this.cuentasJugadores.get(jugador).sumarDinero(monto);
     }
+
     public void quitarDinero(Jugador jugador, int monto){
         CuentaBancaria cuenta = this.cuentasJugadores.get(jugador);
-        if (cuenta.poseeDinero(monto)) cuenta.retirarDinero(monto);
+        cuenta.retirarDinero(monto);
     }
 
     public void transferir(Jugador receptor, Jugador emisor, int monto){
@@ -27,9 +28,11 @@ public class Banco {
             this.otorgarDinero(receptor, monto);
         }
     }
+
     public int consultarDinero(Jugador jugador){
         return this.cuentasJugadores.get(jugador).getDinero();
     }
+
     public CuentaBancaria getCuentaJugador(Jugador jugador) {
         return this.cuentasJugadores.get(jugador);
     }

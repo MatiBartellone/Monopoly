@@ -8,11 +8,11 @@ import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class Config {
-    public static enum ColoresJugadores{MORTY, SUMMER, JERRY, BETH, RICK, CARRETILLA, SOMBRERO, BARCO, SRMONOPOLY, AUTO, HOMERO, AYUDANTE, BART,BOLADENIEVE, LISA}
-    public static enum EstadosJugadores{EN_JUEGO, PRESO, QUEBRADO, CRISIS}
-    public static enum TiposCasillas{PROPIEDAD, ESTACION, IR_A_CARCEL, MULTA, LOTERIA, CARCEL, SALIDA, PASO}
-    public static enum ColoresComprables{black, brown, lightblue, pink, orange, red, yellow, green, blue}
-    public static enum TiposConstrucciones{CASA, HOTEL}
+    public enum ColoresJugadores{MORTY, SUMMER, JERRY, BETH, RICK, CARRETILLA, SOMBRERO, BARCO, SRMONOPOLY, AUTO, HOMERO, AYUDANTE, BART,BOLADENIEVE, LISA}
+    public enum EstadosJugadores{EN_JUEGO, PRESO, QUEBRADO, CRISIS}
+    public enum TiposCasillas{PROPIEDAD, ESTACION, IR_A_CARCEL, MULTA, LOTERIA, CARCEL, SALIDA, PASO}
+    public enum ColoresComprables{black, brown, lightblue, pink, orange, red, yellow, green, blue}
+    public enum TiposConstrucciones{CASA, HOTEL}
     public static int DineroInicial = 1500;
     public static int TurnosCarcel = 3;
     public static int MaxJugadores = 4;
@@ -20,15 +20,10 @@ public class Config {
     public static int MaxCasas = 4;
     public static int MaxHoteles = 1;
     public static int MaxConstrucciones = MaxCasas + MaxHoteles;
+    public static int DiferenciaContrucciones;
     public static int PagoPorSalida = 200;
+    public static int CantDados;
 
-    public static List<Construccion> construcciones = new ArrayList<Construccion>(){{
-        add(new Construccion(TiposConstrucciones.CASA, 50));
-        add(new Construccion(TiposConstrucciones.CASA, 50));
-        add(new Construccion(TiposConstrucciones.CASA, 50));
-        add(new Construccion(TiposConstrucciones.CASA, 50));
-        add(new Construccion(TiposConstrucciones.HOTEL, 50));
-    }};
     public static List<Construccion> construcciones(int valorCasa, int valorHotel){
         List<Construccion> construcciones = new ArrayList<>();
         construcciones.add(new Construccion(TiposConstrucciones.CASA, valorCasa));
@@ -39,7 +34,7 @@ public class Config {
         return construcciones;
     }
     public static CasillaSinEfecto carcel = new CasillaSinEfecto(TiposCasillas.CARCEL);
-    public static List<Propiedad> ListaPropiedades = new ArrayList<Propiedad>(){{
+    public static List<Propiedad> ListaPropiedades = new ArrayList<>(){{
         add(new Propiedad(TiposCasillas.PROPIEDAD, "Mediterraneo", 60, 4, ColoresComprables.brown,  construcciones(50, 100), 50));
         add(new Propiedad(TiposCasillas.PROPIEDAD, "Baltco", 60, 6, ColoresComprables.brown,  construcciones(50, 100), 50));
         add(new Propiedad(TiposCasillas.PROPIEDAD, "Central", 100, 10, ColoresComprables.lightblue,  construcciones(50, 100), 50));
@@ -64,7 +59,7 @@ public class Config {
         add(new Propiedad(TiposCasillas.PROPIEDAD, "Boardwalk", 400, 70, ColoresComprables.blue, construcciones(50, 100), 200));
     }};
 
-    public static List<Estacion> ListaEstaciones= new ArrayList<Estacion>(){{
+    public static List<Estacion> ListaEstaciones= new ArrayList<>(){{
         add(new Estacion(TiposCasillas.ESTACION, "Reading", 200, 25, ColoresComprables.black));
         add(new Estacion(TiposCasillas.ESTACION, "Pennsylvania", 200, 25, ColoresComprables.black));
         add(new Estacion(TiposCasillas.ESTACION, "B & O", 200, 25, ColoresComprables.black));

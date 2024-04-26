@@ -4,14 +4,13 @@ import org.monopoly.model.AdmJugador;
 import org.monopoly.model.Config;
 import org.monopoly.model.Jugador;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class Propiedad extends Comprable implements Construible{
-    private List<Construccion> construcciones;
+    private final List<Construccion> construcciones;
     private int cantConstruidos;
-    private int valorConstruir;
-    private int valorDestruir;
+    private final int valorConstruir;
+    private final int valorDestruir;
     private int valorTotalConstruidos;
 
     public Propiedad(Config.TiposCasillas tipo, String nombre, int valorCompra, int valorRentaBasica, Config.ColoresComprables color, List<Construccion> listaConstruccion, int valorConstruir){

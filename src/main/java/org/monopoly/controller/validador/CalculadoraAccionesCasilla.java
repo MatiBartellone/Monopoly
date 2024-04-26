@@ -14,9 +14,8 @@ import java.util.concurrent.atomic.AtomicInteger;
 import static org.monopoly.model.Config.TiposCasillas.PROPIEDAD;
 
 public class CalculadoraAccionesCasilla implements CalculadoraDeAcciones {
-    private Juego juego;
-    private RegistroComprables registro;
-
+    private final Juego juego;
+    private final RegistroComprables registro;
 
     public CalculadoraAccionesCasilla(Juego juego) {
         this.juego = juego;
@@ -24,7 +23,7 @@ public class CalculadoraAccionesCasilla implements CalculadoraDeAcciones {
     }
 
     public List<Accion> accionesPosibles(Jugador jugador) {
-        List<Accion> acciones = new ArrayList<Accion>();
+        List<Accion> acciones = new ArrayList<>();
 
         List<Casilla> opcionesComprar = this.opcionesComprar(jugador);
         if (!opcionesComprar.isEmpty()){acciones.add(new AccionComprar(this.juego, opcionesComprar));}
@@ -78,7 +77,7 @@ public class CalculadoraAccionesCasilla implements CalculadoraDeAcciones {
 
 
     private List<Casilla> opcionesComprar(Jugador jugador) {
-        if (jugador.estaSobreCasillaComprable()){
+        if (jugador.estaSobreComprable()){
             Comprable comprable = (Comprable) jugador.getCasillaActual();
             if (!this.registro.tieneDuenio(comprable) && this.juego.alcanzaDinero(comprable.getValorCompra())){ return new ArrayList<>() {{add(comprable);}}; }
         }
@@ -90,7 +89,7 @@ public class CalculadoraAccionesCasilla implements CalculadoraDeAcciones {
         for (Config.ColoresComprables color : Config.ColoresComprables.values()) { //Nos fijamos Barrio por Barrio
             if (this.registro.poseeSetCompleto(jugador, color)                     //Si tiene todo el Barrio
                     && barrioSinHipotecar(this.registro.casasPorBarrio(color).keySet())) {//No tiene ninguna hipoteca en el Barrio
-                opcionesFiltradas.addAll(this.mantieneDiferenciaConst(color, 1));//Se filtra las que cumplirian con la regla diferencia de 1
+                opcionesFiltradas.addAll(this.mantieneDiferenciaConst(color, Config.DiferenciaContrucciones));//Se filtra las que cumplirian con la regla diferencia de 1
             }
         }
         for (int i = 0 ; i < opcionesFiltradas.size(); i++){
@@ -107,7 +106,7 @@ public class CalculadoraAccionesCasilla implements CalculadoraDeAcciones {
         for (Config.ColoresComprables color : Config.ColoresComprables.values()) {
             if (this.registro.poseeSetCompleto(jugador, color)
                     && barrioSinHipotecar(this.registro.casasPorBarrio(color).keySet())) {
-                opcionesFiltradas.addAll(this.mantieneDiferenciaVenta(color, 1));
+                opcionesFiltradas.addAll(this.mantieneDiferenciaVenta(color, Config.DiferenciaContrucciones));
             }
         }
         for (int i = 0; i < opcionesFiltradas.size(); i++){

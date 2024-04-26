@@ -9,9 +9,11 @@ public class AccionHipotecar extends AccionCasilla{
     public AccionHipotecar(Juego juego, List<Casilla> opciones){
         super(juego, opciones);
     }
+
     public void accionar(){
         this.juego.hipotecar((Comprable)casilla);
     }
+
     public String getNombre(){
         return "Hipotecar propiedad";
     }

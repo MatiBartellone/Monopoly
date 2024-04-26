@@ -11,7 +11,7 @@ import java.util.List;
 
 public class CalculadorAccionInicio implements CalculadoraDeAcciones {
 
-    private Juego juego;
+    private final Juego juego;
 
     public CalculadorAccionInicio(Juego juego){
         this.juego = juego;

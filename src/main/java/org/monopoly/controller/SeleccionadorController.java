@@ -19,9 +19,7 @@ import org.monopoly.model.casilla.Casilla;
 import org.monopoly.model.casilla.Comprable;
 import org.monopoly.view.BotonView;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class SeleccionadorController {
 
@@ -31,7 +29,6 @@ public class SeleccionadorController {
     private HBox botonera2;
     @FXML
     private HBox botonera3;
-    private int maxBotonera = 5;
     @FXML
     private Label instruccion;
 
@@ -40,20 +37,16 @@ public class SeleccionadorController {
     Config.ColoresJugadores[] coloresArr = Config.ColoresJugadores.values();
 
 
-    private List<Config.ColoresJugadores> colores = new ArrayList<>();
-    private List<Config.ColoresJugadores> coloresElegidos = new ArrayList<>();
+    private final List<Config.ColoresJugadores> colores = new ArrayList<>();
+    private final List<Config.ColoresJugadores> coloresElegidos = new ArrayList<>();
 
     private static final String ESTILO_BOTON = "-fx-min-width: 100; -fx-min-height: 80; -fx-border-radius: 25; -fx-background-radius: 25; -fx-background-color: #F8C471; -fx-border-color: #E59866; -fx-border-width: 3;";
     private static final String ESTILO_BOTON_HOVER = "-fx-min-width: 100; -fx-min-height: 80; -fx-border-radius: 25; -fx-background-radius: 25; -fx-background-color: #A04000; -fx-border-color: #E59866; -fx-border-width: 3;";
 
 
     public void setSeleccionador(){
-        for(Config.ColoresJugadores color : coloresArr){
-            colores.add(color);
-        }
+        colores.addAll(Arrays.asList(coloresArr));
         setearBotones();
-
-
     }
 
     private void setearBotones(){
@@ -66,7 +59,6 @@ public class SeleccionadorController {
                 this.instruccion.setText("Seleccione "+cantJugadores+" Jugadores");
                 MainJavaFx.resizeStage();
                 this.setearBotonesJugadores();
-
             }));
         }
     }
@@ -86,7 +78,7 @@ public class SeleccionadorController {
                 }
             });
 
-            ImageView imageView = new ImageView(new Image(this.getClass().getResourceAsStream("/images/"+c+".png")));
+            ImageView imageView = new ImageView(new Image(Objects.requireNonNull(this.getClass().getResourceAsStream("/images/" + c + ".png"))));
             imageView.setFitWidth(100);
             imageView.setFitHeight(80);
             boton.setGraphic(imageView);
@@ -104,7 +96,7 @@ public class SeleccionadorController {
 
     private void cargarSegundaEscena(){
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/textoMonopoly.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/vistaMonopoly.fxml"));
             HBox root = loader.load();
             JuegoController juegoController = loader.getController();
             Scene escena = new Scene(root);
@@ -112,7 +104,7 @@ public class SeleccionadorController {
             stage.setScene(escena);
             juegoController.setJuego(crearJuego(), stage);
 
-        }catch (IOException ex) {}
+        }catch (IOException ignored) {}
     }
 
     public Juego crearJuego(){
@@ -122,9 +114,9 @@ public class SeleccionadorController {
         List<Jugador> jugadores = crearJugadores(casillas.get(0));
         Tablero tablero = new Tablero(casillas);
 
-        Juego juego = new Juego(tablero, jugadores, tablaColores);
-        return juego;
+        return new Juego(tablero, jugadores, tablaColores);
     }
+
     public List<Jugador> crearJugadores(Casilla salida){
         List<Jugador> jugadores = new ArrayList<>();
         for (int i = 0 ; i < this.cantJugadores ; i++){
@@ -134,10 +126,12 @@ public class SeleccionadorController {
     }
 
     private void agregarABotoneras(Button boton){
+        int maxBotonera = 5;
         if (botonera1.getChildren().size() < maxBotonera) botonera1.getChildren().add(boton);
         else if (botonera2.getChildren().size() < maxBotonera) botonera2.getChildren().add(boton);
         else if (botonera3.getChildren().size() < maxBotonera) botonera3.getChildren().add(boton);
     }
+
     private void clearBotoneras(){
         botonera1.getChildren().clear();
         botonera2.getChildren().clear();

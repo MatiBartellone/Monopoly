@@ -4,13 +4,12 @@ import org.monopoly.model.AdmJugador;
 import org.monopoly.model.Config;
 import org.monopoly.model.Jugador;
 
-import java.util.List;
 import java.util.Objects;
 
 public abstract class Comprable implements Casilla{
 
-    private Config.TiposCasillas tipo;
-    private String nombre;
+    private final Config.TiposCasillas tipo;
+    private final String nombre;
     protected Config.ColoresComprables color;
     protected int valorCompra;
     protected int valorRentaBasica;

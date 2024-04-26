@@ -9,6 +9,8 @@ public abstract class AccionFinal implements Accion {
         this.juego = juego;
     }
     public Etapa getEtapa() {return Etapa.FIN;}
+
     public abstract void accionar();
+
     public abstract String getNombre();
 }
