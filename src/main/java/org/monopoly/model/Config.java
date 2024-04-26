@@ -81,7 +81,7 @@ public class Config {
          List<Casilla> listaCasillas = new ArrayList<Casilla>();
          listaCasillas.add(new CasillaSinEfecto(TiposCasillas.SALIDA));
          AtomicInteger indice = new AtomicInteger(0);
-agregarPropiedad(listaCasillas, indice, 2);
+         agregarPropiedad(listaCasillas, indice, 2);
          listaCasillas.add(new Multa(TiposCasillas.MULTA, 200));
          listaCasillas.add(ListaEstaciones.get(0));
          agregarPropiedad(listaCasillas, indice, 2);

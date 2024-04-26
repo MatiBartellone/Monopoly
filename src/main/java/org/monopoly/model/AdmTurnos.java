@@ -11,10 +11,7 @@ public class AdmTurnos {
         this.turno = 0;
         Collections.shuffle(jugadores);
         this.jugadores = jugadores;
-        Collections.shuffle(this.jugadores);
     }
-    //ojo tiene que haber un siguiente jugador que no esté quebrado
-    //maneja si el jugador que está terminando su turno acaba de cumplir su ultimo turno en prision
     public void siguiente(){
         int iJugador = this.sgteListaCircular();
         this.turno = iJugador;

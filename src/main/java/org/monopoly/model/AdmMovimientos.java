@@ -9,7 +9,7 @@ public class AdmMovimientos {
     private int[] dados;
     public AdmMovimientos(Tablero tablero){
         this.tablero = tablero;
-        this.dados= new int[cantDados];
+        this.dados = new int[cantDados];
     }
     public void tirarDados(){
         for(int i=0;i < dados.length; i++){this.dados[i]= ThreadLocalRandom.current().nextInt(1, 6 + 1);}

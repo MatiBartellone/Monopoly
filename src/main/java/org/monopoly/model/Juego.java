@@ -68,7 +68,6 @@ public class Juego {
     }
     public void entrarEnQuiebra(){this.admJugador.entrarEnQuiebra(this.getJugadorActual());}
 
-
     //REVISAR Y CAMBIAR
     private boolean validarEncarcelamiento(Jugador jugador){
         if (jugador.getEstado() == Config.EstadosJugadores.EN_JUEGO){return true;}

@@ -63,7 +63,7 @@ public class TableroView {
 
         } catch (IOException e) {}
 
-        setCasillas(tablero.getListaCasillas());
+        setCasillas(tablero.getCasillas());
         actualizarCasillas(jugadores);
     }
 

@@ -2,15 +2,12 @@ package org.monopoly.model;
 
 public class CuentaBancaria {
     private int dinero;
-
     public CuentaBancaria(int dineroInicial){
         this.dinero = dineroInicial;
     }
-
     public int getDinero(){
         return this.dinero;
     }
-
     public void sumarDinero(int dinero){
         this.dinero += dinero;
     }
